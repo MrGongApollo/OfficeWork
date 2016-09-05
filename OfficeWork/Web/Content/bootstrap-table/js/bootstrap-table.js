@@ -802,9 +802,9 @@
     };
 
     /**
-    * @param data
-    * @param type: append / prepend
-    */
+     * @param data
+     * @param type: append / prepend
+     */
     BootstrapTable.prototype.initData = function (data, type) {
         if (type === 'append') {
             this.data = this.data.concat(data);
@@ -1156,7 +1156,7 @@
                 }
             }
 
-            this.totalPages = ~ ~((this.options.totalRows - 1) / this.options.pageSize) + 1;
+            this.totalPages = ~~((this.options.totalRows - 1) / this.options.pageSize) + 1;
 
             this.options.totalPages = this.totalPages;
         }
@@ -1714,7 +1714,6 @@
         if (!silent) {
             this.$tableLoading.show();
         }
-
         request = $.extend({}, calculateObjectValue(null, this.options.ajaxOptions), {
             type: this.options.method,
             url: this.options.url,
@@ -1724,14 +1723,12 @@
             contentType: this.options.contentType,
             dataType: this.options.dataType,
             success: function (res) {
-            debugger
-                res = eval(res.d);
                 res = calculateObjectValue(that.options, that.options.responseHandler, [res], res);
+
                 that.load(res);
                 that.trigger('load-success', res);
             },
             error: function (res) {
-                debugger
                 that.trigger('load-error', res.status, res);
             },
             complete: function () {
@@ -1753,7 +1750,7 @@
             if (this.options.searchText !== '') {
                 var $search = this.$toolbar.find('.search input');
                 $search.val(this.options.searchText);
-                this.onSearch({ currentTarget: $search });
+                this.onSearch({currentTarget: $search});
             }
         }
     };
@@ -2495,7 +2492,7 @@
     BootstrapTable.prototype.resetSearch = function (text) {
         var $search = this.$toolbar.find('.search input');
         $search.val(text || '');
-        this.onSearch({ currentTarget: $search });
+        this.onSearch({currentTarget: $search});
     };
 
     BootstrapTable.prototype.expandRow_ = function (expand, index) {
@@ -2645,4 +2642,4 @@
         $('[data-toggle="table"]').bootstrapTable();
     });
 
-} (jQuery);
+}(jQuery);
