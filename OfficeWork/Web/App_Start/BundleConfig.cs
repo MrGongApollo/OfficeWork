@@ -22,6 +22,28 @@ namespace Web
                       "~/Scripts/base.min.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-daterangepicker/js").Include(
+                        "~/Content/bootstrap-daterangepicker/js/moment.js",
+                        "~/Content/bootstrap-daterangepicker/js/daterangepicker.js"
+
+                        ));
+
+
+            bundles.Add(new StyleBundle("~/bundles/bootstrap-daterangepicker/css").Include(
+                        "~/Content/bootstrap-daterangepicker/css/daterangepicker-bs3.css"
+
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-table/js").Include(
+                        "~/Content/bootstrap-table/js/bootstrap-table.min.js",
+                        "~/Content/bootstrap-table/js/locale/bootstrap-table-zh-CN.min.js",
+                        "~/Content/bootstrap-table/js/extensions/filter-control/bootstrap-table-filter-control.js"
+                        ));
+
+
+            bundles.Add(new StyleBundle("~/bundles/bootstrap-table/css").Include(
+                        "~/Content/bootstrap-table/css/bootstrap-table.min.css"));
+
             bundles.Add(new StyleBundle("~/bundles/commoncss").Include(
                       "~/Content/bootstrap/css/bootstrap.min.css",
                       "~/Content/font-awesome/css/font-awesome.min.css",
