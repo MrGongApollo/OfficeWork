@@ -1,0 +1,332 @@
+﻿
+@{
+    ViewBag.Title = "Test1";
+}
+
+@Styles.Render("~/Content/bootstrap-table/css/bootstrap-table.min.css")
+@Scripts.Render("~/Content/bootstrap-table/js/bootstrap-table.js")
+@Scripts.Render("~/Content/bootstrap-table/js/locale/bootstrap-table-zh-CN.min.js")
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+
+        //$.each($('.bootstrap-daterangepicker'), function (i, el) {
+        //    $(el).daterangepicker(null, function (start, end, label) {
+        //        console.log(start.toISOString(), end.toISOString(), label);
+
+        //        $(el).attr({
+        //            "data-date-start": start,
+        //            "data-date-end": end
+        //        });
+
+        //    });
+        //});
+
+
+        var $table = $('#table');
+        $table.bootstrapTable({
+            url: "/Wcf/YHNew.svc/T_YH_HiddenDanger",
+            toolbar: '#toolbar',    //工具按钮用哪个容器
+            showRefresh: false, //是否显示刷新按钮
+            dataType: "json",
+            method: 'get',
+            //ajax: false,
+            //ajaxOptions: { headers: { "Accept": "application/json; odata=verbose", "DataServiceVersion": "3.0", "MaxDataServiceVersion": "3.0"} },
+            height: $(window).height() - 200, //table 高度
+            striped: true, //是否显示行间隔色
+            singleSelect: true, //单选
+            sortable: true, //是否启用排序
+            showColumns: true, //字段筛选
+            dataLocale: "zh-CN", //表格汉化
+            search: false, //显示搜索框
+            pageSize: 10, //每页的记录行数（*）
+            pageList: [10, 15, 20, 25], //分页选择
+            pageNumber: 1, //初始化加载第一页，默认第一页
+            pagination: true, //分页
+            //minimumCountColumns: 2, //最少允许的列数
+            clickToSelect: true, //是否启用点击选中行
+            queryParamsType: "limit",
+            onLoadSuccess: function (xhr) {
+            },
+            onLoadError: function (status) {
+
+            },
+            queryParams: function (params) {
+                //                    var _filter = [
+                //                        "$skip=" + params.offset,
+                //                        "$top=" + params.limit,
+                //                        "$orderby =" + (params.sort ? params.sort + " " + params.order : "CreateTime desc")
+                //                    ];
+                //                    return _filter.join("&");
+                return {
+                    offSet: params.offset,
+                    //orderBy: "'"+(params.sort||"CreateTime")+"'",
+                    sortType: "'" + params.order + "'",
+                    pageSize: params.limit,
+                    pageNumber: params.pageNumber
+                };
+
+            },
+            "sidePagination": "server", //服务端处理分页
+            "columns": [
+                { checkbox: true, align: 'center', valign: 'middle' },
+            //                    { title: '机构名称', field: 'InternalHierarchyName', align: 'center', valign: 'middle', sortable: true },
+            //                    {
+            //                        title: '状态', field: 'status', align: 'center', valign: 'middle', sortable: true,
+            //                        formatter: function (value, row, index) {
+            //                            return "<span class='" + (row.status == "有效" ? "text-success" : "text-danger") + "'>" + row.status + "</span>";
+            //                        }
+            //                    },
+                { title: '隐患编号', field: 'SerialNo', align: 'center', valign: 'middle', sortable: true },
+                {
+                    title: '检查机构', field: 'CheckOrgIHName', align: 'center', valign: 'middle', sortable: true, visible: false,
+                    formatter: function (value) {
+                        return "<span style=''>" + value + "</span>";
+                    }
+                },
+                { title: '发现人', field: 'FindEmpName', align: 'center', valign: 'middle', sortable: true },
+                {
+                    title: '发现日期', field: 'FindTime', align: 'center', valign: 'middle', sortable: true,
+                    formatter: function (value) {
+                        return $.anbao.web.util.changeDateFormat(value);
+                    }
+                },
+                { title: '隐患区域', field: 'OrgCodeIHName', align: 'center', valign: 'middle', sortable: true },
+                { title: '隐患内容', field: 'HiddenContent', align: 'center', valign: 'middle', sortable: true },
+                { title: '隐患分类', field: 'CategoryHierarchyName', align: 'center', valign: 'middle', sortable: true },
+                { title: '专业分类', field: 'ProCategoryHierarchyName', align: 'center', valign: 'middle', sortable: true },
+                {
+                    title: '隐患等级', field: 'HiddenGrade', align: 'center', valign: 'middle', sortable: true,
+                    formatter: function (value) {
+                        var Grade;
+                        switch (value) {
+                            case "1":
+                                Grade = "一级";
+                                break;
+                            case "2":
+                                Grade = "二级";
+                                break;
+                            case "3":
+                                Grade = "三级";
+                                break;
+                            default:
+                                Grade = value || "暂无";
+                                break;
+
+                        }
+                        return "<div style='backgroud-color:red'>" + Grade + "</div>";
+                    }
+                },
+                {
+                    title: '整改去向', field: 'RectifyWay', align: 'center', valign: 'middle', sortable: true,
+                    formatter: function (value) {
+                        var way;
+                        switch (value) {
+                            case "ZG":
+                                way = "自改";
+                                break;
+                            case "SB":
+                                way = "上报";
+                                break;
+                            case "XF":
+                                way = "下发";
+                                break;
+                            default:
+                                way = value;
+                                break;
+
+                        }
+                        return way;
+                    }
+                },
+                {
+                    title: '整改期限', field: 'TimeLimit', align: 'center', valign: 'middle', sortable: true,
+                    formatter: function (value) {
+                        return $.anbao.web.util.changeDateFormat(value);
+                    }
+                },
+                { title: '整改结果', field: 'Rectify', align: 'center', valign: 'middle', sortable: true },
+                { title: '整改责任人', field: 'FeedbackEmpName', align: 'center', valign: 'middle', sortable: true },
+            //{title: '操作',field: 'id',align: 'center',
+            //    formatter:function(value,row,index){
+            //        var e = '<a href="javascript:;"><i class="fa fa-pencil"></i>编辑</a> ';
+            //        var d = '<a href="javascript:;")"><i class="fa fa-close"></i>删除</a> ';
+            //        var $el= $("<span>").append($("<a>", { href: "javascript:;" }).text("编辑").prepend($("<i>", { "class": "fa fa-pencil" })))
+            //                    .append($("<a>", { href: "javascript:;" }).text("删除").prepend($("<i>", { "class": "fa fa-close" })))
+            //        return e+d;
+            //    }
+            //}
+            ]
+        });
+
+        //查询
+        $("#btn_query").click(function () {
+            $table.bootstrapTable('refresh');
+        });
+    });
+</script>
+
+    }
+
+
+<h2>Test1</h2>
+
+<div class="container-fluid">
+    <div class="panel-body" style="padding:0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading panel-headicon"><i class="fa fa-search"></i> <h5>查询条件</h5></div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                机构名称
+                            </span>
+                            <input type="text" class="form-control" readonly>
+                            <div class="input-group-addon nopadding">
+                                <!-- <i class="fa fa-close"></i> 查询 -->
+                                <button class="btn btn-primary btn-sm"><i class="fa fa-search"></i>选择</button>
+                                <button class="btn btn-danger btn-sm"><i class="fa fa-close"></i>清除</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>起止日期
+                            </span>
+                            <input type="text" class="form-control bootstrap-daterangepicker" readonly="readonly" />
+                        </div>
+                        <!-- <div class="control-group">
+                                    <div class="controls">
+                                     <div class="input-prepend input-group">
+                                       <span class="add-on input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" readonly="readonly" id="birthday" class="form-control">
+                                     </div>
+                                    </div>
+                                  </div> -->
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                检查类别
+                            </span>
+                            <select class="form-control" id="SelCheckType">
+                                <option value="All">全部</option>
+                                <option value="ZX">专项检查</option>
+                                <option value="RC">日常检查</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                是否引用检查表
+                            </span>
+                            <!--                                <div class="form-control">
+                                                                <label class="radio-inline"><input type="radio" name="inlineRadioOptions" checked="checked" value="all" />全部</label>
+                                                                <label class="radio-inline"><input type="radio" name="inlineRadioOptions" value="y" />是</label>
+                                                                <label class="radio-inline"><input type="radio" name="inlineRadioOptions" value="n"/>否</label>
+                                                            </div>-->
+                            <select class="form-control">
+                                <option value="all">全部</option>
+                                <option value="y">是</option>
+                                <option value="n">否</option>
+                            </select>
+                            <!-- <input type="checkbox" class="form-control bootstrap-switch" data-on-text="是" data-off-text="否"> -->
+                        </div>
+                    </div>
+
+                </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-md-2 text-right pull-right">
+                        <button type="button" id="btn_query" class="btn btn-primary"><i class="fa fa-search"></i> 查询</button>
+                        <button type="button" id="btn_reset" class="btn btn-info"><i class="fa fa-refresh"></i> 重置</button>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="toolbar" class="btn-group">
+        <button id="btn_add" type="button" class="btn btn-success">
+            <span class="fa fa-plus" aria-hidden="true"></span>新增
+        </button>
+        <button id="btn_edit" type="button" class="btn btn-warning">
+            <span class="fa fa-pencil" aria-hidden="true"></span>修改
+        </button>
+        <button id="btn_delete" type="button" class="btn btn-danger">
+            <span class="fa fa-remove" aria-hidden="true"></span>删除
+        </button>
+        <button id="btn_powerset" type="button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-apple" aria-hidden="true"></span>权限设置
+        </button>
+    </div>
+
+    <table id="table"></table>
+</div>
+
+<form>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">新增</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="txt_rolename">角色名称</label>
+                        <input type="text" name="txt_rolename" class="form-control" id="txt_rolename" placeholder="角色名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_roledesc">角色描述</label>
+                        <input type="text" name="txt_roledesc" class="form-control" id="txt_roledesc" placeholder="角色描述">
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_defaulturl">默认页面</label>
+                        <input type="text" name="txt_defaulturl" class="form-control" id="txt_defaulturl" placeholder="默认页面">
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_defaulturl_Web">默认页面（Web）</label>
+                        <input type="text" name="txt_defaulturl_Web" class="form-control" id="txt_defaulturl_Web" placeholder="默认页面（Web）">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                    <button type="button" id="btn_submit" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="myModal_powerset" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel_powerset">设置角色菜单权限</h4>
+            </div>
+            <div class="modal-body">
+                <table id="tb_powerset"></table>
+                <div id="div_page"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                <button type="button" id="btn_submit_powerset" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+            </div>
+        </div>
+    </div>
+</div>
