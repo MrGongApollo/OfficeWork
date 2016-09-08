@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{D0F9866C-CF84-4913-9A9C-9A55CA3FE848}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Office.Data", "Office.Data\Office.Data.csproj", "{DAA177B8-294C-4774-9AFF-3735599E3BAD}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -19,6 +21,10 @@ Global
 		{D0F9866C-CF84-4913-9A9C-9A55CA3FE848}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0F9866C-CF84-4913-9A9C-9A55CA3FE848}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0F9866C-CF84-4913-9A9C-9A55CA3FE848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA177B8-294C-4774-9AFF-3735599E3BAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA177B8-294C-4774-9AFF-3735599E3BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA177B8-294C-4774-9AFF-3735599E3BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA177B8-294C-4774-9AFF-3735599E3BAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
