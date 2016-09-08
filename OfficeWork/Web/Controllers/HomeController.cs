@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Linq.Dynamic;
+using Office.Data;
+using System.Text;
 
 namespace Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
@@ -16,9 +20,40 @@ namespace Web.Controllers
         {
             return View();
         }
-        public ActionResult Test1()
+        public ActionResult XT_Module()
         {
             return View();
         }
+
+        #region 获取系统日志
+        [HttpGet]
+        public ActionResult GetSysLogs(int offSet = 0, int pageSize = 10, string sortType = "asc", string orderBy = "CreateTime")
+        {
+            try
+            {
+                using (wxEntities context = new wxEntities())
+                {
+                    var list = context.T_SysLogs;
+                    int cnt=list.Count();
+                    string orderExpression = string.Format("{0} {1}", orderBy, sortType);
+                    var _list = list.OrderBy(orderExpression).Skip(offSet).Take(pageSize).ToList();
+                    //string _strsql = string.Format("SELECT TOP {0} * FROM T_YH_HiddenDanger WHERE HiddenDangerId NOT IN (SELECT TOP {1} HiddenDangerId FROM T_YH_HiddenDanger) ORDER BY {2} {3}", pageSize, offSet, orderBy, sortType);
+
+                    //var _list = context.T_YH_HiddenDanger.SqlQuery(_strsql).AsNoTracking().ToList();
+
+
+                    return Json(new
+                    {
+                        total = cnt,
+                        rows = _list
+                    }, JsonRequestBehavior.AllowGet);
+                }                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        #endregion
     }
 }

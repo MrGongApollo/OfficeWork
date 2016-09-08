@@ -15,7 +15,7 @@
     <AssemblyName>Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -43,11 +43,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -137,7 +146,9 @@
     <Content Include="Content\bootstrap-daterangepicker\css\daterangepicker.css" />
     <Content Include="Content\bootstrap-daterangepicker\css\daterangepicker.min.css" />
     <Content Include="Content\bootstrap-daterangepicker\js\daterangepicker.js" />
+    <Content Include="Content\bootstrap-daterangepicker\js\daterangepicker.min.js" />
     <Content Include="Content\bootstrap-daterangepicker\js\moment.js" />
+    <Content Include="Content\bootstrap-daterangepicker\js\moment.min.js" />
     <Content Include="Content\bootstrap-select\css\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select\css\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap-select\js\bootstrap-select.js" />
@@ -439,9 +450,14 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Home.cshtml" />
-    <Content Include="Views\Home\Test1.cshtml" />
+    <Content Include="Views\Home\Test01.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Office.Data\Office.Data.csproj">
+      <Project>{daa177b8-294c-4774-9aff-3735599e3bad}</Project>
+      <Name>Office.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
@@ -464,7 +480,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10162</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:10162/</IISUrl>
+          <IISUrl>http://localhost/OfficeWork</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

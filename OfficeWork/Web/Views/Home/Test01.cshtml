@@ -3,38 +3,56 @@
     ViewBag.Title = "Test1";
 }
 
-@Styles.Render("~/Content/bootstrap-table/css/bootstrap-table.min.css")
-@Scripts.Render("~/Content/bootstrap-table/js/bootstrap-table.js")
-@Scripts.Render("~/Content/bootstrap-table/js/locale/bootstrap-table-zh-CN.min.js")
+@Styles.Render("~/bundles/bootstrap-daterangepicker/css")
+@Styles.Render("~/bundles/bootstrap-table/css")
+    
+@Scripts.Render("~/bundles/bootstrap-daterangepicker/js")
+@Scripts.Render("~/bundles/bootstrap-table/js")
 
-
-@section scripts{
     <script type="text/javascript">
         $(function () {
 
-        //$.each($('.bootstrap-daterangepicker'), function (i, el) {
-        //    $(el).daterangepicker(null, function (start, end, label) {
-        //        console.log(start.toISOString(), end.toISOString(), label);
+        $.each($('.bootstrap-daterangepicker'), function (i, el) {
+            $(el).daterangepicker(null, function (start, end, label) {
+                console.log(start.toISOString(), end.toISOString(), label);
 
-        //        $(el).attr({
-        //            "data-date-start": start,
-        //            "data-date-end": end
-        //        });
+                $(el).attr({
+                    "data-date-start": start,
+                    "data-date-end": end
+                });
 
-        //    });
-        //});
+            });
+        });
 
+
+        var _time = new Date().getTime();
+        @*$.web.get({url:"@Url.Content("~/Home/GetJsonHistoryDatas")"}, {
+            OnSuccess: function (xhr) {
+                console.log("成功！");
+                console.log(xhr);
+
+            },
+            onFailure: function (err) {
+                console.log("失败！");
+                console.log(err);
+            },
+            OnComplete:function () {
+                console.log((new Date().getTime() - _time) / 1000);
+            }
+        });
+
+            return;*@
 
         var $table = $('#table');
         $table.bootstrapTable({
-            url: "/Wcf/YHNew.svc/T_YH_HiddenDanger",
+            url: "@Url.Content("~/Home/GetJsonHistoryDatas")",
             toolbar: '#toolbar',    //工具按钮用哪个容器
             showRefresh: false, //是否显示刷新按钮
             dataType: "json",
             method: 'get',
             //ajax: false,
             //ajaxOptions: { headers: { "Accept": "application/json; odata=verbose", "DataServiceVersion": "3.0", "MaxDataServiceVersion": "3.0"} },
-            height: $(window).height() - 200, //table 高度
+            height: $(window).height() - $("#header").height()-200, //table 高度
             striped: true, //是否显示行间隔色
             singleSelect: true, //单选
             sortable: true, //是否启用排序
@@ -49,53 +67,48 @@
             clickToSelect: true, //是否启用点击选中行
             queryParamsType: "limit",
             onLoadSuccess: function (xhr) {
+                $("[data-toggle]").tooltip();
+                console.log((new Date().getTime()-_time)/1000);
             },
             onLoadError: function (status) {
 
             },
             queryParams: function (params) {
-                //                    var _filter = [
-                //                        "$skip=" + params.offset,
-                //                        "$top=" + params.limit,
-                //                        "$orderby =" + (params.sort ? params.sort + " " + params.order : "CreateTime desc")
-                //                    ];
-                //                    return _filter.join("&");
+                
                 return {
                     offSet: params.offset,
-                    //orderBy: "'"+(params.sort||"CreateTime")+"'",
-                    sortType: "'" + params.order + "'",
-                    pageSize: params.limit,
-                    pageNumber: params.pageNumber
+                    orderBy: params.sort||"CreateTime",
+                    sortType:params.order,
+                    pageSize: params.limit
                 };
 
             },
-            "sidePagination": "server", //服务端处理分页
-            "columns": [
-                { checkbox: true, align: 'center', valign: 'middle' },
-            //                    { title: '机构名称', field: 'InternalHierarchyName', align: 'center', valign: 'middle', sortable: true },
-            //                    {
-            //                        title: '状态', field: 'status', align: 'center', valign: 'middle', sortable: true,
-            //                        formatter: function (value, row, index) {
-            //                            return "<span class='" + (row.status == "有效" ? "text-success" : "text-danger") + "'>" + row.status + "</span>";
-            //                        }
-            //                    },
+            sidePagination: "server", //服务端处理分页
+            columns: [
+                { checkbox: true, align: 'center', valign: 'middle' },              
                 { title: '隐患编号', field: 'SerialNo', align: 'center', valign: 'middle', sortable: true },
                 {
-                    title: '检查机构', field: 'CheckOrgIHName', align: 'center', valign: 'middle', sortable: true, visible: false,
-                    formatter: function (value) {
-                        return "<span style=''>" + value + "</span>";
-                    }
+                    title: '检查机构', field: 'CheckOrgIHName', align: 'center', valign: 'middle', sortable: true, visible: false
+                    //,formatter: function (value) {
+                    //    return "<span style=''>" + value + "</span>";
+                    //}
                 },
                 { title: '发现人', field: 'FindEmpName', align: 'center', valign: 'middle', sortable: true },
                 {
                     title: '发现日期', field: 'FindTime', align: 'center', valign: 'middle', sortable: true,
                     formatter: function (value) {
-                        return $.anbao.web.util.changeDateFormat(value);
+                        return $.web.changeDateFormat(value);
                     }
                 },
                 { title: '隐患区域', field: 'OrgCodeIHName', align: 'center', valign: 'middle', sortable: true },
-                { title: '隐患内容', field: 'HiddenContent', align: 'center', valign: 'middle', sortable: true },
-                { title: '隐患分类', field: 'CategoryHierarchyName', align: 'center', valign: 'middle', sortable: true },
+                {
+                    title: '隐患内容', field: 'HiddenContent', align: 'center', valign: 'middle', sortable: true, width: 100,
+                    formatter: function (value) {
+                        var yh = value||"";
+                        return yh.length > 20 ? "<span title='" + yh + "' data-toggle='tooltip'>" + yh.substr(0, 10) + "...</span>" : yh;
+                    }
+                },
+                {title: '隐患分类', field: 'CategoryHierarchyName', align: 'center', valign: 'middle', sortable: true},
                 { title: '专业分类', field: 'ProCategoryHierarchyName', align: 'center', valign: 'middle', sortable: true },
                 {
                     title: '隐患等级', field: 'HiddenGrade', align: 'center', valign: 'middle', sortable: true,
@@ -144,10 +157,10 @@
                 {
                     title: '整改期限', field: 'TimeLimit', align: 'center', valign: 'middle', sortable: true,
                     formatter: function (value) {
-                        return $.anbao.web.util.changeDateFormat(value);
+                        return $.web.changeDateFormat(value);
                     }
                 },
-                { title: '整改结果', field: 'Rectify', align: 'center', valign: 'middle', sortable: true },
+                //{ title: '整改结果', field: 'Rectify', align: 'center', valign: 'middle', sortable: true },
                 { title: '整改责任人', field: 'FeedbackEmpName', align: 'center', valign: 'middle', sortable: true },
             //{title: '操作',field: 'id',align: 'center',
             //    formatter:function(value,row,index){
@@ -162,16 +175,16 @@
         });
 
         //查询
-        $("#btn_query").click(function () {
-            $table.bootstrapTable('refresh');
-        });
+            $("#btn_query").click(function () {
+               _time  = new Date().getTime();
+                $table.bootstrapTable('refresh');
+            });
+
+            $("#btn_add").click(function () {
+                $("#myModal").modal("show");
+            });
     });
 </script>
-
-    }
-
-
-<h2>Test1</h2>
 
 <div class="container-fluid">
     <div class="panel-body" style="padding:0px;">
@@ -179,8 +192,8 @@
             <div class="panel-heading panel-headicon"><i class="fa fa-search"></i> <h5>查询条件</h5></div>
 
             <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="row margin_tb_5">
+                    <div class="col-md-5">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 机构名称
@@ -195,7 +208,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-5">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar"></i>起止日期
@@ -203,12 +216,12 @@
                             <input type="text" class="form-control bootstrap-daterangepicker" readonly="readonly" />
                         </div>
                         <!-- <div class="control-group">
-                                    <div class="controls">
-                                     <div class="input-prepend input-group">
-                                       <span class="add-on input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" readonly="readonly" id="birthday" class="form-control">
-                                     </div>
-                                    </div>
-                                  </div> -->
+                        <div class="controls">
+                         <div class="input-prepend input-group">
+                           <span class="add-on input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" readonly="readonly" id="birthday" class="form-control">
+                         </div>
+                        </div>
+                      </div> -->
                     </div>
 
                     <div class="col-md-2">
@@ -223,31 +236,11 @@
                             </select>
                         </div>
                     </div>
-
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                是否引用检查表
-                            </span>
-                            <!--                                <div class="form-control">
-                                                                <label class="radio-inline"><input type="radio" name="inlineRadioOptions" checked="checked" value="all" />全部</label>
-                                                                <label class="radio-inline"><input type="radio" name="inlineRadioOptions" value="y" />是</label>
-                                                                <label class="radio-inline"><input type="radio" name="inlineRadioOptions" value="n"/>否</label>
-                                                            </div>-->
-                            <select class="form-control">
-                                <option value="all">全部</option>
-                                <option value="y">是</option>
-                                <option value="n">否</option>
-                            </select>
-                            <!-- <input type="checkbox" class="form-control bootstrap-switch" data-on-text="是" data-off-text="否"> -->
-                        </div>
-                    </div>
-
                 </div><!-- /.row -->
-                <div class="row">
+                <div class="row margin_tb_5">
                     <div class="col-md-2 text-right pull-right">
-                        <button type="button" id="btn_query" class="btn btn-primary"><i class="fa fa-search"></i> 查询</button>
-                        <button type="button" id="btn_reset" class="btn btn-info"><i class="fa fa-refresh"></i> 重置</button>
+                        <button type="button" id="btn_query" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> 查询</button>
+                        <button type="button" id="btn_reset" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i> 重置</button>
                     </div>
                 </div>
 
@@ -259,16 +252,16 @@
     </div>
 
     <div id="toolbar" class="btn-group">
-        <button id="btn_add" type="button" class="btn btn-success">
+        <button id="btn_add" type="button" class="btn btn-success btn-sm">
             <span class="fa fa-plus" aria-hidden="true"></span>新增
         </button>
-        <button id="btn_edit" type="button" class="btn btn-warning">
+        <button id="btn_edit" type="button" class="btn btn-warning btn-sm">
             <span class="fa fa-pencil" aria-hidden="true"></span>修改
         </button>
-        <button id="btn_delete" type="button" class="btn btn-danger">
+        <button id="btn_delete" type="button" class="btn btn-danger btn-sm">
             <span class="fa fa-remove" aria-hidden="true"></span>删除
         </button>
-        <button id="btn_powerset" type="button" class="btn btn-primary">
+        <button id="btn_powerset" type="button" class="btn btn-primary btn-sm">
             <span class="glyphicon glyphicon-apple" aria-hidden="true"></span>权限设置
         </button>
     </div>
