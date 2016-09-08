@@ -1,15 +1,14 @@
-﻿
-@{
-    ViewBag.Title = "Test1";
+﻿@{
+    ViewBag.Title = "测试";
 }
 
 @Styles.Render("~/bundles/bootstrap-daterangepicker/css")
 @Styles.Render("~/bundles/bootstrap-table/css")
-    
+
 @Scripts.Render("~/bundles/bootstrap-daterangepicker/js")
 @Scripts.Render("~/bundles/bootstrap-table/js")
 
-    <script type="text/javascript">
+<script type="text/javascript">
         $(function () {
 
         $.each($('.bootstrap-daterangepicker'), function (i, el) {
@@ -26,26 +25,10 @@
 
 
         var _time = new Date().getTime();
-        @*$.web.get({url:"@Url.Content("~/Home/GetJsonHistoryDatas")"}, {
-            OnSuccess: function (xhr) {
-                console.log("成功！");
-                console.log(xhr);
-
-            },
-            onFailure: function (err) {
-                console.log("失败！");
-                console.log(err);
-            },
-            OnComplete:function () {
-                console.log((new Date().getTime() - _time) / 1000);
-            }
-        });
-
-            return;*@
 
         var $table = $('#table');
         $table.bootstrapTable({
-            url: "@Url.Content("~/Home/GetSysLogs")",
+            url: "@Url.Content("~/XT/GetSysLogs")",
             toolbar: '#toolbar',    //工具按钮用哪个容器
             showRefresh: false, //是否显示刷新按钮
             dataType: "json",
@@ -74,7 +57,7 @@
 
             },
             queryParams: function (params) {
-                
+
                 return {
                     offSet: params.offset,
                     orderBy: params.sort||"CreateTime",
@@ -85,83 +68,14 @@
             },
             sidePagination: "server", //服务端处理分页
             columns: [
-                { checkbox: true, align: 'center', valign: 'middle' },              
+                { checkbox: true, align: 'center', valign: 'middle' },
                 { title: '日志内容', field: 'SysContent', align: 'left', valign: 'middle', sortable: true },
-                //{
-                //    title: '检查机构', field: 'CheckOrgIHName', align: 'center', valign: 'middle', sortable: true, visible: false
-                //    //,formatter: function (value) {
-                //    //    return "<span style=''>" + value + "</span>";
-                //    //}
-                //},
-                //{ title: '发现人', field: 'FindEmpName', align: 'center', valign: 'middle', sortable: true },
                 {
                     title: '创建日期', field: 'CreateTime', align: 'center', valign: 'middle', sortable: true,
                     formatter: function (value) {
                         return $.web.changeDateFormat(value);
                     }
                 },
-                //{ title: '隐患区域', field: 'OrgCodeIHName', align: 'center', valign: 'middle', sortable: true },
-                //{
-                //    title: '隐患内容', field: 'HiddenContent', align: 'center', valign: 'middle', sortable: true, width: 100,
-                //    formatter: function (value) {
-                //        var yh = value||"";
-                //        return yh.length > 20 ? "<span title='" + yh + "' data-toggle='tooltip'>" + yh.substr(0, 10) + "...</span>" : yh;
-                //    }
-                //},
-                //{title: '隐患分类', field: 'CategoryHierarchyName', align: 'center', valign: 'middle', sortable: true},
-                //{ title: '专业分类', field: 'ProCategoryHierarchyName', align: 'center', valign: 'middle', sortable: true },
-                //{
-                //    title: '隐患等级', field: 'HiddenGrade', align: 'center', valign: 'middle', sortable: true,
-                //    formatter: function (value) {
-                //        var Grade;
-                //        switch (value) {
-                //            case "1":
-                //                Grade = "一级";
-                //                break;
-                //            case "2":
-                //                Grade = "二级";
-                //                break;
-                //            case "3":
-                //                Grade = "三级";
-                //                break;
-                //            default:
-                //                Grade = value || "暂无";
-                //                break;
-
-                //        }
-                //        return "<div style='backgroud-color:red'>" + Grade + "</div>";
-                //    }
-                //},
-                //{
-                //    title: '整改去向', field: 'RectifyWay', align: 'center', valign: 'middle', sortable: true,
-                //    formatter: function (value) {
-                //        var way;
-                //        switch (value) {
-                //            case "ZG":
-                //                way = "自改";
-                //                break;
-                //            case "SB":
-                //                way = "上报";
-                //                break;
-                //            case "XF":
-                //                way = "下发";
-                //                break;
-                //            default:
-                //                way = value;
-                //                break;
-
-                //        }
-                //        return way;
-                //    }
-                //},
-                //{
-                //    title: '整改期限', field: 'TimeLimit', align: 'center', valign: 'middle', sortable: true,
-                //    formatter: function (value) {
-                //        return $.web.changeDateFormat(value);
-                //    }
-                //},
-                //{ title: '整改结果', field: 'Rectify', align: 'center', valign: 'middle', sortable: true },
-                //{ title: '整改责任人', field: 'FeedbackEmpName', align: 'center', valign: 'middle', sortable: true },
             //{title: '操作',field: 'id',align: 'center',
             //    formatter:function(value,row,index){
             //        var e = '<a href="javascript:;"><i class="fa fa-pencil"></i>编辑</a> ';
@@ -193,59 +107,21 @@
 
             <div class="panel-body">
                 <div class="row margin_tb_5">
-                    <div class="col-md-5">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                机构名称
-                            </span>
-                            <input type="text" class="form-control" readonly>
-                            <div class="input-group-addon nopadding">
-                                <!-- <i class="fa fa-close"></i> 查询 -->
-                                <button class="btn btn-primary btn-sm"><i class="fa fa-search"></i>选择</button>
-                                <button class="btn btn-danger btn-sm"><i class="fa fa-close"></i>清除</button>
-                            </div>
 
-                        </div>
-                    </div>
-
-                    <div class="col-md-5">
+                    <div class="col-md-8">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar"></i>起止日期
                             </span>
                             <input type="text" class="form-control bootstrap-daterangepicker" readonly="readonly" />
                         </div>
-                        <!-- <div class="control-group">
-                        <div class="controls">
-                         <div class="input-prepend input-group">
-                           <span class="add-on input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" readonly="readonly" id="birthday" class="form-control">
-                         </div>
-                        </div>
-                      </div> -->
                     </div>
 
-                    <div class="col-md-2">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                检查类别
-                            </span>
-                            <select class="form-control" id="SelCheckType">
-                                <option value="All">全部</option>
-                                <option value="ZX">专项检查</option>
-                                <option value="RC">日常检查</option>
-                            </select>
-                        </div>
-                    </div>
-                </div><!-- /.row -->
-                <div class="row margin_tb_5">
-                    <div class="col-md-2 text-right pull-right">
+                    <div class="col-md-4 text-right">
                         <button type="button" id="btn_query" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> 查询</button>
                         <button type="button" id="btn_reset" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i> 重置</button>
                     </div>
-                </div>
-
-
-
+                </div><!-- /.row -->
             </div>
 
         </div>

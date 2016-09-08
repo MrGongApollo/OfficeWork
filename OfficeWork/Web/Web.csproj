@@ -136,6 +136,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\XTController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -451,6 +452,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\Home\XT_Module.cshtml" />
+    <Content Include="Views\XT\XT_SysLogs.cshtml" />
+    <Content Include="Views\XT\XT_Menus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Office.Data\Office.Data.csproj">

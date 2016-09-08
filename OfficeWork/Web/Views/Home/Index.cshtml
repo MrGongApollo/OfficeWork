@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "办公系统";
+    ViewBag.Title = "Home";
 }
 
 @section styles{
@@ -46,7 +46,7 @@
         display: none;
     }
     #left_bar .sub-menu>li{padding:5px 0;}
-    #left_bar .sub-menu>li:before{content:'\f08d';font-family: "FontAwesome";color: #889097;margin-right: 10px;}
+    /*#left_bar .sub-menu>li:before{content:'\f08d';font-family: "FontAwesome";color: #889097;margin-right: 10px;}*/
 
     #page-main{position: absolute;left: 230px;top: 0;right: 0;bottom: 0;overflow: hidden;overflow-y:auto;}
 
@@ -81,9 +81,9 @@
     { title: "首页", sortindex: 0, icon: "fa fa-home margin_lr_5", islink: true, href: "@Url.Content("~/Home/Home")" },
     {
         title: "一级菜单0", sortindex: 0, icon: "fa fa-close margin_lr_5", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true, href: "@Url.Content("~/Home/Test1")"},
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true, href: "table.htm" },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true, href: "test.htm" }
+        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true},
+        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: false },
+        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: false}
         ]
     },
     {
@@ -143,44 +143,9 @@
         ]
     },
     {
-        title: "一级菜单9", sortindex: 0, icon: "fa fa-cubes margin_lr_5", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单10", sortindex: 0, icon: "fa fa-file-o margin_lr_5", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单11", sortindex: 0, icon: "fa fa-map-marker margin_lr_5", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单12", sortindex: 0, icon: "fa fa-map-marker margin_lr_5", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单13", sortindex: 0, icon: "fa fa-map-marker margin_lr_5", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单14", sortindex: 0, icon: "fa fa-map-marker margin_lr_5", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
+        title: "系统管理", sortindex: 0, icon: "fa fa-cogs margin_lr_5", islink: false, children: [
+        { title: "微信系统日志", sortindex: 0, icon: "fa fa-close", islink: true,href:"@Url.Content("~/XT/XT_SysLogs")"},
+        { title: "微信菜单管理", sortindex: 0, icon: "fa fa-close", islink: true,href:"@Url.Content("~/XT/XT_Menus")"},
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
         ]
     }
@@ -208,7 +173,7 @@
                     $.extend(_obj_a, { href: t.href, "data-href": t.href || "" });
                     
                     $ul.append($("<li>").append(
-                        $("<a>", _obj_a).text(t.title).click(function () {
+                        $("<a>", _obj_a).text(t.title).prepend($("<i>", { "class": item.icon })).click(function () {
                             $("#header_progress").stop(false, true).animate({ width: "80%" }, 2000, "swing");
                             //if (t.islink && t.href) {
                             //    $("#page-main").load(t.href, function () {
