@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="wxModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="wxModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="T_SysLogs">
           <Key>
             <PropertyRef Name="SysLogId" />
@@ -13,11 +13,26 @@
           <Property Name="SysContent" Type="varchar" MaxLength="500" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="T_Wx_Menus">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="MenuName" Type="varchar" MaxLength="50" />
+          <Property Name="MenuLevel" Type="varchar" MaxLength="10" />
+          <Property Name="MenuType" Type="varchar" MaxLength="10" />
+          <Property Name="MenuUrl" Type="varchar" MaxLength="300" />
+          <Property Name="ParentMenu" Type="varchar" MaxLength="32" />
+          <Property Name="SortNum" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="wxModelStoreContainer">
           <EntitySet Name="T_SysLogs" EntityType="Self.T_SysLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_Wx_Menus" EntityType="Self.T_Wx_Menus" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="wxModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -31,7 +46,23 @@
         </EntityType>
         <EntityContainer Name="wxEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="T_SysLogs" EntityType="Self.T_SysLogs" />
+          <EntitySet Name="T_Wx_Menus" EntityType="wxModel.T_Wx_Menus" />
         </EntityContainer>
+        <EntityType Name="T_Wx_Menus">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="MenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MenuLevel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MenuType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MenuUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="ParentMenu" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="SortNum" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -44,6 +75,22 @@
                 <ScalarProperty Name="SysLogId" ColumnName="SysLogId" />
                 <ScalarProperty Name="SysContent" ColumnName="SysContent" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_Wx_Menus">
+            <EntityTypeMapping TypeName="wxModel.T_Wx_Menus">
+              <MappingFragment StoreEntitySet="T_Wx_Menus">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="SortNum" ColumnName="SortNum" />
+                <ScalarProperty Name="ParentMenu" ColumnName="ParentMenu" />
+                <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+                <ScalarProperty Name="MenuType" ColumnName="MenuType" />
+                <ScalarProperty Name="MenuLevel" ColumnName="MenuLevel" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

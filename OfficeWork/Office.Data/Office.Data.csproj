@@ -65,6 +65,9 @@
     <Compile Include="T_SysLogs.cs">
       <DependentUpon>WxModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="T_Wx_Menus.cs">
+      <DependentUpon>WxModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="T_XT_OperateLog.cs">
       <DependentUpon>OfficeModel.tt</DependentUpon>
     </Compile>

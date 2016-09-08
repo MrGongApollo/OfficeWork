@@ -26,5 +26,6 @@ namespace Office.Data
         }
     
         public DbSet<T_SysLogs> T_SysLogs { get; set; }
+        public DbSet<T_Wx_Menus> T_Wx_Menus { get; set; }
     }
 }
