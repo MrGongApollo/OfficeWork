@@ -9,8 +9,7 @@
     .page-center{position: absolute;top:50px;left: 0;right: 0;bottom: 0;}
     #left_bar_box{position: absolute;top:0;left: 0;bottom: 0;width:230px;background-color: #242a30;overflow-y: hidden;
     overflow-y: auto;}
-    #left_bar_box::-webkit-scrollbar
-    {
+    #left_bar_box::-webkit-scrollbar{
         width: 2px;
         height: 16px;
         background-color: #F5F5F5;
@@ -32,6 +31,7 @@
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
         background-color: #555;
     }
+    #left_bar .menuIcon{margin-right:10px;}
     #left_bar>li{border-bottom: 1px solid #333333;}
     /*#left_bar>li>a{background-color:#2d353c;}*/
     #left_bar a{color:white;}
@@ -78,74 +78,74 @@
 @section scripts{
     <script type="text/javascript">
     var menu = [
-    { title: "首页", sortindex: 0, icon: "fa fa-home margin_lr_5", islink: true, href: "@Url.Content("~/Home/Home")" },
+    { title: "首页", sortindex: 0, icon: "fa fa-home", islink: true, href: "@Url.Content("~/Home/Home")" },
     {
-        title: "一级菜单0", sortindex: 0, icon: "fa fa-close margin_lr_5", islink: false, children: [
+        title: "一级菜单0", sortindex: 0, icon: "fa fa-close", islink: false, children: [
         { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true},
         { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: false },
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: false}
         ]
     },
     {
-        title: "一级菜单1", sortindex: 0, icon: "fa fa-envelope margin_lr_5", islink: false, children: [
+        title: "一级菜单1", sortindex: 0, icon: "fa fa-envelope", islink: false, children: [
         { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
         ]
     },
     {
-        title: "一级菜单2", sortindex: 0, icon: "fa fa-paper-plane margin_lr_5", islink: false, children: [
+        title: "一级菜单2", sortindex: 0, icon: "fa fa-paper-plane", islink: false, children: [
         { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
         ]
     },
     {
-        title: "一级菜单3", sortindex: 0, icon: "fa fa-th margin_lr_5", islink: false, children: [
+        title: "一级菜单3", sortindex: 0, icon: "fa fa-th", islink: false, children: [
         { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
         ]
     },
     {
-        title: "一级菜单4", sortindex: 0, icon: "fa fa-inbox margin_lr_5", islink: false, children: [
+        title: "一级菜单4", sortindex: 0, icon: "fa fa-inbox", islink: false, children: [
         { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
         ]
     },
     {
-        title: "一级菜单5", sortindex: 0, icon: "fa fa-star margin_lr_5", islink: false, children: [
+        title: "一级菜单5", sortindex: 0, icon: "fa fa-star", islink: false, children: [
         { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
         ]
     },
     {
-        title: "一级菜单6", sortindex: 0, icon: "fa fa-key margin_lr_5", islink: false, children: [
+        title: "一级菜单6", sortindex: 0, icon: "fa fa-key", islink: false, children: [
         { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
         ]
     },
     {
-        title: "一级菜单7", sortindex: 0, icon: "fa fa-envelope margin_lr_5", islink: false, children: [
+        title: "一级菜单7", sortindex: 0, icon: "fa fa-envelope", islink: false, children: [
         { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
         ]
     },
     {
-        title: "一级菜单8", sortindex: 0, icon: "fa fa-align-left margin_lr_5", islink: false, children: [
+        title: "一级菜单8", sortindex: 0, icon: "fa fa-align-left", islink: false, children: [
         { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
         ]
     },
     {
-        title: "系统管理", sortindex: 0, icon: "fa fa-cogs margin_lr_5", islink: false, children: [
-        { title: "微信系统日志", sortindex: 0, icon: "fa fa-close", islink: true,href:"@Url.Content("~/XT/XT_SysLogs")"},
-        { title: "微信菜单管理", sortindex: 0, icon: "fa fa-close", islink: true,href:"@Url.Content("~/XT/XT_Menus")"},
+        title: "系统管理", sortindex: 0, icon: "fa fa-cogs", islink: false, children: [
+        { title: "微信系统日志", sortindex: 0, icon: "fa fa-file-text-o", islink: true,href:"@Url.Content("~/XT/XT_SysLogs")"},
+        { title: "微信菜单管理", sortindex: 0, icon: "fa fa-th-large", islink: true,href:"@Url.Content("~/XT/XT_Menus")"},
         { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
         ]
     }
@@ -173,7 +173,7 @@
                     $.extend(_obj_a, { href: t.href, "data-href": t.href || "" });
                     
                     $ul.append($("<li>").append(
-                        $("<a>", _obj_a).text(t.title).prepend($("<i>", { "class": item.icon })).click(function () {
+                        $("<a>", _obj_a).text(t.title).prepend($("<i>", { "class": "menuIcon "+t.icon })).click(function () {
                             $("#header_progress").stop(false, true).animate({ width: "80%" }, 2000, "swing");
                             //if (t.islink && t.href) {
                             //    $("#page-main").load(t.href, function () {
@@ -185,7 +185,7 @@
                 });
 
                 $bar.append($el.append(
-                        $("<a>", { "href": "javascript:;" }).append($("<b>", { "class": "caret pull-right" })).append($("<i>", { "class": item.icon })).append($("<span>").text(item.title)).click(function (e) {
+                        $("<a>", { "href": "javascript:;" }).append($("<b>", { "class": "caret pull-right" })).append($("<i>", { "class": "menuIcon " + item.icon })).append($("<span>").text(item.title)).click(function (e) {
                             var $parent = $(this).parent();
                             if ($parent.hasClass('active')) {
                                 $parent.find(">ul").stop(true, false).slideToggle(300);
@@ -201,7 +201,7 @@
             else {
                 $.extend(_obj_a, { href: item.href, "data-href": item.href || "" });
                 var $el = $("<li>").append(
-                        $("<a>", _obj_a).append($("<i>", { "class": item.icon })).append($("<span>").text(item.title)).click(function () {
+                        $("<a>", _obj_a).append($("<i>", { "class": "menuIcon "+item.icon })).append($("<span>").text(item.title)).click(function () {
                             var $parent = $(this).parent();
                             if ($parent.hasClass('active'))
                             {
