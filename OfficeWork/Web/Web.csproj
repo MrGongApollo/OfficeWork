@@ -15,7 +15,7 @@
     <AssemblyName>Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -124,7 +124,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Filter\" />
     <Folder Include="Help\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Login\" />
     <Folder Include="Views\Main\" />
@@ -140,6 +139,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\KeyValueModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -483,7 +483,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10162</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/OfficeWork</IISUrl>
+          <IISUrl>http://localhost:10162/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
