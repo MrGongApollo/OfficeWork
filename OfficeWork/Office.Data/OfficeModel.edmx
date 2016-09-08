@@ -1,0 +1,499 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OfficeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_XT_OperateLog">
+          <Key>
+            <PropertyRef Name="OperateId" />
+          </Key>
+          <Property Name="OperateId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="RelevanceId" Type="varchar" MaxLength="32" />
+          <Property Name="Fromtable" Type="varchar" MaxLength="50" />
+          <Property Name="EmpCode" Type="varchar" MaxLength="20" />
+          <Property Name="EmpName" Type="varchar" MaxLength="50" />
+          <Property Name="OrgCode" Type="varchar" MaxLength="32" />
+          <Property Name="InternalHierarchyName" Type="varchar" MaxLength="500" />
+          <Property Name="OperateType" Type="varchar" MaxLength="20" />
+          <Property Name="DetailSrc" Type="nvarchar" MaxLength="200" />
+          <Property Name="DeviceType" Type="nvarchar" MaxLength="20" />
+          <Property Name="Remark" Type="varchar" MaxLength="2000" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="20" />
+          <Property Name="CreateByEmpName" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyBy" Type="varchar" MaxLength="20" />
+          <Property Name="ModifyByEmpName" Type="varchar" MaxLength="50" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="T_XT_User">
+          <Key>
+            <PropertyRef Name="EmpCode" />
+          </Key>
+          <Property Name="EmpCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="EmpName" Type="varchar" MaxLength="50" />
+          <Property Name="PersonType" Type="varchar" MaxLength="10" />
+          <Property Name="SpellHead" Type="varchar" MaxLength="20" />
+          <Property Name="OrgCode" Type="varchar" MaxLength="32" />
+          <Property Name="Gender" Type="varchar" MaxLength="2" />
+          <Property Name="IdcardTypeId" Type="varchar" MaxLength="20" />
+          <Property Name="IdcardType" Type="varchar" MaxLength="100" />
+          <Property Name="IdcardNo" Type="varchar" MaxLength="100" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="JoinCompanyDate" Type="datetime" />
+          <Property Name="PhoneOffice" Type="varchar" MaxLength="100" />
+          <Property Name="PhoneHome" Type="varchar" MaxLength="100" />
+          <Property Name="PhoneMobile" Type="varchar" MaxLength="11" />
+          <Property Name="IfActivation" Type="varchar" MaxLength="2" />
+          <Property Name="EmailInside" Type="varchar" MaxLength="100" />
+          <Property Name="EmailOutside" Type="varchar" MaxLength="100" />
+          <Property Name="PostCode" Type="varchar" MaxLength="20" />
+          <Property Name="PostName" Type="varchar" MaxLength="100" />
+          <Property Name="PostLevelId" Type="varchar" MaxLength="20" />
+          <Property Name="PostLevel" Type="varchar" MaxLength="100" />
+          <Property Name="PostTrueLevel" Type="varchar" MaxLength="50" />
+          <Property Name="WorkStatusId" Type="varchar" MaxLength="20" />
+          <Property Name="WorkStatus" Type="varchar" MaxLength="50" />
+          <Property Name="SortCode" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="LoginPermissions" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="LoginPassword" Type="varchar" MaxLength="32" />
+          <Property Name="LastLoginTime" Type="datetime" />
+          <Property Name="TheLoginTime" Type="datetime" />
+          <Property Name="TotalLoginCount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="IfSyn" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="YGDBLevel" Type="varchar" MaxLength="32" />
+          <Property Name="QAGLevel" Type="varchar" MaxLength="32" />
+          <Property Name="Party" Type="varchar" MaxLength="100" />
+          <Property Name="EducationId" Type="varchar" MaxLength="32" />
+          <Property Name="IfSmoke" Type="varchar" MaxLength="2" />
+          <Property Name="Hobby" Type="varchar" MaxLength="100" />
+          <Property Name="History" Type="varchar" MaxLength="100" />
+          <Property Name="Remark" Type="varchar" MaxLength="500" />
+          <Property Name="ExpandOne" Type="varchar" MaxLength="500" />
+          <Property Name="ExpandTwo" Type="varchar" MaxLength="500" />
+          <Property Name="ExpandThree" Type="varchar" MaxLength="500" />
+          <Property Name="ExpandFour" Type="varchar" MaxLength="500" />
+          <Property Name="ExpandFive" Type="varchar" MaxLength="500" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifyTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_YH_HiddenDanger">
+          <Key>
+            <PropertyRef Name="HiddenDangerId" />
+          </Key>
+          <Property Name="HiddenDangerId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="SerialNo" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrgCode" Type="varchar" MaxLength="32" />
+          <Property Name="ResponsOrg" Type="varchar" MaxLength="32" />
+          <Property Name="FindEmpCode" Type="varchar" MaxLength="50" />
+          <Property Name="FindEmpName" Type="varchar" MaxLength="50" />
+          <Property Name="FindTime" Type="datetime" />
+          <Property Name="CheckOrgCode" Type="varchar" MaxLength="32" />
+          <Property Name="NoSafetyActionId" Type="varchar" MaxLength="32" />
+          <Property Name="NoSafetyStatusId" Type="varchar" MaxLength="32" />
+          <Property Name="IsManageDefect" Type="varchar" MaxLength="32" />
+          <Property Name="CategoryId" Type="varchar" MaxLength="32" />
+          <Property Name="CategoryHierarchyName" Type="varchar" MaxLength="1000" />
+          <Property Name="ProCategory" Type="varchar" MaxLength="32" />
+          <Property Name="ProCategoryHierarchyName" Type="varchar" MaxLength="1000" />
+          <Property Name="HiddenContent" Type="varchar" MaxLength="2000" />
+          <Property Name="IfNeedAnalysis" Type="varchar" MaxLength="2" />
+          <Property Name="RectifyWay" Type="varchar" MaxLength="2" />
+          <Property Name="Measure" Type="varchar" MaxLength="2000" />
+          <Property Name="TimeLimit" Type="datetime" />
+          <Property Name="MakePerson" Type="varchar" MaxLength="50" />
+          <Property Name="MakeTime" Type="datetime" />
+          <Property Name="RectifySituation" Type="varchar" MaxLength="2000" />
+          <Property Name="UnRectifyReason" Type="varchar" MaxLength="2000" />
+          <Property Name="UnAcceptReason" Type="varchar" MaxLength="2000" />
+          <Property Name="FeedbackEmpCode" Type="varchar" MaxLength="20" />
+          <Property Name="FeedbackEmpName" Type="varchar" MaxLength="20" />
+          <Property Name="CompleteTime" Type="datetime" />
+          <Property Name="RectifyTimes" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CurrentEmpCode" Type="varchar" MaxLength="20" />
+          <Property Name="CurrentEmpName" Type="varchar" MaxLength="20" />
+          <Property Name="CurrentStatus" Type="varchar" MaxLength="2" />
+          <Property Name="LastStatus" Type="varchar" MaxLength="2" />
+          <Property Name="PenaltyPoint" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PointRemark" Type="varchar" MaxLength="100" />
+          <Property Name="IfActivity" Type="varchar" MaxLength="2" />
+          <Property Name="FromTable" Type="varchar" MaxLength="100" />
+          <Property Name="RelevanceId" Type="varchar" MaxLength="50" />
+          <Property Name="HiddenGradefactor" Type="varchar" MaxLength="1" />
+          <Property Name="HiddenGrade" Type="varchar" MaxLength="1" />
+          <Property Name="MaybeResult" Type="varchar" MaxLength="10" />
+          <Property Name="HiddenParts" Type="varchar" MaxLength="100" />
+          <Property Name="CorrectiveAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="DelayedDateBefore" Type="datetime" />
+          <Property Name="DelayedDate" Type="datetime" />
+          <Property Name="DelayedTempMeasure" Type="varchar" MaxLength="2000" />
+          <Property Name="DelayedReasons" Type="varchar" MaxLength="2000" />
+          <Property Name="DelayedStatus" Type="varchar" MaxLength="2" />
+          <Property Name="IfSafetyHazard" Type="varchar" MaxLength="2" />
+          <Property Name="NotAcceptStatus" Type="varchar" MaxLength="2" />
+          <Property Name="NotAcceptReason" Type="varchar" MaxLength="100" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyBy" Type="varchar" MaxLength="50" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="SpecialHiddenId" Type="varchar" MaxLength="100" />
+          <Property Name="SpecialHiddenName" Type="varchar" MaxLength="500" />
+          <Property Name="IsHaveWXHazard" Type="bit" />
+          <Property Name="IsPerfectWXHazard" Type="bit" />
+          <Property Name="ReasonRemark" Type="varchar" MaxLength="100" />
+          <Property Name="CreateByEmpCode" Type="varchar" MaxLength="20" />
+          <Property Name="CreateByEmpName" Type="varchar" MaxLength="50" />
+          <Property Name="ModifyByEmpCode" Type="varchar" MaxLength="20" />
+          <Property Name="ModifyByEmpName" Type="varchar" MaxLength="50" />
+          <Property Name="OrgCodeIHName" Type="varchar" MaxLength="500" />
+          <Property Name="CheckOrgIHName" Type="varchar" MaxLength="500" />
+          <Property Name="ResponsOrgIHName" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityContainer Name="OfficeModelStoreContainer">
+          <EntitySet Name="T_XT_OperateLog" EntityType="Self.T_XT_OperateLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_XT_User" EntityType="Self.T_XT_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_YH_HiddenDanger" EntityType="Self.T_YH_HiddenDanger" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OfficeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_XT_OperateLog">
+          <Key>
+            <PropertyRef Name="OperateId" />
+          </Key>
+          <Property Name="OperateId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RelevanceId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Fromtable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmpCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrgCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="InternalHierarchyName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OperateType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DetailSrc" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DeviceType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateByEmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyBy" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyByEmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="T_XT_User">
+          <Key>
+            <PropertyRef Name="EmpCode" />
+          </Key>
+          <Property Name="EmpCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PersonType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SpellHead" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OrgCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IdcardTypeId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdcardType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdcardNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="JoinCompanyDate" Type="DateTime" Precision="3" />
+          <Property Name="PhoneOffice" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneHome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneMobile" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="IfActivation" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="EmailInside" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmailOutside" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PostName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostLevelId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PostLevel" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostTrueLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkStatusId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="WorkStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SortCode" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="LoginPermissions" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LoginPassword" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="LastLoginTime" Type="DateTime" Precision="3" />
+          <Property Name="TheLoginTime" Type="DateTime" Precision="3" />
+          <Property Name="TotalLoginCount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IfSyn" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="YGDBLevel" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="QAGLevel" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Party" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EducationId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IfSmoke" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Hobby" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="History" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpandOne" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpandTwo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpandThree" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpandFour" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExpandFive" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="T_YH_HiddenDanger">
+          <Key>
+            <PropertyRef Name="HiddenDangerId" />
+          </Key>
+          <Property Name="HiddenDangerId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SerialNo" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrgCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="ResponsOrg" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="FindEmpCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FindEmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FindTime" Type="DateTime" Precision="3" />
+          <Property Name="CheckOrgCode" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="NoSafetyActionId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="NoSafetyStatusId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IsManageDefect" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryHierarchyName" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ProCategory" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="ProCategoryHierarchyName" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="HiddenContent" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="IfNeedAnalysis" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="RectifyWay" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Measure" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="TimeLimit" Type="DateTime" Precision="3" />
+          <Property Name="MakePerson" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MakeTime" Type="DateTime" Precision="3" />
+          <Property Name="RectifySituation" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="UnRectifyReason" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="UnAcceptReason" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="FeedbackEmpCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FeedbackEmpName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CompleteTime" Type="DateTime" Precision="3" />
+          <Property Name="RectifyTimes" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CurrentEmpCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentEmpName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="LastStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="PenaltyPoint" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PointRemark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IfActivity" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="FromTable" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RelevanceId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HiddenGradefactor" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="HiddenGrade" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="MaybeResult" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="HiddenParts" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CorrectiveAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DelayedDateBefore" Type="DateTime" Precision="3" />
+          <Property Name="DelayedDate" Type="DateTime" Precision="3" />
+          <Property Name="DelayedTempMeasure" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="DelayedReasons" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="DelayedStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IfSafetyHazard" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="NotAcceptStatus" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="NotAcceptReason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="SpecialHiddenId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SpecialHiddenName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsHaveWXHazard" Type="Boolean" />
+          <Property Name="IsPerfectWXHazard" Type="Boolean" />
+          <Property Name="ReasonRemark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateByEmpCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreateByEmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyByEmpCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyByEmpName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrgCodeIHName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CheckOrgIHName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ResponsOrgIHName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="OfficeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_XT_OperateLog" EntityType="Self.T_XT_OperateLog" />
+          <EntitySet Name="T_XT_User" EntityType="Self.T_XT_User" />
+          <EntitySet Name="T_YH_HiddenDanger" EntityType="Self.T_YH_HiddenDanger" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OfficeModelStoreContainer" CdmEntityContainer="OfficeEntities">
+          <EntitySetMapping Name="T_XT_OperateLog">
+            <EntityTypeMapping TypeName="OfficeModel.T_XT_OperateLog">
+              <MappingFragment StoreEntitySet="T_XT_OperateLog">
+                <ScalarProperty Name="OperateId" ColumnName="OperateId" />
+                <ScalarProperty Name="RelevanceId" ColumnName="RelevanceId" />
+                <ScalarProperty Name="Fromtable" ColumnName="Fromtable" />
+                <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="OrgCode" ColumnName="OrgCode" />
+                <ScalarProperty Name="InternalHierarchyName" ColumnName="InternalHierarchyName" />
+                <ScalarProperty Name="OperateType" ColumnName="OperateType" />
+                <ScalarProperty Name="DetailSrc" ColumnName="DetailSrc" />
+                <ScalarProperty Name="DeviceType" ColumnName="DeviceType" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateByEmpName" ColumnName="CreateByEmpName" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyByEmpName" ColumnName="ModifyByEmpName" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_XT_User">
+            <EntityTypeMapping TypeName="OfficeModel.T_XT_User">
+              <MappingFragment StoreEntitySet="T_XT_User">
+                <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="PersonType" ColumnName="PersonType" />
+                <ScalarProperty Name="SpellHead" ColumnName="SpellHead" />
+                <ScalarProperty Name="OrgCode" ColumnName="OrgCode" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="IdcardTypeId" ColumnName="IdcardTypeId" />
+                <ScalarProperty Name="IdcardType" ColumnName="IdcardType" />
+                <ScalarProperty Name="IdcardNo" ColumnName="IdcardNo" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="JoinCompanyDate" ColumnName="JoinCompanyDate" />
+                <ScalarProperty Name="PhoneOffice" ColumnName="PhoneOffice" />
+                <ScalarProperty Name="PhoneHome" ColumnName="PhoneHome" />
+                <ScalarProperty Name="PhoneMobile" ColumnName="PhoneMobile" />
+                <ScalarProperty Name="IfActivation" ColumnName="IfActivation" />
+                <ScalarProperty Name="EmailInside" ColumnName="EmailInside" />
+                <ScalarProperty Name="EmailOutside" ColumnName="EmailOutside" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="PostName" ColumnName="PostName" />
+                <ScalarProperty Name="PostLevelId" ColumnName="PostLevelId" />
+                <ScalarProperty Name="PostLevel" ColumnName="PostLevel" />
+                <ScalarProperty Name="PostTrueLevel" ColumnName="PostTrueLevel" />
+                <ScalarProperty Name="WorkStatusId" ColumnName="WorkStatusId" />
+                <ScalarProperty Name="WorkStatus" ColumnName="WorkStatus" />
+                <ScalarProperty Name="SortCode" ColumnName="SortCode" />
+                <ScalarProperty Name="LoginPermissions" ColumnName="LoginPermissions" />
+                <ScalarProperty Name="LoginPassword" ColumnName="LoginPassword" />
+                <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
+                <ScalarProperty Name="TheLoginTime" ColumnName="TheLoginTime" />
+                <ScalarProperty Name="TotalLoginCount" ColumnName="TotalLoginCount" />
+                <ScalarProperty Name="IfSyn" ColumnName="IfSyn" />
+                <ScalarProperty Name="YGDBLevel" ColumnName="YGDBLevel" />
+                <ScalarProperty Name="QAGLevel" ColumnName="QAGLevel" />
+                <ScalarProperty Name="Party" ColumnName="Party" />
+                <ScalarProperty Name="EducationId" ColumnName="EducationId" />
+                <ScalarProperty Name="IfSmoke" ColumnName="IfSmoke" />
+                <ScalarProperty Name="Hobby" ColumnName="Hobby" />
+                <ScalarProperty Name="History" ColumnName="History" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ExpandOne" ColumnName="ExpandOne" />
+                <ScalarProperty Name="ExpandTwo" ColumnName="ExpandTwo" />
+                <ScalarProperty Name="ExpandThree" ColumnName="ExpandThree" />
+                <ScalarProperty Name="ExpandFour" ColumnName="ExpandFour" />
+                <ScalarProperty Name="ExpandFive" ColumnName="ExpandFive" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_YH_HiddenDanger">
+            <EntityTypeMapping TypeName="OfficeModel.T_YH_HiddenDanger">
+              <MappingFragment StoreEntitySet="T_YH_HiddenDanger">
+                <ScalarProperty Name="HiddenDangerId" ColumnName="HiddenDangerId" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="OrgCode" ColumnName="OrgCode" />
+                <ScalarProperty Name="ResponsOrg" ColumnName="ResponsOrg" />
+                <ScalarProperty Name="FindEmpCode" ColumnName="FindEmpCode" />
+                <ScalarProperty Name="FindEmpName" ColumnName="FindEmpName" />
+                <ScalarProperty Name="FindTime" ColumnName="FindTime" />
+                <ScalarProperty Name="CheckOrgCode" ColumnName="CheckOrgCode" />
+                <ScalarProperty Name="NoSafetyActionId" ColumnName="NoSafetyActionId" />
+                <ScalarProperty Name="NoSafetyStatusId" ColumnName="NoSafetyStatusId" />
+                <ScalarProperty Name="IsManageDefect" ColumnName="IsManageDefect" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryHierarchyName" ColumnName="CategoryHierarchyName" />
+                <ScalarProperty Name="ProCategory" ColumnName="ProCategory" />
+                <ScalarProperty Name="ProCategoryHierarchyName" ColumnName="ProCategoryHierarchyName" />
+                <ScalarProperty Name="HiddenContent" ColumnName="HiddenContent" />
+                <ScalarProperty Name="IfNeedAnalysis" ColumnName="IfNeedAnalysis" />
+                <ScalarProperty Name="RectifyWay" ColumnName="RectifyWay" />
+                <ScalarProperty Name="Measure" ColumnName="Measure" />
+                <ScalarProperty Name="TimeLimit" ColumnName="TimeLimit" />
+                <ScalarProperty Name="MakePerson" ColumnName="MakePerson" />
+                <ScalarProperty Name="MakeTime" ColumnName="MakeTime" />
+                <ScalarProperty Name="RectifySituation" ColumnName="RectifySituation" />
+                <ScalarProperty Name="UnRectifyReason" ColumnName="UnRectifyReason" />
+                <ScalarProperty Name="UnAcceptReason" ColumnName="UnAcceptReason" />
+                <ScalarProperty Name="FeedbackEmpCode" ColumnName="FeedbackEmpCode" />
+                <ScalarProperty Name="FeedbackEmpName" ColumnName="FeedbackEmpName" />
+                <ScalarProperty Name="CompleteTime" ColumnName="CompleteTime" />
+                <ScalarProperty Name="RectifyTimes" ColumnName="RectifyTimes" />
+                <ScalarProperty Name="CurrentEmpCode" ColumnName="CurrentEmpCode" />
+                <ScalarProperty Name="CurrentEmpName" ColumnName="CurrentEmpName" />
+                <ScalarProperty Name="CurrentStatus" ColumnName="CurrentStatus" />
+                <ScalarProperty Name="LastStatus" ColumnName="LastStatus" />
+                <ScalarProperty Name="PenaltyPoint" ColumnName="PenaltyPoint" />
+                <ScalarProperty Name="PointRemark" ColumnName="PointRemark" />
+                <ScalarProperty Name="IfActivity" ColumnName="IfActivity" />
+                <ScalarProperty Name="FromTable" ColumnName="FromTable" />
+                <ScalarProperty Name="RelevanceId" ColumnName="RelevanceId" />
+                <ScalarProperty Name="HiddenGradefactor" ColumnName="HiddenGradefactor" />
+                <ScalarProperty Name="HiddenGrade" ColumnName="HiddenGrade" />
+                <ScalarProperty Name="MaybeResult" ColumnName="MaybeResult" />
+                <ScalarProperty Name="HiddenParts" ColumnName="HiddenParts" />
+                <ScalarProperty Name="CorrectiveAmount" ColumnName="CorrectiveAmount" />
+                <ScalarProperty Name="DelayedDateBefore" ColumnName="DelayedDateBefore" />
+                <ScalarProperty Name="DelayedDate" ColumnName="DelayedDate" />
+                <ScalarProperty Name="DelayedTempMeasure" ColumnName="DelayedTempMeasure" />
+                <ScalarProperty Name="DelayedReasons" ColumnName="DelayedReasons" />
+                <ScalarProperty Name="DelayedStatus" ColumnName="DelayedStatus" />
+                <ScalarProperty Name="IfSafetyHazard" ColumnName="IfSafetyHazard" />
+                <ScalarProperty Name="NotAcceptStatus" ColumnName="NotAcceptStatus" />
+                <ScalarProperty Name="NotAcceptReason" ColumnName="NotAcceptReason" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="SpecialHiddenId" ColumnName="SpecialHiddenId" />
+                <ScalarProperty Name="SpecialHiddenName" ColumnName="SpecialHiddenName" />
+                <ScalarProperty Name="IsHaveWXHazard" ColumnName="IsHaveWXHazard" />
+                <ScalarProperty Name="IsPerfectWXHazard" ColumnName="IsPerfectWXHazard" />
+                <ScalarProperty Name="ReasonRemark" ColumnName="ReasonRemark" />
+                <ScalarProperty Name="CreateByEmpCode" ColumnName="CreateByEmpCode" />
+                <ScalarProperty Name="CreateByEmpName" ColumnName="CreateByEmpName" />
+                <ScalarProperty Name="ModifyByEmpCode" ColumnName="ModifyByEmpCode" />
+                <ScalarProperty Name="ModifyByEmpName" ColumnName="ModifyByEmpName" />
+                <ScalarProperty Name="OrgCodeIHName" ColumnName="OrgCodeIHName" />
+                <ScalarProperty Name="CheckOrgIHName" ColumnName="CheckOrgIHName" />
+                <ScalarProperty Name="ResponsOrgIHName" ColumnName="ResponsOrgIHName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
