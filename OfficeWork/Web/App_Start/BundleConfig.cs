@@ -34,6 +34,15 @@ namespace Web
 
                         ));
 
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-Validator/js").Include(
+            "~/Content/bootstrap-Validator/js/bootstrapValidator.min.js"
+            ));
+
+
+            bundles.Add(new StyleBundle("~/bundles/bootstrap-Validator/css").Include(
+                        "~/Content/bootstrap-Validator/css/bootstrapValidator.min.css"
+                        ));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-table/js").Include(
                         "~/Content/bootstrap-table/js/bootstrap-table.min.js",
                         "~/Content/bootstrap-table/js/locale/bootstrap-table-zh-CN.min.js",
