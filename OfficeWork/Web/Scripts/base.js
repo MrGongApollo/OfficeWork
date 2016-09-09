@@ -198,7 +198,7 @@
             var $toast=$('#wxtoast');
             $toast.css("left", (ScreenWidth - $toast.width()) / 2);
             $("#wxtoast").show().fadeOut(_config.duration, function () {
-                    //$("#wxtoast").remove();
+                    $("#wxtoast").remove();
                 });
             
         },
