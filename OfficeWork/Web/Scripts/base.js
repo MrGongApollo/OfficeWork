@@ -176,6 +176,32 @@
                 $.web.RemoveLoading();
             }, _time || 1000);
         },
+        toast: function (_option) {
+            switch (typeof _option) {
+                case "string":
+                    _option = { text: _option };
+                    break;
+                case "object":
+                    break;
+                default:
+                    console.warn("toast参数不合法，必须是object或者string类型");
+                    return;
+            }
+            var _config = {
+                text: "",
+                duration:3000
+            };
+            var ScreenWidth = $(window).width();
+            $.extend(_config,_option);
+            $('#wxtoast').length == 0 ? "" : $('#wxtoast').stop().unbind().remove();
+            $('body').append($('<div>', { id: 'wxtoast' }).hide().text(_config.text));
+            var $toast=$('#wxtoast');
+            $toast.css("left", (ScreenWidth - $toast.width()) / 2);
+            $("#wxtoast").show().fadeOut(_config.duration, function () {
+                    //$("#wxtoast").remove();
+                });
+            
+        },
         get: function (_option, _funobj) {
             var ajaxconfig =
                 {
