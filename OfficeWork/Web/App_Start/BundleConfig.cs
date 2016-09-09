@@ -16,12 +16,21 @@ namespace Web
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            #region common
             bundles.Add(new ScriptBundle("~/bundles/commonjs").Include(
-                      "~/Content/bootstrap/js/bootstrap.min.js",
-                      "~/Scripts/jquery.unobtrusive-ajax.min.js",
-                      "~/Scripts/base.min.js",
-                      "~/Scripts/respond.js"));
+          "~/Content/bootstrap/js/bootstrap.min.js",
+          "~/Scripts/jquery.unobtrusive-ajax.min.js",
+          "~/Scripts/base.min.js",
+          "~/Scripts/respond.js"));
 
+            bundles.Add(new StyleBundle("~/bundles/commoncss").Include(
+          "~/Content/bootstrap/css/bootstrap.min.css",
+          "~/Content/font-awesome/css/font-awesome.min.css",
+          "~/Content/font-awesome/css/font-awesome-ie7.min.css",
+          "~/Content/common.min.css"));
+            #endregion
+
+            #region bootstrap-daterangepicker
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-daterangepicker/js").Include(
                         "~/Content/bootstrap-daterangepicker/js/moment.js",
                         "~/Content/bootstrap-daterangepicker/js/daterangepicker.js"
@@ -33,16 +42,18 @@ namespace Web
                         "~/Content/bootstrap-daterangepicker/css/daterangepicker-bs3.css"
 
                         ));
+            #endregion
 
+            #region bootstrap-Validator
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-Validator/js").Include(
             "~/Content/bootstrap-Validator/js/bootstrapValidator.min.js"
             ));
-
-
             bundles.Add(new StyleBundle("~/bundles/bootstrap-Validator/css").Include(
                         "~/Content/bootstrap-Validator/css/bootstrapValidator.min.css"
                         ));
+            #endregion
 
+            #region bootstrap-table
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-table/js").Include(
                         "~/Content/bootstrap-table/js/bootstrap-table.min.js",
                         "~/Content/bootstrap-table/js/locale/bootstrap-table-zh-CN.min.js",
@@ -52,12 +63,25 @@ namespace Web
 
             bundles.Add(new StyleBundle("~/bundles/bootstrap-table/css").Include(
                         "~/Content/bootstrap-table/css/bootstrap-table.min.css"));
+            #endregion
 
-            bundles.Add(new StyleBundle("~/bundles/commoncss").Include(
-                      "~/Content/bootstrap/css/bootstrap.min.css",
-                      "~/Content/font-awesome/css/font-awesome.min.css",
-                      "~/Content/font-awesome/css/font-awesome-ie7.min.css",
-                      "~/Content/common.min.css"));
+            #region CodeSeven-toastr
+            bundles.Add(new ScriptBundle("~/bundles/CodeSeven-toastr/js").Include(
+            "~/Content/CodeSeven-toastr/js/toastr.min.js"
+            ));
+            bundles.Add(new StyleBundle("~/bundles/CodeSeven-toastr/css").Include(
+                        "~/Content/CodeSeven-toastr/css/toastr.min.css"
+                        ));
+            #endregion
+
+            #region sweetalert
+            bundles.Add(new ScriptBundle("~/bundles/sweetalert/js").Include(
+            "~/Content/sweetalert/js/sweetalert.min.js"
+            ));
+            bundles.Add(new StyleBundle("~/bundles/sweetalert/css").Include(
+                        "~/Content/sweetalert/css/sweetalert.css"
+                        ));
+            #endregion
         }
     }
 }
