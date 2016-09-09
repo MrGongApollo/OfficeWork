@@ -5,6 +5,9 @@
 @Styles.Render("~/bundles/bootstrap-table/css")
 @Scripts.Render("~/bundles/bootstrap-table/js")
 
+@*@Scripts.Render("~/bundles/bootstrap-Validator/js")
+@Styles.Render("~/bundles/bootstrap-Validator/css")*@
+
 <style>
     .modal-body > .row {
         margin-top: 1em;
@@ -14,6 +17,9 @@
 
 <script type="text/javascript">
     $(function () {
+        var cur_operatype;//当前操作类型
+
+
         var $table = $('#table');
         $table.bootstrapTable({
             url: "@Url.Content("~/XT/GetMenus")",
@@ -55,8 +61,9 @@
             sidePagination: "server", //服务端处理分页
             columns: [
                 { checkbox: true, align: 'center', valign: 'middle' },
-                { title: '菜单名称', field: 'MenuName', align: 'left', valign: 'middle', sortable: true },
-                { title: '菜单等级', field: 'MenuLevel', align: 'left', valign: 'middle', sortable: true,
+                { title: '菜单名称', field: 'MenuName', align: 'center', valign: 'middle', sortable: true },
+                {
+                    title: '菜单等级', field: 'MenuLevel', align: 'center', valign: 'middle', sortable: true,
                 formatter: function (value) {
                     var _txt = value;
                     switch (value) {
@@ -70,11 +77,11 @@
                     return _txt;
                 }
                 },
-                { title: '菜单类型', field: 'MenuType', align: 'left', valign: 'middle', sortable: true },
+                { title: '菜单类型', field: 'MenuType', align: 'center', valign: 'middle', sortable: true },
                 {
                     title: '创建日期', field: 'CreateTime', align: 'center', valign: 'middle', sortable: true,
                     formatter: function (value) {
-                        return $.web.changeDateFormat(value);
+                        return $.web.changetoLocaleTimeString(value);
                     }
                 },
             //{title: '操作',field: 'id',align: 'center',
@@ -89,17 +96,126 @@
             ]
         });
 
-        //查询
+            //查询
             $("#btn_query").click(function () {
                 $table.bootstrapTable('refresh');
             });
 
             $("#btn_add").click(function () {
+                cur_operatype = "add";
+                debugger
+                $.web.get({ url: "@Url.Content("~/XT/GetWxbuttons")"}, {
+                    OnSuccess: function (xhr)
+                    {
+                        if (xhr)
+                        {
+                            $("#txt_menu_parent>option:gt(1)").remove();
+                            $.each(xhr, function (_i,_t) {
+                                $("#txt_menu_parent").append($("<option>", { "value": _t.key }).text(_t.name));
+                            });
+                        }
+                    }
+                });
                 $("#Menus_Modal").modal("show");
             });
+
+            //$("#txt_menu_level")
+
+            $("#txt_menu_level").change(function () {
+                var $this = $(this);
+                switch ($("#txt_menu_level option:selected").val()) {
+                    case "button":
+                        $("#txt_menu_parent>option[value='root']").show().attr("selected", true).parent().attr("disabled", true);
+                        break;
+                    case "sub_button":
+                        $("#txt_menu_parent>option[value='root']").hide().siblings().eq(0).attr("selected", true).parent().attr("disabled",false);
+                        break;
+                    default:
+                        $("#txt_menu_parent").attr("disabled", true).find(">option:eq(0)").attr("selected", true);
+                        break;
+
+                }
+            });
+
+            $("#btn_submit").click(function () {
+                var _valid = true, _validList = [
+                    { selector: "#txt_menu_code", type: "text", errmsg: "菜单代码不可为空" },
+                    { selector: "#txt_menu_name", type: "text", errmsg: "菜单名称不可为空" },
+                    { selector: "#txt_menu_level", type: "select", errmsg: "菜单等级未选择" },
+                    { selector: "#txt_menu_parent", type: "select", errmsg: "上级菜单未选择" },
+                    { selector: "#txt_menu_type", type: "select", errmsg: "菜单类型未选择" }
+                ], errret = {
+                    cnt: 0,
+                    msg:[]
+                };
+                
+                $.each(_validList, function (_i, _t) {
+                    switch (_t.type) {
+                        case "text":
+                            if (!$(_t.selector).val()) { errret.cnt++; errret.msg.push(_t.errmsg); }
+                            break;
+                        case "select":
+                            var selectedval= $(">option:selected", $(_t.selector)).val();
+                            if (!selectedval||selectedval=="blank") { errret.cnt++; errret.msg.push(_t.errmsg); }
+                            break;
+                    }
+                });
+                if ($("#txt_menu_type>option:selected").val() == "view" && !$("#txt_menu_url").val()) {
+                    errret.cnt++; errret.msg.push("地址不可为空");
+                }
+
+                if ($("#txt_menu_sort").val() && !(/^[0-9]\d*$/.test($("#txt_menu_sort").val()))) {
+                    errret.cnt++; errret.msg.push("排序号必须为数字");
+                }
+
+                if (errret.cnt > 0) {
+                    $.web.toast({ text: errret.msg.join(","), duration: 5000 });
+                    return;
+                }
+
+                var _menu = {
+                    MenuId: $("#txt_menu_code").val(),
+                    MenuName: $("#txt_menu_name").val(),
+                    ParentMenu: $("#txt_menu_parent>option:selected").val(),
+                    MenuType: $("#txt_menu_type>option:selected").val(),
+                    MenuLevel: $("#txt_menu_level>option:selected").val(),
+                    SortNum: $("#txt_menu_sort").val() || 0,
+                    MenuUrl: $("#txt_menu_url").val()
+                };
+
+                var _obj = {
+                    menu: _menu,
+                    operatype: cur_operatype
+                };
+
+                SaveMenus(_obj);
+                
+            });
+
     });
+
+
+    function SaveMenus(data) {
+        $.web.post("@Url.Content("~/XT/WxMenusSave")", data, function (xhr) {
+            $.web.toast(xhr.Value);
+            switch (xhr.Key) {
+                case "error":
+                    break;
+                case "success":
+                    $("#btn_reset").trigger("click");
+                    $("#Menus_Modal").modal("hide");
+                    $('#table').bootstrapTable('refresh');
+                    break;
+
+            }
+        });
+    }
 </script>
 
+<ol class="breadcrumb bg-default nomargin">
+    <li><a href="javascript:;">系统管理</a></li>
+    <li class="active">微信菜单管理</li>
+</ol>
 <div class="container-fluid">
     <div class="panel-body" style="padding:0px;">
         <div class="panel panel-default">
@@ -107,17 +223,39 @@
 
             <div class="panel-body">
                 <div class="row margin_tb_5">
-
-                    <div class="col-md-8">
+                    <div class="col-md-3">
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>起止日期
+                                <i class="fa fa-calendar"></i>菜单名称
                             </span>
-                            <input type="text" class="form-control bootstrap-daterangepicker" readonly="readonly" />
+                            <input type="text" class="form-control" placeholder="请输入菜单名称" />
                         </div>
                     </div>
-
-                    <div class="col-md-4 text-right">
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>菜单等级
+                            </span>
+                            <select class="form-control" id="query_menu_level">
+                                <option value="all">全部</option>
+                                <option value="button">一级菜单</option>
+                                <option value="sub_button">二级菜单</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar"></i>菜单类型
+                            </span>
+                            <select class="form-control" id="query_menu_type">
+                                <option value="all">全部</option>
+                                <option value="click">click</option>
+                                <option value="view">view</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-right">
                         <button type="button" id="btn_query" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> 查询</button>
                         <button type="button" id="btn_reset" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i> 重置</button>
                     </div>
@@ -144,84 +282,90 @@
 
     <table id="table"></table>
 </div>
-
-<div class="modal fade" id="Menus_Modal" tabindex="-1" role="dialog" aria-labelledby="Menus_ModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="Menus_ModalLabel">微信菜单维护</h4>
-            </div>
-            <div class="modal-body">
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <label for="txt_defaulturl" class="input-group-addon">菜单代码</label>
-                            <input type="text" name="txt_defaulturl" class="form-control" id="txt_defaulturl" placeholder="菜单代码">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">菜单等级</span>
-                            <select class="form-control">
-                                <option>--菜单等级--</option>
-                                <option>一级菜单</option>
-                                <option>二级菜单</option>
-                            </select>
-                        </div>
-                    </div>
+<form id="Menus_form">
+    <div class="modal fade" id="Menus_Modal" tabindex="-1" role="dialog" aria-labelledby="Menus_ModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="Menus_ModalLabel">微信菜单维护</h4>
                 </div>
+                <div class="modal-body">
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">菜单类型</span>
-                            <select class="form-control">
-                                <option>--菜单类型--</option>
-                                <option>click</option>
-                                <option>view</option>
-                            </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <label for="txt_menu_code" class="input-group-addon">菜单代码</label>
+                                <input type="text" name="menu_code" class="form-control" id="txt_menu_code" placeholder="菜单代码">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <label for="txt_menu_name" class="input-group-addon">菜单名称</label>
+                                <input type="text" name="menu_name" class="form-control" id="txt_menu_name" placeholder="菜单名称">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">上级菜单</span>
-                            <select class="form-control">
-                                <option>--请选择上级菜单--</option>
-                                <option>一级菜单</option>
-                                <option>二级菜单</option>
-                            </select>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">菜单等级</span>
+                                <select class="form-control" id="txt_menu_level" name="menu_level">
+                                    <option value="blank">--菜单等级--</option>
+                                    <option value="button">一级菜单</option>
+                                    <option value="sub_button">二级菜单</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">上级菜单</span>
+                                <select class="form-control" id="txt_menu_parent" name="menu_parent" disabled>
+                                    <option value="blank">--请选择上级菜单--</option>
+                                    <option class="hide" value="root">root</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">菜单类型</span>
+                                <select class="form-control" id="txt_menu_type" name="menu_type">
+                                    <option value="blank">--菜单类型--</option>
+                                    <option value="click">click</option>
+                                    <option value="view">view</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <label for="txt_menu_name" class="input-group-addon">排序号</label>
+                                <input type="text" class="form-control" id="txt_menu_sort" placeholder="排序号">
+                            </div>
                         </div>
                     </div>
-                    
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <label for="txt_menu_url" class="input-group-addon">详细地址</label>
+                                <input type="text" class="form-control" name="menu_url" id="txt_menu_url" placeholder="请填写url地址">
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <label for="txt_defaulturl" class="input-group-addon">默认页面</label>
-                            <input type="text" name="txt_defaulturl" class="form-control" id="txt_defaulturl" placeholder="默认页面">
-                        </div>
-                    </div>
-
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                    <button type="button" id="btn_submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+                    <button type="reset" class="btn btn-info hide" id="btn_reset">重置</button>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <label for="txt_defaulturl_Web" class="input-group-addon">详细地址</label>
-                            <input type="text" name="txt_defaulturl_Web" class="form-control" id="txt_defaulturl_Web" placeholder="请填写url地址">
-                        </div>
-                    </div>
-                </div>
-                
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
-                <button type="button" id="btn_submit" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
             </div>
         </div>
     </div>
-</div>
+</form>

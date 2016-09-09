@@ -60,6 +60,33 @@ namespace Web.Controllers
         #endregion
 
         #region 微信自定义菜单
+        #region 发布菜单
+        
+        #endregion
+
+        #region 获取一级菜单
+        [HttpGet]
+        public JsonResult GetWxbuttons()
+        {
+            try
+            {
+                using (wxEntities context=new wxEntities())
+                {
+                  var list= context.T_Wx_Menus.Where(m => m.MenuLevel == "button" && m.IsDeleted == false)
+                        .Select(p=>new
+                        {
+                           name=p.MenuName,
+                           key=p.MenuId
+                        }).ToList();
+                  return Json(list,JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
 
         #region 获取菜单信息
         [HttpGet]
@@ -88,7 +115,7 @@ namespace Web.Controllers
         }
         #endregion
 
-        #region 新增菜单
+        #region 保存菜单
         /// <summary>
         /// 新增菜单
         /// </summary>
@@ -96,9 +123,10 @@ namespace Web.Controllers
         /// <param name="operatype">操作类型</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddWXMenus(T_Wx_Menus menu, string operatype)
+        public ActionResult WxMenusSave(T_Wx_Menus menu, string operatype)
         {
-            KeyValueModel ret = new KeyValueModel { Key = "error", Value = "操作失败" };
+            KeyValueModel ret = new KeyValueModel { Key = "error", Value = "操作失败！" },
+                          successret = new KeyValueModel { Key = "success", Value = "操作成功！" };
             try
             {
                 using (wxEntities context = new wxEntities())
@@ -108,7 +136,7 @@ namespace Web.Controllers
                         case "add":
                             if (context.T_Wx_Menus.Any(m => m.MenuId == menu.MenuId))
                             {
-                                ret.Value = "已经存在MenuId";
+                                ret.Value = "已经存在菜单代码为" + menu.MenuId+"的菜单";
                             }
                             else
                             {
@@ -129,7 +157,7 @@ namespace Web.Controllers
                                                 menu.CreateTime = DateTime.Now;
                                                 context.T_Wx_Menus.Add(menu);
                                                 context.SaveChanges();
-                                                ret.Key = "success";
+                                                ret = successret;
                                             }
 
                                         }
@@ -146,7 +174,7 @@ namespace Web.Controllers
                                                 menu.CreateTime = DateTime.Now;
                                                 context.T_Wx_Menus.Add(menu);
                                                 context.SaveChanges();
-                                                ret.Key = "success";
+                                                ret = successret;
                                             }
                                         }
                                         #endregion
@@ -157,6 +185,15 @@ namespace Web.Controllers
                             break;
                         case "modify":
 
+                            break;
+                        case "delete":
+                            T_Wx_Menus _menu = context.T_Wx_Menus.Where(m => m.MenuId == menu.MenuId).FirstOrDefault();
+                            if (_menu != null) {
+                                _menu.IsDeleted = false;
+                                _menu.ModifyTime = DateTime.Now;
+                                context.SaveChanges();
+                                ret = successret;
+                            }
                             break;
                     }
                 }
