@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "测试";
+    ViewBag.Title = "系统日志";
 }
 
 @Styles.Render("~/bundles/bootstrap-daterangepicker/css")
@@ -33,6 +33,7 @@
             showRefresh: false, //是否显示刷新按钮
             dataType: "json",
             method: 'get',
+            sortOrder: 'desc',
             //ajax: false,
             //ajaxOptions: { headers: { "Accept": "application/json; odata=verbose", "DataServiceVersion": "3.0", "MaxDataServiceVersion": "3.0"} },
             height: $(window).height() - $("#header").height()-200, //table 高度

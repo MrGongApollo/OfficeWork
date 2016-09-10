@@ -69,8 +69,6 @@
             }
             if (cellval.indexOf("/Date") == 0) {
                 d = new Date();
-                //localOffset = d.getTimezoneOffset() * 60000;
-                //var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10) + localOffset);
                 var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
                 var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
                 var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
@@ -88,8 +86,6 @@
                 return "";
             }
             d = new Date();
-            //localOffset = d.getTimezoneOffset() * 60000;
-            //var date = new Date(parseInt(cellval.substr(6)) + localOffset);
             var date = new Date(parseInt(cellval.substr(6)));
             var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
             var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
@@ -322,5 +318,4 @@
             }
         }
     }
-
 })(jQuery)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Office.Data;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -38,15 +39,7 @@ namespace Web.Controllers
         }
         #endregion
 
-        //protected OfficeEntities CurrentContext = new OfficeEntities();
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing && CurrentContext == null)
-        //    {
-        //        this.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+        protected KeyValueModel success_r = new KeyValueModel { Key="success",Value="操作成功！"},
+                error_r = new KeyValueModel { Key = "error", Value = "操作失败！" };        
 	}
 }

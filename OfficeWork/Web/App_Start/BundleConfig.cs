@@ -26,7 +26,6 @@ namespace Web
             bundles.Add(new StyleBundle("~/bundles/commoncss").Include(
           "~/Content/bootstrap/css/bootstrap.min.css",
           "~/Content/font-awesome/css/font-awesome.min.css",
-          "~/Content/font-awesome/css/font-awesome-ie7.min.css",
           "~/Content/common.min.css"));
             #endregion
 
@@ -79,9 +78,10 @@ namespace Web
             "~/Content/sweetalert/js/sweetalert.min.js"
             ));
             bundles.Add(new StyleBundle("~/bundles/sweetalert/css").Include(
-                        "~/Content/sweetalert/css/sweetalert.css"
+                        "~/Content/sweetalert/css/sweetalert.min.css"
                         ));
             #endregion
+
         }
     }
 }
