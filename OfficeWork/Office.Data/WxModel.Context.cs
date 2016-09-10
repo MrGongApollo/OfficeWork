@@ -12,11 +12,11 @@ namespace Office.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
-    public partial class wxEntities : DbContext
+
+    public partial class WechatEntities : DbContext
     {
-        public wxEntities()
-            : base("name=wxEntities")
+        public WechatEntities()
+            : base("name=WechatEntities")
         {
         }
     
