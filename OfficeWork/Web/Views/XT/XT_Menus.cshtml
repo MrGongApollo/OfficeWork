@@ -5,6 +5,9 @@
 @Styles.Render("~/bundles/bootstrap-table/css")
 @Scripts.Render("~/bundles/bootstrap-table/js")
 
+@Styles.Render("~/bundles/sweetalert/css")
+@Scripts.Render("~/bundles/sweetalert/js")
+
 @*@Scripts.Render("~/bundles/bootstrap-Validator/js")
 @Styles.Render("~/bundles/bootstrap-Validator/css")*@
 
@@ -19,6 +22,7 @@
     $(function () {
         var cur_operatype;//当前操作类型
 
+        LoadMenus();
 
         var $table = $('#table');
         $table.bootstrapTable({
@@ -29,7 +33,7 @@
             method: 'get',
             //ajax: false,
             //ajaxOptions: { headers: { "Accept": "application/json; odata=verbose", "DataServiceVersion": "3.0", "MaxDataServiceVersion": "3.0"} },
-            height: $(window).height() - $("#header").height()-200, //table 高度
+            height: $(window).height() - $("#header").height() - 200, //table 高度
             striped: true, //是否显示行间隔色
             singleSelect: true, //单选
             sortable: true, //是否启用排序
@@ -51,9 +55,10 @@
             },
             queryParams: function (params) {
                 return {
+                   // filter: { MenuName: $("#query_menu_name").val(), MenuLevel: $("#query_menu_level :selected").val(), MenuType: $("#query_menu_type :selected").val() },
                     offSet: params.offset,
-                    orderBy: params.sort||"CreateTime",
-                    sortType:params.order,
+                    orderBy: params.sort || "CreateTime",
+                    sortType: params.order,
                     pageSize: params.limit
                 };
 
@@ -61,21 +66,42 @@
             sidePagination: "server", //服务端处理分页
             columns: [
                 { checkbox: true, align: 'center', valign: 'middle' },
+                { title: '行号',width:20,align: 'center', valign: 'middle',
+                    formatter: function (value, row, index) {
+                        return index+1;
+                    }
+                },
                 { title: '菜单名称', field: 'MenuName', align: 'center', valign: 'middle', sortable: true },
                 {
                     title: '菜单等级', field: 'MenuLevel', align: 'center', valign: 'middle', sortable: true,
-                formatter: function (value) {
-                    var _txt = value;
-                    switch (value) {
-                        case "button":
-                            _txt = "一级菜单";
-                            break;
-                        case "sub_button":
-                            _txt = "二级菜单";
-                            break;
+                    formatter: function (value) {
+                        var _txt = value;
+                        switch (value) {
+                            case "button":
+                                _txt = "一级菜单";
+                                break;
+                            case "sub_button":
+                                _txt = "二级菜单";
+                                break;
+                        }
+                        return _txt;
                     }
-                    return _txt;
-                }
+                },
+                { title: '上级菜单名称', field: 'ParentMenuName', align: 'center', valign: 'middle', sortable: true },
+                {
+                    title: '菜单等级', field: 'MenuLevel', align: 'center', valign: 'middle', sortable: true,
+                    formatter: function (value) {
+                        var _txt = value;
+                        switch (value) {
+                            case "button":
+                                _txt = "一级菜单";
+                                break;
+                            case "sub_button":
+                                _txt = "二级菜单";
+                                break;
+                        }
+                        return _txt;
+                    }
                 },
                 { title: '菜单类型', field: 'MenuType', align: 'center', valign: 'middle', sortable: true },
                 {
@@ -96,117 +122,192 @@
             ]
         });
 
-            //查询
-            $("#btn_query").click(function () {
-                $table.bootstrapTable('refresh');
-            });
+        //查询
+        $("#btn_query").click(function () {
+            $table.bootstrapTable('refresh');
+        });
+        //新增
+        $("#btn_Add").click(function () {
+             $("#btn_reset").trigger("click");
+             cur_operatype = "add";
+            $("#txt_menu_level").attr("disabled", false);
+            $("#Menus_Modal").modal("show");
+        });
 
-            $("#btn_add").click(function () {
-                cur_operatype = "add";
+        //修改
+        $("#btn_Edit").click(function () {
+            
+            var rowData = $table.bootstrapTable('getSelections');
+            if (rowData.length == 0) { $.web.toast("请选择一行数据！"); return; }
+            cur_operatype = "modify";
+            rowData = rowData[0];
+
+            $("#txt_menu_code").val(rowData.MenuId).attr("disabled",true);
+            $("#txt_menu_name").val(rowData.MenuName);
+            $("#txt_menu_parent").val(rowData.ParentMenu);
+            $("#txt_menu_type").val(rowData.MenuType);
+            $("#txt_menu_level").val(rowData.MenuLevel);
+            $("#txt_menu_sort").val(rowData.SortNum);
+            $("#txt_menu_url").val(rowData.MenuUrl);
+
+            $("#txt_menu_parent,#txt_menu_parent,#txt_menu_level").attr("disabled", true);
+
+            $("#Menus_Modal").modal("show");
+        });
+        //删除
+        $("#btn_Delete").click(function () {
+            var rowData = $table.bootstrapTable('getSelections');
+            if (rowData.length == 0) { $.web.toast("请选择一行数据！"); return; }
+            rowData = rowData[0];
+            swal({
+                title: "确认删除所选菜单数据?",
+                text: "菜单一旦删除无法恢复!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "是",
+                cancelButtonText: "否",
+                closeOnConfirm: false
+            }, function ()
+            {
+                SaveMenus({
+                        menu: { MenuId: rowData.MenuId },
+                        operatype: "delete"
+                    });
+            }); 
+        });
+
+        $("#txt_menu_level").change(function () {
+            debugger
+            var $this = $(this);
+            switch ($("#txt_menu_level option:selected").val()) {
+                case "button":
+                    $("#txt_menu_parent").val("root").removeClass("hide").attr("disabled", true);
+                    break;
+                case "sub_button":
+                    $("#txt_menu_parent").val("blank").attr("disabled", false).find("[value='root']").addClass("hide");
+                    break;
+                default:                   
+                    $("#txt_menu_parent").val("blank").attr("disabled", true);
+                    break;
+
+            }
+        });
+        //保存
+        $("#btn_submit").click(function () {
+            var _valid = true, _validList = [
+                { selector: "#txt_menu_code", type: "text", errmsg: "菜单代码不可为空" },
+                { selector: "#txt_menu_name", type: "text", errmsg: "菜单名称不可为空" },
+                { selector: "#txt_menu_level", type: "select", errmsg: "菜单等级未选择" },
+                { selector: "#txt_menu_parent", type: "select", errmsg: "上级菜单未选择" },
+                { selector: "#txt_menu_type", type: "select", errmsg: "菜单类型未选择" }
+            ], errret = {
+                cnt: 0,
+                msg: []
+            };
+
+            $.each(_validList, function (_i, _t) {
+                switch (_t.type) {
+                    case "text":
+                        if (!$(_t.selector).val()) { errret.cnt++; errret.msg.push(_t.errmsg); }
+                        break;
+                    case "select":
+                        var selectedval = $(">option:selected", $(_t.selector)).val();
+                        if (!selectedval || selectedval == "blank") { errret.cnt++; errret.msg.push(_t.errmsg); }
+                        break;
+                }
+            });
+            if ($("#txt_menu_type>option:selected").val() == "view" && !$("#txt_menu_url").val()) {
+                errret.cnt++; errret.msg.push("地址不可为空");
+            }
+
+            if ($("#txt_menu_sort").val() && !(/^[0-9]\d*$/.test($("#txt_menu_sort").val()))) {
+                errret.cnt++; errret.msg.push("排序号必须为数字");
+            }
+
+            if (errret.cnt > 0) {
+                $.web.toast({ text: errret.msg.join(","), duration: 5000 });
+                return;
+            }
+
+            var _menu = {
+                MenuId: $("#txt_menu_code").val(),
+                MenuName: $("#txt_menu_name").val(),
+                ParentMenu: $("#txt_menu_parent>option:selected").val(),
+                ParentMenuName: $("#txt_menu_parent>option:selected").text(),
+                MenuType: $("#txt_menu_type>option:selected").val(),
+                MenuLevel: $("#txt_menu_level>option:selected").val(),
+                SortNum: $("#txt_menu_sort").val() || 0,
+                MenuUrl: $("#txt_menu_url").val()
+            };
+
+            var _obj = {
+                menu: _menu,
+                operatype: cur_operatype
+            };
+
+            SaveMenus(_obj);
+
+        });
+
+        //发布
+        $("#btn_Publish").click(function () {
+            swal({
+                title: "确认发布微信菜单?",
+                text: "发布后，微信公众平台将同步此菜单!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "是",
+                cancelButtonText: "否",
+                closeOnConfirm: false
+            }, function () {
                 debugger
-                $.web.get({ url: "@Url.Content("~/XT/GetWxbuttons")"}, {
-                    OnSuccess: function (xhr)
-                    {
-                        if (xhr)
-                        {
-                            $("#txt_menu_parent>option:gt(1)").remove();
-                            $.each(xhr, function (_i,_t) {
-                                $("#txt_menu_parent").append($("<option>", { "value": _t.key }).text(_t.name));
-                            });
+                $.web.get({ url: "@Url.Content("~/XT/PublishWXMenus")" }, {
+                    OnSuccess: function(xhr) {
+                        switch (xhr.Key) {
+                            case "success":
+                            case "error":
+                                swal("操作" + (xhr.Key == "success" ? "成功" : "失败"), xhr.Value, xhr.Key);
+                                break;
                         }
                     }
                 });
-                $("#Menus_Modal").modal("show");
             });
-
-            //$("#txt_menu_level")
-
-            $("#txt_menu_level").change(function () {
-                var $this = $(this);
-                switch ($("#txt_menu_level option:selected").val()) {
-                    case "button":
-                        $("#txt_menu_parent>option[value='root']").show().attr("selected", true).parent().attr("disabled", true);
-                        break;
-                    case "sub_button":
-                        $("#txt_menu_parent>option[value='root']").hide().siblings().eq(0).attr("selected", true).parent().attr("disabled",false);
-                        break;
-                    default:
-                        $("#txt_menu_parent").attr("disabled", true).find(">option:eq(0)").attr("selected", true);
-                        break;
-
-                }
-            });
-
-            $("#btn_submit").click(function () {
-                var _valid = true, _validList = [
-                    { selector: "#txt_menu_code", type: "text", errmsg: "菜单代码不可为空" },
-                    { selector: "#txt_menu_name", type: "text", errmsg: "菜单名称不可为空" },
-                    { selector: "#txt_menu_level", type: "select", errmsg: "菜单等级未选择" },
-                    { selector: "#txt_menu_parent", type: "select", errmsg: "上级菜单未选择" },
-                    { selector: "#txt_menu_type", type: "select", errmsg: "菜单类型未选择" }
-                ], errret = {
-                    cnt: 0,
-                    msg:[]
-                };
-                
-                $.each(_validList, function (_i, _t) {
-                    switch (_t.type) {
-                        case "text":
-                            if (!$(_t.selector).val()) { errret.cnt++; errret.msg.push(_t.errmsg); }
-                            break;
-                        case "select":
-                            var selectedval= $(">option:selected", $(_t.selector)).val();
-                            if (!selectedval||selectedval=="blank") { errret.cnt++; errret.msg.push(_t.errmsg); }
-                            break;
-                    }
-                });
-                if ($("#txt_menu_type>option:selected").val() == "view" && !$("#txt_menu_url").val()) {
-                    errret.cnt++; errret.msg.push("地址不可为空");
-                }
-
-                if ($("#txt_menu_sort").val() && !(/^[0-9]\d*$/.test($("#txt_menu_sort").val()))) {
-                    errret.cnt++; errret.msg.push("排序号必须为数字");
-                }
-
-                if (errret.cnt > 0) {
-                    $.web.toast({ text: errret.msg.join(","), duration: 5000 });
-                    return;
-                }
-
-                var _menu = {
-                    MenuId: $("#txt_menu_code").val(),
-                    MenuName: $("#txt_menu_name").val(),
-                    ParentMenu: $("#txt_menu_parent>option:selected").val(),
-                    MenuType: $("#txt_menu_type>option:selected").val(),
-                    MenuLevel: $("#txt_menu_level>option:selected").val(),
-                    SortNum: $("#txt_menu_sort").val() || 0,
-                    MenuUrl: $("#txt_menu_url").val()
-                };
-
-                var _obj = {
-                    menu: _menu,
-                    operatype: cur_operatype
-                };
-
-                SaveMenus(_obj);
-                
-            });
-
+        });
     });
 
 
     function SaveMenus(data) {
         $.web.post("@Url.Content("~/XT/WxMenusSave")", data, function (xhr) {
-            $.web.toast(xhr.Value);
-            switch (xhr.Key) {
-                case "error":
-                    break;
+            switch (xhr.Key)
+            {
                 case "success":
-                    $("#btn_reset").trigger("click");
-                    $("#Menus_Modal").modal("hide");
+                    swal("操作成功", "你的操作已经成功执行", "success");
+                    if (data.operatype != "delete")
+                    {
+                        $("#btn_reset").trigger("click");
+                        $("#Menus_Modal").modal("hide");
+                    }
                     $('#table').bootstrapTable('refresh');
                     break;
+                default:
+                    swal("操作失败", xhr.Value, "error");
+                    break;
 
+            }
+        });
+    }
+
+    function LoadMenus() {
+        $.web.get({ url: "@Url.Content("~/XT/GetWxbuttons")", async: true }, {
+            OnSuccess: function (xhr) {
+                if (xhr) {
+                    $("#txt_menu_parent>option:gt(1)").remove();
+                    $.each(xhr, function (_i, _t) {
+                        $("#txt_menu_parent").append($("<option>", { "value": _t.key}).text(_t.name));
+                    });
+                }
             }
         });
     }
@@ -228,7 +329,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar"></i>菜单名称
                             </span>
-                            <input type="text" class="form-control" placeholder="请输入菜单名称" />
+                            <input type="text" class="form-control" id="query_menu_name" placeholder="请输入菜单名称" />
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -266,17 +367,17 @@
     </div>
 
     <div id="toolbar" class="btn-group">
-        <button id="btn_add" type="button" class="btn btn-success btn-sm">
-            <span class="fa fa-plus" aria-hidden="true"></span>新增
+        <button id="btn_Add" type="button" class="btn btn-success">
+            <span class="fa fa-plus" aria-hidden="true"></span> 新增
         </button>
-        <button id="btn_edit" type="button" class="btn btn-warning btn-sm">
-            <span class="fa fa-pencil" aria-hidden="true"></span>修改
+        <button id="btn_Edit" type="button" class="btn btn-warning">
+            <span class="fa fa-pencil" aria-hidden="true"></span> 修改
         </button>
-        <button id="btn_delete" type="button" class="btn btn-danger btn-sm">
-            <span class="fa fa-remove" aria-hidden="true"></span>删除
+        <button id="btn_Delete" type="button" class="btn btn-danger">
+            <span class="fa fa-remove" aria-hidden="true"></span> 删除
         </button>
-        <button id="btn_powerset" type="button" class="btn btn-primary btn-sm">
-            <span class="glyphicon glyphicon-apple" aria-hidden="true"></span>发布
+        <button id="btn_Publish" type="button" class="btn btn-primary">
+            <span class="fa fa-legal" aria-hidden="true"></span> 发布
         </button>
     </div>
 
