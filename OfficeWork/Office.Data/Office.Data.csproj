@@ -62,7 +62,13 @@
       <DependentUpon>OfficeModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="T_FontIcons.cs">
+      <DependentUpon>WechatModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="T_SysLogs.cs">
+      <DependentUpon>WechatModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T_SysMenus.cs">
       <DependentUpon>WechatModel.tt</DependentUpon>
     </Compile>
     <Compile Include="T_Wx_Menus.cs">

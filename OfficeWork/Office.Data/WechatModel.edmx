@@ -4,7 +4,18 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WechatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WechatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_FontIcons">
+          <Key>
+            <PropertyRef Name="FontId" />
+          </Key>
+          <Property Name="FontId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="FontClass" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FontFamily" Type="varchar" MaxLength="50" />
+          <Property Name="SortNum" Type="int" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="T_SysLogs">
           <Key>
             <PropertyRef Name="SysLogId" />
@@ -12,6 +23,23 @@
           <Property Name="SysLogId" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="SysContent" Type="varchar" MaxLength="500" />
           <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="T_SysMenus">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="MenuName" Type="varchar" MaxLength="50" />
+          <Property Name="MenuIcon" Type="varchar" MaxLength="50" />
+          <Property Name="ParentId" Type="varchar" MaxLength="32" />
+          <Property Name="SortNum" Type="int" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="MenuLevel" Type="int" />
+          <Property Name="MenuUrl" Type="varchar" MaxLength="100" />
+          <Property Name="Islink" Type="bit" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="ParentMenuName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="T_Wx_Menus">
           <Key>
@@ -23,17 +51,19 @@
           <Property Name="MenuType" Type="varchar" MaxLength="10" />
           <Property Name="MenuUrl" Type="varchar" MaxLength="300" />
           <Property Name="ParentMenu" Type="varchar" MaxLength="32" />
+          <Property Name="ParentMenuName" Type="varchar" MaxLength="50" />
           <Property Name="SortNum" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityContainer Name="WechatModelStoreContainer">
+          <EntitySet Name="T_FontIcons" EntityType="Self.T_FontIcons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_SysLogs" EntityType="Self.T_SysLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_SysMenus" EntityType="Self.T_SysMenus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Wx_Menus" EntityType="Self.T_Wx_Menus" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WechatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -59,11 +89,42 @@
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="ParentMenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="WechatEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="T_SysLogs" EntityType="Self.T_SysLogs" />
           <EntitySet Name="T_Wx_Menus" EntityType="Self.T_Wx_Menus" />
+          <EntitySet Name="T_FontIcons" EntityType="WechatModel.T_FontIcons" />
+          <EntitySet Name="T_SysMenus" EntityType="WechatModel.T_SysMenus" />
         </EntityContainer>
+        <EntityType Name="T_FontIcons">
+          <Key>
+            <PropertyRef Name="FontId" />
+          </Key>
+          <Property Name="FontId" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="FontClass" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FontFamily" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SortNum" Type="Int32" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_SysMenus">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="MenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MenuIcon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ParentId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="SortNum" Type="Int32" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="MenuLevel" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="MenuUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Islink" Type="Boolean" Nullable="false" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="ParentMenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -82,6 +143,7 @@
           <EntitySetMapping Name="T_Wx_Menus">
             <EntityTypeMapping TypeName="WechatModel.T_Wx_Menus">
               <MappingFragment StoreEntitySet="T_Wx_Menus">
+                <ScalarProperty Name="ParentMenuName" ColumnName="ParentMenuName" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
                 <ScalarProperty Name="MenuName" ColumnName="MenuName" />
                 <ScalarProperty Name="MenuLevel" ColumnName="MenuLevel" />
@@ -92,6 +154,36 @@
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_FontIcons">
+            <EntityTypeMapping TypeName="WechatModel.T_FontIcons">
+              <MappingFragment StoreEntitySet="T_FontIcons">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="SortNum" ColumnName="SortNum" />
+                <ScalarProperty Name="FontFamily" ColumnName="FontFamily" />
+                <ScalarProperty Name="FontClass" ColumnName="FontClass" />
+                <ScalarProperty Name="FontId" ColumnName="FontId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_SysMenus">
+            <EntityTypeMapping TypeName="WechatModel.T_SysMenus">
+              <MappingFragment StoreEntitySet="T_SysMenus">
+                <ScalarProperty Name="ParentMenuName" ColumnName="ParentMenuName" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="Islink" ColumnName="Islink" />
+                <ScalarProperty Name="MenuUrl" ColumnName="MenuUrl" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="MenuLevel" ColumnName="MenuLevel" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="SortNum" ColumnName="SortNum" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="MenuIcon" ColumnName="MenuIcon" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

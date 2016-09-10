@@ -12,18 +12,19 @@ namespace Office.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class T_Wx_Menus
+    public partial class T_SysMenus
     {
         public string MenuId { get; set; }
         public string MenuName { get; set; }
-        public string MenuLevel { get; set; }
-        public string MenuType { get; set; }
-        public string MenuUrl { get; set; }
-        public string ParentMenu { get; set; }
-        public Nullable<int> SortNum { get; set; }
+        public string MenuIcon { get; set; }
+        public string ParentId { get; set; }
+        public int SortNum { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public Nullable<System.DateTime> ModifyTime { get; set; }
+        public Nullable<int> MenuLevel { get; set; }
         public bool IsDeleted { get; set; }
+        public string MenuUrl { get; set; }
+        public bool Islink { get; set; }
+        public Nullable<System.DateTime> ModifyTime { get; set; }
         public string ParentMenuName { get; set; }
     }
 }
