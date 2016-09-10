@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+
+<style type="text/css">
+
+#fonts_container>.row>.col-md-3>i{width: 2em;text-align: center;}
+#fonts_container>.row>.col-md-3{white-space: nowrap;text-overflow: ellipsis;padding: 0 1em;overflow: hidden;position: relative;height: 3rem;line-height: 3rem;font-size: 1.5rem;cursor:pointer;}
+#fonts_container>.row>.col-md-3:not(.active):hover,
+#fonts_container>.row>.col-md-3.active
+{background-color: #00acac;color: white;border-radius: 10px;}
+</style>
+<script type="text/javascript">
+    $(function () {
+        $.web.get({ url: "@Url.Content("~/XT/GetIcons")", async: true },
+            {
+            OnSuccess: function (xhr)
+            {
+                switch (xhr.Key)
+                {
+                    case "success":
+                        var Icons = $.parseJSON(xhr.Value);
+                        $.each(Icons, function (_i, _t) {
+                            $("#fonts_container>.row").append($("<div>", { "class": "col-md-3", "data-icons": _t.FontClass }).text(_t.FontClass).prepend($("<i>", { "class": _t.FontClass })).click(function () {
+                                if ($(this).hasClass("active")) { return;}
+                                $(this).addClass("active").siblings(".active").removeClass("active");
+                                return false;
+                            }));
+                        });
+                        break;
+                    default:
+                        $.web.toast(xhr.Value);
+                        break;
+
+                }
+            }
+        })
+    });
+
+</script>
+
+<div class="container-fluid" id="fonts_container">
+    <div class="row"></div>
+</div>
