@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "XT_Menus";
+    ViewBag.Title = "微信菜单";
 }
 
 @Styles.Render("~/bundles/bootstrap-table/css")
@@ -128,7 +128,7 @@
         });
         //新增
         $("#btn_Add").click(function () {
-             $("#btn_reset").trigger("click");
+            $("#Menus_form")[0].reset();
              cur_operatype = "add";
             $("#txt_menu_level").attr("disabled", false);
             $("#Menus_Modal").modal("show");
@@ -286,7 +286,7 @@
                     swal("操作成功", "你的操作已经成功执行", "success");
                     if (data.operatype != "delete")
                     {
-                        $("#btn_reset").trigger("click");
+                        $("#Menus_form")[0].reset();
                         $("#Menus_Modal").modal("hide");
                     }
                     $('#table').bootstrapTable('refresh');
@@ -397,13 +397,13 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <label for="txt_menu_code" class="input-group-addon">菜单代码</label>
-                                <input type="text" name="menu_code" class="form-control" id="txt_menu_code" placeholder="菜单代码">
+                                <input type="text" name="menu_code" class="form-control" id="txt_menu_code" placeholder="菜单代码" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="input-group">
                                 <label for="txt_menu_name" class="input-group-addon">菜单名称</label>
-                                <input type="text" name="menu_name" class="form-control" id="txt_menu_name" placeholder="菜单名称">
+                                <input type="text" name="menu_name" class="form-control" id="txt_menu_name" placeholder="菜单名称" autocomplete="off">
                             </div>
                         </div>
                     </div>
@@ -462,9 +462,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-remove" aria-hidden="true"></span>关闭</button>
                     <button type="button" id="btn_submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
-                    <button type="reset" class="btn btn-info hide" id="btn_reset">重置</button>
                 </div>
             </div>
         </div>
