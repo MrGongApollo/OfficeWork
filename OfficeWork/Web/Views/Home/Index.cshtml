@@ -7,83 +7,7 @@
 }
 
 @section scripts{
-    <script type="text/javascript">
-    var menu = [
-    { title: "首页", sortindex: 0, icon: "fa fa-home", islink: true, href: "@Url.Content("~/Home/Home")" },
-    {
-        title: "一级菜单0", sortindex: 0, icon: "fa fa-close", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true},
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: false },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: false}
-        ]
-    },
-    {
-        title: "一级菜单1", sortindex: 0, icon: "fa fa-envelope", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单2", sortindex: 0, icon: "fa fa-paper-plane", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单3", sortindex: 0, icon: "fa fa-th", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单4", sortindex: 0, icon: "fa fa-inbox", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单5", sortindex: 0, icon: "fa fa-star", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单6", sortindex: 0, icon: "fa fa-key", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单7", sortindex: 0, icon: "fa fa-envelope", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "一级菜单8", sortindex: 0, icon: "fa fa-align-left", islink: false, children: [
-        { title: "二级菜单1", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单2", sortindex: 0, icon: "fa fa-close", islink: true },
-        { title: "二级菜单3", sortindex: 0, icon: "fa fa-close", islink: true }
-        ]
-    },
-    {
-        title: "系统管理", sortindex: 0, icon: "fa fa-cogs", islink: false, children: [
-        { title: "微信系统日志", sortindex: 0, icon: "fa fa-file-text-o", islink: true,href:"@Url.Content("~/XT/XT_SysLogs")"},
-        { title: "微信菜单管理", sortindex: 0, icon: "fa fa-th-large", islink: true, href: "@Url.Content("~/XT/XT_Menus")" },
-        { title: "系统菜单管理", sortindex: 0, icon: "fa fa-windows", islink: true, href: "@Url.Content("~/XT/XT_SysMenus")" },
-        { title: "微信用户管理", sortindex: 0, icon: "fa fa-users", islink: true,href:"@Url.Content("~/XT/XT_UserManage")"},
-        { title: "字体图标", sortindex: 0, icon: "fa fa-tumblr", islink: true, href: "@Url.Content("~/XT/XT_FontIcons")" }
-        ]
-    }
-    ];
-
+    <script type="text/javascript">     
     $(function () {
 
         var $bar = $("#left_bar");
@@ -96,69 +20,65 @@
             "data-href": ""
         };
 
-        $.each(menu, function (index, item) {
+        $.web.get({ url: "@Url.Content("~/XT/GetIndexMenus")", async: true }, {
+            OnSuccess: function (xhr) {
+                switch (xhr.Ret.Key) {
+                    case "success":
+                        $.each(xhr.Data, function (index, item) {
 
-            if (item.children && item.children.length > 0)
-            {
-                var $el = $("<li>", { "class": "has-sub" }),
-                    $ul = $("<ul>", { "class": "sub-menu" }).hide();
-                $.each(item.children, function (i, t) {
-                    $.extend(_obj_a, { href: t.href, "data-href": t.href || "" });
-                    
-                    $ul.append($("<li>").append(
-                        $("<a>", _obj_a).text(t.title).prepend($("<i>", { "class": "menuIcon "+t.icon })).click(function () {
-                            $("#header_progress").stop(false, true).animate({ width: "80%" }, 2000, "swing");
-                            //if (t.islink && t.href) {
-                            //    $("#page-main").load(t.href, function () {
+                            if (item.children && item.children.length > 0)
+                            {
+                                var $el = $("<li>", { "class": "has-sub" }),
+                                    $ul = $("<ul>", { "class": "sub-menu" }).hide();
+                                $.each(item.children, function (i, t) {
+                                    $.extend(_obj_a, { href: t.href, "data-href": t.href||"" });
 
-                            //    });
-                            //}
-                        })
-                        ));
-                });
+                                    $ul.append($("<li>").append(
+                                        $("<a>", _obj_a).text(t.title).prepend($("<i>", { "class": "menuIcon " + t.icon })).click(function () {
+                                            $("#header_progress").stop(false, true).animate({ width: "80%" }, 2000, "swing");
+                                        })
+                                        ));
+                                });
 
-                $bar.append($el.append(
-                        $("<a>", { "href": "javascript:;" }).append($("<b>", { "class": "caret pull-right" })).append($("<i>", { "class": "menuIcon " + item.icon })).append($("<span>").text(item.title)).click(function (e) {
-                            var $parent = $(this).parent();
-                            if ($parent.hasClass('active')) {
-                                $parent.find(">ul").stop(true, false).slideToggle(300);
-                                
+                                $bar.append($el.append(
+                                        $("<a>", { "href": "javascript:;" }).append($("<b>", { "class": "caret pull-right" })).append($("<i>", { "class": "menuIcon " + item.icon })).append($("<span>").text(item.title)).click(function (e) {
+                                            var $parent = $(this).parent();
+                                            if ($parent.hasClass('active')) {
+                                                $parent.find(">ul").stop(true, false).slideToggle(300);
+
+                                            }
+                                            else {
+                                                $parent.addClass('active').find(">ul").stop(true, false).slideDown(300).end().siblings('.active').removeClass('active').find(">ul").slideUp(300);
+                                            }
+                                        })
+                                        ).append($ul)
+                                    );
                             }
                             else {
-                                $parent.addClass('active').find(">ul").stop(true, false).slideDown(300).end().siblings('.active').removeClass('active').find(">ul").slideUp(300);
+                                $.extend(_obj_a, { href: item.href, "data-href": item.href || "" });
+                                var $el = $("<li>").append(
+                                        $("<a>", _obj_a).append($("<i>", { "class": "menuIcon " + item.icon })).append($("<span>").text(item.title)).click(function () {
+                                            var $parent = $(this).parent();
+                                            if ($parent.hasClass('active')) {
+                                                return false;
+                                            }
+                                            else {
+                                                //if (item.islink && item.href) {}
+                                                $("#header_progress").stop(false, true).animate({ width: "80%" }, 2000, "swing");
+                                                $parent.addClass('active').find(">ul").stop(true, false).slideDown(300).end().siblings('.active').removeClass('active').find(">ul").slideUp(300);
+                                            }
+                                        })
+                                        );
+                                $bar.append($el);
                             }
-                        })
-                        ).append($ul)
-                    );
-            }
-            else {
-                $.extend(_obj_a, { href: item.href, "data-href": item.href || "" });
-                var $el = $("<li>").append(
-                        $("<a>", _obj_a).append($("<i>", { "class": "menuIcon "+item.icon })).append($("<span>").text(item.title)).click(function () {
-                            var $parent = $(this).parent();
-                            if ($parent.hasClass('active'))
-                            {
-                                // $(this).find(">ul").stop(true,false).slideToggle(300);
-                                return false;
-                            }
-                            else
-                            {
-                                if (item.islink && item.href) {
-                                    //$("#page-main").load(item.href, function () {
+                        });
 
-                                    //});
-                                }
+                        $bar.find(">li").eq(0).find(">a").trigger('click');
+                        break;
 
-                                $("#header_progress").stop(false, true).animate({ width: "80%" }, 2000, "swing");
-                                $parent.addClass('active').find(">ul").stop(true, false).slideDown(300).end().siblings('.active').removeClass('active').find(">ul").slideUp(300);
-                            }
-                        })
-                        );
-                $bar.append($el);
+                }
             }
         });
-
-        $bar.find(">li").eq(0).find(">a").trigger('click');
         
     });
 

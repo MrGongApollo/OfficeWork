@@ -40,7 +40,7 @@ namespace Web.Controllers
         {
             return View();
         }
-        
+
         #endregion
 
         #region 获取系统日志
@@ -111,10 +111,10 @@ namespace Web.Controllers
                     var menubuttons = menus.Where(k => k.MenuLevel == "button").OrderBy(g => g.SortNum)
                         .Select(p => new WxButtonMenu
                         {
-                           key= p.MenuId,
-                           name = p.MenuName,
-                           type = p.MenuType,
-                           url = p.MenuUrl
+                            key = p.MenuId,
+                            name = p.MenuName,
+                            type = p.MenuType,
+                            url = p.MenuUrl
                         })
                         .ToList();
                     #endregion
@@ -122,7 +122,7 @@ namespace Web.Controllers
                     #region 二级菜单
                     foreach (var mn in menubuttons)
                     {
-                        mn.sub_button = menus.Where(k => k.ParentMenu == mn.key).OrderBy(o=>o.SortNum).Select(p => new WxBaseMenu
+                        mn.sub_button = menus.Where(k => k.ParentMenu == mn.key).OrderBy(o => o.SortNum).Select(p => new WxBaseMenu
                         {
                             key = p.MenuId,
                             name = p.MenuName,
@@ -133,22 +133,23 @@ namespace Web.Controllers
                     }
                     #endregion
 
-                    WxMenu btn=new WxMenu{
-                        button=menubuttons
+                    WxMenu btn = new WxMenu
+                    {
+                        button = menubuttons
                     };
 
-                   WXApiUrl WXApiUrl= new WXApiUrl();
-                   string CreateWxMenuUrl = string.Format(WXApiUrl.Dic_WXUrls[WXApiUrl.Enum_WXUrls.CreateWxMenu], new Utils().GetAccessToken());
-                   string backmsg = wxCOM.Utils.SendPostHttpRequest(CreateWxMenuUrl, JsonConvert.SerializeObject(btn));
-                   RetMsg retmsg = JsonConvert.DeserializeObject<RetMsg>(backmsg);
-                   if (retmsg.errcode != 0)
-                   {
-                       ret.Value = RetMsg.DicWxRetMsg[retmsg.errcode];
-                   }
-                   else
-                   {
-                       ret = successret;
-                   }
+                    WXApiUrl WXApiUrl = new WXApiUrl();
+                    string CreateWxMenuUrl = string.Format(WXApiUrl.Dic_WXUrls[WXApiUrl.Enum_WXUrls.CreateWxMenu], new Utils().GetAccessToken());
+                    string backmsg = wxCOM.Utils.SendPostHttpRequest(CreateWxMenuUrl, JsonConvert.SerializeObject(btn));
+                    RetMsg retmsg = JsonConvert.DeserializeObject<RetMsg>(backmsg);
+                    if (retmsg.errcode != 0)
+                    {
+                        ret.Value = RetMsg.DicWxRetMsg[retmsg.errcode];
+                    }
+                    else
+                    {
+                        ret = successret;
+                    }
                 }
             }
             catch (Exception ex)
@@ -348,7 +349,7 @@ namespace Web.Controllers
             {
                 using (WechatEntities context = new WechatEntities())
                 {
-                    var list = context.T_SysMenus.Where(m => m.MenuLevel == 1 && m.IsDeleted == false).OrderBy(s=>s.SortNum)
+                    var list = context.T_SysMenus.Where(m => m.MenuLevel == 1 && m.IsDeleted == false).OrderBy(s => s.SortNum)
                           .Select(p => new
                           {
                               name = p.MenuName,
@@ -394,10 +395,10 @@ namespace Web.Controllers
                                     case 1:
                                     case 2:
                                         var cnt = context.T_SysMenus.Where(m => m.MenuLevel == menu.MenuLevel && m.IsDeleted == false);
-                                         menu.CreateTime = DateTime.Now;
-                                         context.T_SysMenus.Add(menu);
-                                         context.SaveChanges();
-                                         ret = base.success_r;
+                                        menu.CreateTime = DateTime.Now;
+                                        context.T_SysMenus.Add(menu);
+                                        context.SaveChanges();
+                                        ret = base.success_r;
                                         break;
                                 }
 
@@ -429,7 +430,7 @@ namespace Web.Controllers
                         #endregion
                         #region 删除
                         case "delete":
-                            T_SysMenus MN = context.T_SysMenus.Where(m => m.MenuId == menu.MenuId&&m.IsDeleted==false).FirstOrDefault();
+                            T_SysMenus MN = context.T_SysMenus.Where(m => m.MenuId == menu.MenuId && m.IsDeleted == false).FirstOrDefault();
                             if (MN != null)
                             {
                                 MN.IsDeleted = true;
@@ -477,6 +478,66 @@ namespace Web.Controllers
             }
         }
         #endregion
+
+        #region 获取系统菜单
+        [HttpGet]
+        public JsonResult GetIndexMenus()
+        {
+            base.fin_r = base.error_r;
+            try
+            {
+                using (WechatEntities db=new WechatEntities())
+                {
+                   var menus=db.T_SysMenus.Where(m => m.IsDeleted == false).OrderBy(o=>o.SortNum);
+                   var topMenus = menus.Where(k => k.MenuLevel == 1).Select(p => new TopSysMenu { 
+                   title=p.MenuName,
+                   key=p.MenuId,
+                   islink=p.Islink,
+                   icon=p.MenuIcon,
+                   href=p.MenuUrl
+                   }).ToList();
+
+                   foreach (var mn in topMenus)
+                   {
+                       mn.children = menus.Where(k => k.MenuLevel == 2 && k.ParentId == mn.key).Select(
+                           p => new BaseSysMenu
+                           {
+                               title = p.MenuName,
+                               islink = p.Islink,
+                               icon = p.MenuIcon,
+                               href = p.MenuUrl
+                           }).ToList();
+                   }
+
+                   base.fin_r = base.success_r;
+                   return JsonR(topMenus, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                base.fin_r.Value = ex.Message;
+            }
+            return JsonR(new { }, JsonRequestBehavior.AllowGet);
+        }
+
+        #region IndexMenu实体
+        private class BaseSysMenu
+        {
+            public string title { get; set; }
+            public bool islink { get; set; }
+            public string href { get; set; }
+            public string icon { get; set; }
+        }
+
+        private class TopSysMenu : BaseSysMenu
+        {
+            public List<BaseSysMenu> children { get; set; }
+
+            public string key { get; set; }
+        }
+        #endregion
+
+        #endregion
         #endregion
 
         #region 字体图标
@@ -486,16 +547,16 @@ namespace Web.Controllers
             KeyValueModel ret = base.error_r;
             try
             {
-                using (WechatEntities et=new WechatEntities())
+                using (WechatEntities et = new WechatEntities())
                 {
-                   var Icons=et.T_FontIcons.Where(i => i.IsDeleted == false).OrderBy(s => s.SortNum).Select(p => new
-                    {
-                        FontClass=p.FontClass
-                    }).ToList();
-                   ret = base.success_r;
-                   ret.Value = JsonConvert.SerializeObject(Icons);
+                    var Icons = et.T_FontIcons.Where(i => i.IsDeleted == false).OrderBy(s => s.SortNum).Select(p => new
+                     {
+                         FontClass = p.FontClass
+                     }).ToList();
+                    ret = base.success_r;
+                    ret.Value = JsonConvert.SerializeObject(Icons);
                 }
-                
+
             }
             catch (Exception ex)
             {

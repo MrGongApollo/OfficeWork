@@ -39,7 +39,34 @@ namespace Web.Controllers
         }
         #endregion
 
-        protected KeyValueModel success_r = new KeyValueModel { Key="success",Value="操作成功！"},
-                error_r = new KeyValueModel { Key = "error", Value = "操作失败！" };        
+        protected KeyValueModel success_r = new KeyValueModel { Key = "success", Value = "操作成功！" },
+                error_r = new KeyValueModel { Key = "error", Value = "操作失败！" },
+                fin_r = new KeyValueModel();
+
+
+        public JsonResult JsonR(object obj)
+        {
+            JsonRetMsg _jsonRet = new JsonRetMsg()
+            {
+                Data = obj,
+                Ret = fin_r
+            };
+            return Json(_jsonRet);
+        }
+
+        public JsonResult JsonR(object obj, JsonRequestBehavior behavior)
+        {
+            JsonRetMsg _jsonRet = new JsonRetMsg() {
+            Data = obj,
+            Ret = fin_r
+            };
+            return Json(_jsonRet, behavior);
+        }
+
+        private class JsonRetMsg
+        {
+            public KeyValueModel Ret { get; set; }
+            public object Data { get; set; }
+        }
 	}
 }

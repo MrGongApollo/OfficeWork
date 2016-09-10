@@ -21,9 +21,7 @@
 <script type="text/javascript">
     $(function () {
         var cur_operatype;//当前操作类型
-
         LoadMenus();
-
         var $table = $('#table');
         $table.bootstrapTable({
             url: "@Url.Content("~/XT/GetMenus")",
@@ -162,8 +160,7 @@
             }); 
         });
 
-        $("#txt_menu_level").change(function () {
-            debugger
+        $("#txt_menu_level").change(function () {            
             var $this = $(this);
             switch ($("#txt_menu_level option:selected").val()) {
                 case "button":
