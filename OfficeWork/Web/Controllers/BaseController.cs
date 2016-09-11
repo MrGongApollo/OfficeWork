@@ -43,7 +43,6 @@ namespace Web.Controllers
                 error_r = new KeyValueModel { Key = "error", Value = "操作失败！" },
                 fin_r = new KeyValueModel();
 
-
         public JsonResult JsonR(object obj)
         {
             JsonRetMsg _jsonRet = new JsonRetMsg()
@@ -53,7 +52,24 @@ namespace Web.Controllers
             };
             return Json(_jsonRet);
         }
-
+        public JsonResult JsonR()
+        {
+            JsonRetMsg _jsonRet = new JsonRetMsg()
+            {
+                Data = null,
+                Ret = fin_r
+            };
+            return Json(_jsonRet);
+        }
+        public JsonResult JsonR(JsonRequestBehavior behavior)
+        {
+            JsonRetMsg _jsonRet = new JsonRetMsg()
+            {
+                Data =null,
+                Ret = fin_r
+            };
+            return Json(_jsonRet, behavior);
+        }
         public JsonResult JsonR(object obj, JsonRequestBehavior behavior)
         {
             JsonRetMsg _jsonRet = new JsonRetMsg() {
@@ -62,7 +78,6 @@ namespace Web.Controllers
             };
             return Json(_jsonRet, behavior);
         }
-
         private class JsonRetMsg
         {
             public KeyValueModel Ret { get; set; }

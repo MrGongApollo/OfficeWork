@@ -7,9 +7,11 @@ using System.Web.Mvc;
 using System.Linq.Dynamic;
 using Office.Data;
 using System.Text;
+using Web.Filter;
 
 namespace Web.Controllers
 {
+    [LoginChecked]
     public class HomeController : BaseController
     {
         public ActionResult Index()
@@ -20,6 +22,22 @@ namespace Web.Controllers
         {
             return View();
         }
-        
+
+        #region 获取当前用户
+        /// <summary>
+        /// 获取当前用户
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult GetCurentUser()
+        {
+            base.fin_r = base.error_r;
+            T_SysUser user = Session["User"] as T_SysUser;
+            user.LoginPsw = "********";
+            base.fin_r = base.success_r;
+            return JsonR(user, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
     }
 }
