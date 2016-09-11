@@ -19,6 +19,7 @@
 </style>
 
 <script type="text/javascript">
+    window.curlocation = ['系统管理', '微信用户管理'];
     $(function () {
         var cur_operatype;//当前操作类型
 
@@ -232,22 +233,6 @@
             SaveMenus(_obj);
 
         });
-
-        //发布
-        $("#btn_Publish").click(function () {
-            swal({
-                title: "确认发布微信菜单?",
-                text: "发布后，微信公众平台将同步此菜单!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "是",
-                cancelButtonText: "否",
-                closeOnConfirm: false
-            }, function () {
-                
-            });
-        });
     });
 
 
@@ -286,10 +271,6 @@
     }
 </script>
 
-<ol class="breadcrumb bg-default nomargin">
-    <li><a href="javascript:;">系统管理</a></li>
-    <li class="active">微信用户管理</li>
-</ol>
 <div class="container-fluid">
     <div class="panel-body" style="padding:0px;">
         <div class="panel panel-default">

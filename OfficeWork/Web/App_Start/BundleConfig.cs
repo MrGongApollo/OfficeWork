@@ -20,12 +20,14 @@ namespace Web
             bundles.Add(new ScriptBundle("~/bundles/commonjs").Include(
           "~/Content/bootstrap/js/bootstrap.min.js",
           "~/Scripts/jquery.unobtrusive-ajax.min.js",
+          "~/Content/CodeSeven-toastr/js/toastr.min.js",
           "~/Scripts/base.min.js",
           "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/bundles/commoncss").Include(
           "~/Content/bootstrap/css/bootstrap.min.css",
           "~/Content/font-awesome/css/font-awesome.min.css",
+          "~/Content/CodeSeven-toastr/css/toastr.min.css",
           "~/Content/common.min.css"));
             #endregion
 
@@ -63,16 +65,7 @@ namespace Web
             bundles.Add(new StyleBundle("~/bundles/bootstrap-table/css").Include(
                         "~/Content/bootstrap-table/css/bootstrap-table.min.css"));
             #endregion
-
-            #region CodeSeven-toastr
-            bundles.Add(new ScriptBundle("~/bundles/CodeSeven-toastr/js").Include(
-            "~/Content/CodeSeven-toastr/js/toastr.min.js"
-            ));
-            bundles.Add(new StyleBundle("~/bundles/CodeSeven-toastr/css").Include(
-                        "~/Content/CodeSeven-toastr/css/toastr.min.css"
-                        ));
-            #endregion
-
+            
             #region sweetalert
             bundles.Add(new ScriptBundle("~/bundles/sweetalert/js").Include(
             "~/Content/sweetalert/js/sweetalert.min.js"

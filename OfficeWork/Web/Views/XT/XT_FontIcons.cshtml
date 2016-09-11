@@ -9,6 +9,7 @@
 </style>
 
 <script type="text/javascript">
+    window.curlocation = ['系统管理', '字体图标'];
     $(function () {
         $.web.get({ url: "@Url.Content("~/XT/GetIcons")", async: true },
             {
@@ -32,11 +33,6 @@
     });
 
 </script>
-
-<ol class="breadcrumb bg-default nomargin">
-    <li><a href="javascript:;">系统管理</a></li>
-    <li class="active">字体图标</li>
-</ol>
 
 <div class="container-fluid" id="Icon_container">
     <div class="row nomargin"></div>
