@@ -84,7 +84,7 @@
                                         $("<a>", _obj_a).append($("<i>", { "class": "menuIcon " + item.icon })).append($("<span>").text(item.title)).click(function () {
                                             var $parent = $(this).parent();
                                             if ($parent.hasClass('active')) {
-                                                return false;
+                                                //return false;
                                             }
                                             else {
                                                 //if (item.islink && item.href) {}
@@ -188,14 +188,23 @@
         </div>
         <!-- end mobile sidebar expand / collapse button -->
         <!-- begin header navigation right -->
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right visible-sm visible-md visible-lg">
             <li>
-                <form class="navbar-form full-width">
-                    <div class="form-group">
+                <div class="navbar-form full-width">
+                    <div class="input-group">
                         <input type="text" class="form-control" placeholder="请输入关键字" autocomplete="off" data-provide="typeahead">
-                        <button type="button" class="btn btn-search btn-info"><i class="fa fa-search"></i></button>
+                        <span class="input-group-btn">
+                            <a role="button" class="btn btn-search btn-info"
+                               href="@Url.Content("~/Common/Share_Search")"
+                               data-ajax-id="Search"
+                               data-ajax-update="#page-main"
+                               data-ajax="true"
+                               data-ajax-success="UpdatePage">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </span>
                     </div>
-                </form>
+                </div>
             </li>
             <li class="dropdown" id="user_notice">
                 <a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle f-s-14 color-white">
@@ -218,7 +227,7 @@
                             <div class="media-left"><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2428676430,4161488114&fm=116&gp=0.jpg" class="media-object" alt=""></div>
                             <div class="media-body">
                                 <h6 class="media-heading">xxxxx</h6>
-                                <p>具体内容</p>
+                                @*<p>具体内容</p>*@
                                 <div class="text-muted f-s-11">25 分钟前</div>
                             </div>
                         </a>
@@ -228,7 +237,7 @@
                             <div class="media-left"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1913246915,2422968925&fm=116&gp=0.jpg" class="media-object" alt=""></div>
                             <div class="media-body">
                                 <h6 class="media-heading">xxxxx</h6>
-                                <p>具体内容</p>
+                                @*<p>具体内容</p>*@
                                 <div class="text-muted f-s-11">35 分钟前</div>
                             </div>
                         </a>
@@ -252,7 +261,11 @@
                         </a>
                     </li>
                     <li class="dropdown-footer text-center">
-                        <a href="javascript:;">更多</a>
+                        <a href="@Url.Content("~/Common/Share_MsgCenter")"
+                           data-ajax-id="MsgCenter"
+                           data-ajax-update="#page-main"
+                           data-ajax="true"
+                           data-ajax-success="UpdatePage">查看更多</a>
                     </li>
                 </ul>
             </li>

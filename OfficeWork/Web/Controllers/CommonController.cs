@@ -14,5 +14,15 @@ namespace Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Share_Search()
+        {
+            return View();
+        }
+
+        public ActionResult Share_MsgCenter()
+        {
+            return View();
+        }
 	}
 }

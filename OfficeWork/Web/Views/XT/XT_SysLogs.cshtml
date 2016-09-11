@@ -70,7 +70,11 @@
             },
             sidePagination: "server", //服务端处理分页
             columns: [
-                { checkbox: true, align: 'center', valign: 'middle' },
+                {
+                    checkbox: true, align: 'center', valign: 'middle', formatter: function (value, row, index) {
+                        return value;
+                    }
+                },
                 { title: '日志内容', field: 'SysContent', align: 'left', valign: 'middle', sortable: true },
                 {
                     title: '创建日期', field: 'CreateTime', align: 'center', valign: 'middle', sortable: true,
