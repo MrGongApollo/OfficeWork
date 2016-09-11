@@ -217,8 +217,21 @@
 
                     }
                 };
-            _option.url = encodeURI(_option.url);//地址栏里转码
-            $.extend(ajaxconfig, _option);
+            debugger
+            switch (typeof _option) {
+                case "string":
+                    ajaxconfig.url = encodeURI(_option);//地址栏里转码
+                    break;
+                case "object":
+                    _option.url = encodeURI(_option.url);//地址栏里转码
+                    $.extend(ajaxconfig, _option);
+                    break;
+                default:
+                    console.warn("参数类型不正确，必须是string,或者object");
+                    return;
+
+            }
+            
             if (_funobj) {
                 $.extend(funconfig, _funobj);
             }
