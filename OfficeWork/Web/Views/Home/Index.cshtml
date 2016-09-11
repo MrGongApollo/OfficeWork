@@ -1,14 +1,39 @@
 ﻿@{
-    ViewBag.Title = "Home";
+    ViewBag.Title = "Wechat";
 }
 
 @section styles{
+@Styles.Render("~/bundles/CodeSeven-toastr/css")
 @Styles.Render("~/Content/index.min.css")
+@Styles.Render("~/bundles/sweetalert/css")
 }
 
+
 @section scripts{
+@Scripts.Render("~/bundles/CodeSeven-toastr/js")
+@Scripts.Render("~/bundles/sweetalert/js")
     <script type="text/javascript">     
-    $(function () {
+        $(function () {
+
+            $.web.get({
+                url: "@Url.Content("~/Home/GetCurentUser")",
+                async:true
+            }, {
+                OnSuccess: function(xhr) {
+                    switch (xhr.Ret.Key)
+                    {
+                        case "success":
+                            $("#txt_NickName").text(xhr.Data.UserName);
+                            break;
+                        case "error":
+                            swal("获取用户失败", xhr.Ret.Value, "error");
+                            break;
+
+                    }
+                }
+            });
+         
+
         var $bar = $("#left_bar");
         var _obj_a = {
             "href": "",
@@ -78,6 +103,19 @@
             }
         });
         
+        $("#Signout").click(function () {
+            $.web.get("@Url.Content("~/Login/SignOut")",{
+                OnSuccess: function () {
+                    swal("注销成功","1秒后自动跳转", "success");
+                    setTimeout(function() {
+                        window.location.replace("@Url.Content("~/Login/Index")");
+                    },1000);
+                },
+                onFailure: function (err) {
+                    
+                }
+            });
+        });
     });
 
     //切换页面时候更新
@@ -221,14 +259,14 @@
             <li class="dropdown navbar-user">
                 <a href="javascript:;" class="dropdown-toggle color-white" data-toggle="dropdown">
                     <i class="fa fa-user"></i>
-                    <span class="hidden-xs">系统管理员</span> <b class="caret"></b>
+                    <span class="hidden-xs" id="txt_NickName">加载中..</span> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu animated fadeInLeft">
                     <li class="arrow"></li>
                     <li><a href="javascript:;"><i class="fa fa-user"></i>个人信息</a></li>
                     <li><a href="javascript:;"><i class="fa fa-cog"></i> 设置</a></li>
                     <li class="divider"></li>
-                    <li><a href="javascript:;"><i class="fa fa-sign-out"></i>注销</a></li>
+                    <li id="Signout"><a href="javascript:;"><i class="fa fa-sign-out"></i>注销</a></li>
                 </ul>
             </li>
         </ul>

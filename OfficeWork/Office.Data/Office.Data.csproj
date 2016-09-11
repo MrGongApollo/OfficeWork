@@ -71,6 +71,9 @@
     <Compile Include="T_SysMenus.cs">
       <DependentUpon>WechatModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="T_SysUser.cs">
+      <DependentUpon>WechatModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="T_Wx_Menus.cs">
       <DependentUpon>WechatModel.tt</DependentUpon>
     </Compile>

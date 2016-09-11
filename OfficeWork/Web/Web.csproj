@@ -125,10 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Filter\" />
-    <Folder Include="Help\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Login\" />
     <Folder Include="Views\Main\" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +140,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Filter\LoginCheckedAttribute.cs" />
+    <Compile Include="Help\CommonHelper.cs" />
     <Compile Include="Models\KeyValueModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -448,6 +447,7 @@
     <Content Include="Content\font-awesome\css\font-awesome.css.map" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff2" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Images\login_bg.jpg" />
     <Content Include="Scripts\base.js" />
     <Content Include="Scripts\base.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -478,6 +478,7 @@
     <Content Include="Views\XT\XT_FontIcons.cshtml" />
     <Content Include="Views\XT\XT_SysMenus.cshtml" />
     <Content Include="Views\Common\Share_Fonts.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Office.Data\Office.Data.csproj">

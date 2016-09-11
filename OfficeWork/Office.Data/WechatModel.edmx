@@ -32,14 +32,24 @@
           <Property Name="MenuName" Type="varchar" MaxLength="50" />
           <Property Name="MenuIcon" Type="varchar" MaxLength="50" />
           <Property Name="ParentId" Type="varchar" MaxLength="32" />
+          <Property Name="ParentMenuName" Type="varchar" MaxLength="50" />
           <Property Name="SortNum" Type="int" Nullable="false" />
-          <Property Name="CreateTime" Type="datetime" />
-          <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="MenuLevel" Type="int" />
           <Property Name="MenuUrl" Type="varchar" MaxLength="100" />
           <Property Name="Islink" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
           <Property Name="ModifyTime" Type="datetime" />
-          <Property Name="ParentMenuName" Type="varchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_SysUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="LoginPsw" Type="varchar" MaxLength="32" />
         </EntityType>
         <EntityType Name="T_Wx_Menus">
           <Key>
@@ -61,6 +71,7 @@
           <EntitySet Name="T_FontIcons" EntityType="Self.T_FontIcons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_SysLogs" EntityType="Self.T_SysLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_SysMenus" EntityType="Self.T_SysMenus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_SysUser" EntityType="Self.T_SysUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_Wx_Menus" EntityType="Self.T_Wx_Menus" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -96,6 +107,7 @@
           <EntitySet Name="T_Wx_Menus" EntityType="Self.T_Wx_Menus" />
           <EntitySet Name="T_FontIcons" EntityType="WechatModel.T_FontIcons" />
           <EntitySet Name="T_SysMenus" EntityType="WechatModel.T_SysMenus" />
+          <EntitySet Name="T_SysUser" EntityType="WechatModel.T_SysUser" />
         </EntityContainer>
         <EntityType Name="T_FontIcons">
           <Key>
@@ -124,6 +136,16 @@
           <Property Name="Islink" Type="Boolean" Nullable="false" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="ParentMenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="T_SysUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="LoginPsw" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -184,6 +206,17 @@
                 <ScalarProperty Name="MenuIcon" ColumnName="MenuIcon" />
                 <ScalarProperty Name="MenuName" ColumnName="MenuName" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_SysUser">
+            <EntityTypeMapping TypeName="WechatModel.T_SysUser">
+              <MappingFragment StoreEntitySet="T_SysUser">
+                <ScalarProperty Name="LoginPsw" ColumnName="LoginPsw" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
