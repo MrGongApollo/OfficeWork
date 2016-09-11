@@ -128,7 +128,10 @@
                     swal("登录" + (IsValid ? "成功" : "失败"), xhr.Ret.Value, xhr.Ret.Key);
                     if (IsValid)
                     {
-                        window.location.href = "@Url.Content("~/Home/Index")";
+                        setTimeout(function () {
+                            window.location.href = "@Url.Content("~/Home/Index")";
+                        },500);
+                        
                     }
                 });
             });

@@ -29,7 +29,7 @@ namespace Web.Controllers
             {
                 using (WechatEntities db = new WechatEntities())
                 {
-                    T_SysUser user = db.T_SysUser.Where(u => u.UserId == username).FirstOrDefault();
+                    T_SysUser user = db.T_SysUser.Where(u => u.UserId == username&&u.IsDeleted==false).FirstOrDefault();
                     #region 判断用户是否存在
                     if (user != null)
                     {

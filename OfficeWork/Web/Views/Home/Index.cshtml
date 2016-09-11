@@ -12,27 +12,27 @@
 @section scripts{
 @Scripts.Render("~/bundles/CodeSeven-toastr/js")
 @Scripts.Render("~/bundles/sweetalert/js")
-    <script type="text/javascript">     
-        $(function () {
+    <script type="text/javascript">
+    $(function () {
 
-            $.web.get({
-                url: "@Url.Content("~/Home/GetCurentUser")",
-                async:true
-            }, {
-                OnSuccess: function(xhr) {
-                    switch (xhr.Ret.Key)
-                    {
-                        case "success":
-                            $("#txt_NickName").text(xhr.Data.UserName);
-                            break;
-                        case "error":
-                            swal("获取用户失败", xhr.Ret.Value, "error");
-                            break;
+        $.web.get({
+            url: "@Url.Content("~/Home/GetCurentUser")",
+            async:true
+        }, {
+            OnSuccess: function(xhr) {
+                switch (xhr.Ret.Key)
+                {
+                    case "success":
+                        $("#txt_NickName").text(xhr.Data.UserName);
+                        break;
+                    case "error":
+                        swal("获取用户失败", xhr.Ret.Value, "error");
+                        break;
 
-                    }
                 }
-            });
-         
+            }
+        });
+
 
         var $bar = $("#left_bar");
         var _obj_a = {
@@ -102,17 +102,14 @@
                 }
             }
         });
-        
+
         $("#Signout").click(function () {
             $.web.get("@Url.Content("~/Login/SignOut")",{
                 OnSuccess: function () {
                     swal("注销成功","1秒后自动跳转", "success");
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.replace("@Url.Content("~/Login/Index")");
-                    },1000);
-                },
-                onFailure: function (err) {
-                    
+                    },500);
                 }
             });
         });
@@ -153,7 +150,7 @@
                     );
                         break;
                 }
-                
+
             });
         }
     }
