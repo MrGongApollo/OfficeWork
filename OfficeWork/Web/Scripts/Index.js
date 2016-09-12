@@ -86,14 +86,26 @@
     });
 
     $("#Signout").click(function () {
-        $.web.get(document.weburl + "Login/SignOut", {
-            OnSuccess: function () {
-                swal("注销成功", "1秒后自动跳转", "success");
-                setTimeout(function () {
-                    window.location.replace(document.weburl + "Login/Index");
-                }, 500);
-            }
+        swal({
+            title: "确认注销当前用户",
+            text: "注销后自动跳转登录界面",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "是",
+            cancelButtonText: "否",
+            closeOnConfirm: false
+        }, function () {
+            $.web.get(document.weburl + "Login/SignOut", {
+                OnSuccess: function () {
+                    swal("注销成功", "1秒后自动跳转", "success");
+                    setTimeout(function () {
+                        window.location.replace(document.weburl + "Login/Index");
+                    }, 500);
+                }
+            });
         });
+
     });
 });
 

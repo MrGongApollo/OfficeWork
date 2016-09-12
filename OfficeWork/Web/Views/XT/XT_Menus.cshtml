@@ -51,13 +51,14 @@
 
             },
             queryParams: function (params) {
-                params["$top"] = params.limit;
-                params["$skip"] = params.offset;
+                var queryParams = {};
+                queryParams["$top"] = params.limit;
+                queryParams["$skip"] = params.offset;
                 //params["$inlinecount"] = "allpages";
-                params["$filter"] = GetFilters();
+                queryParams["$filter"] = GetFilters();
                 if (params.sort)
-                    params["$orderby"] = params.sort + " " + params.order;
-                return params;
+                    queryParams["$orderby"] = params.sort + " " + params.order;
+                return queryParams;
 
             },
             sidePagination: "server", //服务端处理分页
