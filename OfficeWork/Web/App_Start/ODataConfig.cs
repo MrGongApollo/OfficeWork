@@ -20,7 +20,8 @@ namespace Web
 
             builder.EntitySet<T_SysMenus>("T_SysMenus");
             builder.EntitySet<T_Wx_Menus>("T_Wx_Menus");
-
+            builder.EntitySet<T_FontIcons>("T_FontIcons");
+            
             return builder.GetEdmModel();
 
         }
