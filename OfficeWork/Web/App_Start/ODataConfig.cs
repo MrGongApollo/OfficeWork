@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.OData.Builder;
 using Office.Data;
+using Office.Data.Models;
 
 namespace Web
 {

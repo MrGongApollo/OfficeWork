@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.OData;
+using Microsoft.OData.Edm;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
 using System.Web.OData.Batch;
