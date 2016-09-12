@@ -20,7 +20,7 @@ namespace Web
             bundles.Add(new ScriptBundle("~/bundles/commonjs").Include(
           "~/Content/bootstrap/js/bootstrap.min.js",
           "~/Scripts/jquery.unobtrusive-ajax.min.js",
-          "~/Scripts/base.js",
+          "~/Scripts/base.min.js",
           "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/bundles/commoncss").Include(
