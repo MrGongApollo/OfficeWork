@@ -217,7 +217,6 @@
 
                     }
                 };
-            debugger
             switch (typeof _option) {
                 case "string":
                     ajaxconfig.url = encodeURI(_option);//地址栏里转码
