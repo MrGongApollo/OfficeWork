@@ -139,7 +139,8 @@ function UpdateBreadcrumb() {
 //更新消息
 function UpdateMessage() {
     toastr.options = {
-        "closeButton": true
+        closeButton: true,
+        positionClass: "toast-bottom-right",
     };
     toastr.info("您有一条新的消息，请及时查看！");
     var msgcnt = parseInt($("#user_notice .badge").text());
