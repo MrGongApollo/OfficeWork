@@ -5,14 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Linq.Dynamic;
-using Office.Web.Models;
+using Web.Models;
 using wxCOM;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
-using Office.Web.Filter;
+using Web.Filter;
 
-namespace Office.Web.Controllers
+namespace Web.Controllers
 {
     [LoginChecked]
     public class XTController : BaseController

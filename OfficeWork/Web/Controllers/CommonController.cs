@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Office.Web.Controllers
+namespace Web.Controllers
 {
     public class CommonController : Controller
     {

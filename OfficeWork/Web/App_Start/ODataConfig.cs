@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.OData.Builder;
 using Office.Data;
 
-namespace Office.Web
+namespace Web
 {
     public class ODataConfig
     {

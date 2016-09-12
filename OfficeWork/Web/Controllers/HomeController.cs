@@ -7,9 +7,9 @@ using System.Web.Mvc;
 using System.Linq.Dynamic;
 using Office.Data;
 using System.Text;
-using Office.Web.Filter;
+using Web.Filter;
 
-namespace Office.Web.Controllers
+namespace Web.Controllers
 {
     [LoginChecked]
     public class HomeController : BaseController

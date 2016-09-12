@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace Office.Web
+namespace Web
 {
     public class BundleConfig
     {

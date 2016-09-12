@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Office.Web.Models;
+using Web.Models;
 using Office.Data;
 using System.Security.Cryptography;
 using System.Text;
-using Office.Web.Help;
+using Web.Help;
 
-namespace Office.Web.Controllers
+namespace Web.Controllers
 {
     public class LoginController : BaseController
     {

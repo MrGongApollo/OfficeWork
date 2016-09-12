@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-namespace Office.Web.Filter
+namespace Web.Filter
 {
     #region 登录验证
     /// <summary>

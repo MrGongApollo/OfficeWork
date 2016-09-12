@@ -169,6 +169,8 @@
     <Compile Include="Filter\LoginCheckedAttribute.cs" />
     <Compile Include="Help\CommonHelper.cs" />
     <Compile Include="Models\KeyValueModel.cs" />
+    <Compile Include="OdataModel\T_Wx_MenusController.cs" />
+    <Compile Include="OdataModel\T_SysMenusController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

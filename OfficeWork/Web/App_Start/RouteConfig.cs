@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Office.Web
+namespace Web
 {
     public class RouteConfig
     {
@@ -15,6 +15,7 @@ namespace Office.Web
 
             routes.MapRoute(
                 name: "Default",
+                namespaces: new string[] { "Web.Controllers" },
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
             );

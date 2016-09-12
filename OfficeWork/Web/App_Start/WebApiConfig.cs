@@ -7,7 +7,7 @@ using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
 using System.Web.OData.Batch;
 
-namespace Office.Web
+namespace Web
 {
     public static class WebApiConfig
     {
