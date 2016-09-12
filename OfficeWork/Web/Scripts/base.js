@@ -116,6 +116,108 @@
             type = timeformat ? timeformat : type;
             return date.getFullYear() + type + month + type + currentDate + " " + hour + ":" + minute;
         },
+        dataFormat: function (dataValue, fmtOpts) {
+            //格式化选项匹配正则
+            var formatOptions = {
+                numeric: /N\d{1}/ig,
+                percent: /P\d{1}/ig,
+                currency: /C/ig,
+                datetime: /yy(yy{0,1})|M{2}|dd|HH{1}|mm{1}|ss{1}/ig
+            };
+            //格式化日期
+            if (fmtOpts.match(formatOptions.datetime) !== null) {
+                var _dataValue = dataValue;
+                var _dateParse = {
+                    msJsonDate: /^\/Date\(\d*(|\+?\d*)\)\/$/ig,
+                    stringDate: /^\d{4}[\.\/-]?[0-1]{1}[0-9]{1}(|[\.\/-]?[0-3]{1}[0-9]{1}[\.\/-]?|\s?[0-1]{1}[0-9]{1}|:?[0-1]{1}[0-9]{1}|:?[0-1]{1}[0-9]{1}|:?\d*)$/ig,
+                    dtData: /^\d{8}\s\d{2}:\d{2}:\d{2}$/,
+                    cludeTDate: /^\d{4}-\d{2}-\d{2}(T|t)\d{2}:\d{2}:\d{2}/
+                }
+                //判断是否为日期格式，不是需要转换成日期格式
+                if (dataValue instanceof Date === false) {
+                    //微软JSON日期格式，可带时区可不带
+                    if (_dateParse.msJsonDate.test(dataValue)) {
+                        var _regex = /^\/Date\(|\)\/$/ig;
+                        var _dates = (dataValue + "").replace(_regex, "").split("+");
+                        if (_dates.length > 1) {
+                            _dataValue = new Date(parseInt(_dates[0]) + parseInt(_dates[1]));
+                        }
+                        else {
+                            //添加本地时区
+                            var d = new Date();
+                            var localOffset = d.getTimezoneOffset() * 60000;
+                            localOffset = 0;
+                            _dataValue = new Date(parseInt(_dates[0]) + localOffset);
+                        }
+                    }
+                        //判断是否为数字格式如：20101010101010
+                    else if (_dateParse.stringDate.test(dataValue)) {
+                        if ($.isNumeric(dataValue) === true) {
+                            var _yy = (dataValue + "").substr(0, 4);
+                            var _mm = (dataValue + "").substr(4, 2);
+                            var _dd = (dataValue + "").substr(6, 2);
+                            var _hh = (dataValue + "").substr(8, 2);
+                            var _mi = (dataValue + "").substr(10, 2);
+                            var _ss = (dataValue + "").substr(12, 2);
+                            _dataValue = new Date(
+                            _yy + "/"
+                            + _mm + "/"
+                            + (_dd === "" ? "01" : _dd) + " "
+                            + (_hh === "" ? "00" : _hh) + ":"
+                            + (_mi === "" ? "00" : _mi) + ":"
+                            + (_ss === "" ? "00" : _ss));
+                        }
+                        else {
+                            _dataValue = (dataValue + "").replace(/[-\.]/g, "/");
+                            _dataValue = new Date(_dataValue);
+                        }
+                    } else if (_dateParse.dtData.test(dataValue)) {
+                        var _yy = (dataValue + "").substr(0, 4);
+                        var _mm = (dataValue + "").substr(4, 2);
+                        var _dd = (dataValue + "").substr(6, 2);
+                        var _hh = (dataValue + "").substr(8);
+                        _dataValue = new Date(
+                            _yy + "/"
+                            + _mm + "/" + _dd + _hh);
+                    } else if (_dateParse.cludeTDate.test(dataValue)) {
+                        var _yy = (dataValue + "").substr(0, 4);
+                        var _mm = (dataValue + "").substr(5, 2);
+                        var _dd = (dataValue + "").substr(8, 2);
+                        var _hh = (dataValue + "").substr(11);
+                        _dataValue = new Date(
+                            _yy + "/"
+                            + _mm + "/" + _dd + " " + _hh);
+                    }
+                }
+                //补零
+                var zeroize = function (value, length) {
+                    if (!length) {
+                        length = 2;
+                    }
+                    value = new String(value);
+                    for (var i = 0, zeros = ''; i < (length - value.length) ; i++) {
+                        zeros += '0';
+                    }
+                    return zeros + value;
+                };
+                //是否已转成日期
+                if (_dataValue instanceof Date) {
+                    return fmtOpts.replace(formatOptions.datetime, function ($0) {
+                        switch ($0) {
+                            case 'dd': return zeroize(_dataValue.getDate());
+                            case 'MM': return zeroize(_dataValue.getMonth() + 1);
+                            case 'yy': return new String(_dataValue.getFullYear()).substr(2);
+                            case 'yyyy': return _dataValue.getFullYear();
+                            case 'HH': return zeroize(_dataValue.getHours());
+                            case 'mm': return zeroize(_dataValue.getMinutes());
+                            case 'ss': return zeroize(_dataValue.getSeconds());
+                        }
+                    });
+                }
+                else { return dataValue; }
+            }
+            else { return dataValue; }
+        },
         //获取地址栏参数
         getUrlParam: function (name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象

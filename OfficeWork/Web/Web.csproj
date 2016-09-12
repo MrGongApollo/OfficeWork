@@ -194,6 +194,7 @@
     <Compile Include="Help\CommonHelper.cs" />
     <Compile Include="Models\KeyValueModel.cs" />
     <Compile Include="OdataModel\T_SysMenusController.cs" />
+    <Compile Include="OdataModel\T_FontIcons.cs" />
     <Compile Include="OdataModel\T_Wx_MenusController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -502,6 +503,8 @@
     <Content Include="Images\login_bg.jpg" />
     <Content Include="Scripts\base.js" />
     <Content Include="Scripts\base.min.js" />
+    <Content Include="Scripts\Index.js" />
+    <Content Include="Scripts\Index.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
