@@ -12,28 +12,19 @@
 </style>
 <script type="text/javascript">
     $(function () {
-        $.web.get({ url: "@Url.Content("~/XT/GetIcons")", async: true },
+        var $row = $("#fonts_container>.row");
+        $.web.get({ url:document.weburl + "odata/T_FontIcons?$filter=IsDeleted eq false&$orderby=SortNum", async: true },
             {
             OnSuccess: function (xhr)
             {
-                $("#fonts_container>.row").empty();
-                switch (xhr.Key)
-                {
-                    case "success":
-                        var Icons = $.parseJSON(xhr.Value);
-                        $.each(Icons, function (_i, _t) {
-                            $("#fonts_container>.row").append($("<div>", { "class": "col-md-3", "data-icons": _t.FontClass }).text(_t.FontClass).prepend($("<i>", { "class": _t.FontClass })).click(function () {
-                                if ($(this).hasClass("active")) { return;}
-                                $(this).addClass("active").siblings(".active").removeClass("active");
-                                return false;
-                            }));
-                        });
-                        break;
-                    default:
-                        $.web.toast(xhr.Value);
-                        break;
-
-                }
+                $row.empty();
+                $.each(xhr.value, function (_i, _t) {
+                    $row.append($("<div>", { "class": "col-md-3", "data-icons": _t.FontClass }).text(_t.FontClass).prepend($("<i>", { "class": _t.FontClass })).click(function () {
+                        if ($(this).hasClass("active")) { return; }
+                        $(this).addClass("active").siblings(".active").removeClass("active");
+                        return false;
+                    }));
+                });
             }
         })
     });
