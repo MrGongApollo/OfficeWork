@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.OData;
 using Office.Data;
+using Office.Data.Models;
 
 namespace Web.OdataModel
 {
