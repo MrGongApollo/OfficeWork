@@ -52,99 +52,12 @@
     <Compile Include="Model\T_SysUser.cs" />
     <Compile Include="Model\T_Wx_Menus.cs" />
     <Compile Include="Model\T_XT_OperateLog.cs" />
-    <Compile Include="OfficeModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OfficeModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OfficeModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OfficeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OfficeModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OfficeModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="T_FontIcons.cs">
-      <DependentUpon>WechatModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T_SysLogs.cs">
-      <DependentUpon>WechatModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T_SysMenus.cs">
-      <DependentUpon>WechatModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T_SysUser.cs">
-      <DependentUpon>WechatModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T_Wx_Menus.cs">
-      <DependentUpon>WechatModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T_XT_OperateLog.cs">
-      <DependentUpon>OfficeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T_XT_User.cs">
-      <DependentUpon>OfficeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="T_YH_HiddenDanger.cs">
-      <DependentUpon>OfficeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WechatModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WechatModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WechatModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WechatModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="WechatModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WechatModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="WechatEntities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="OfficeModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>OfficeModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="OfficeModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OfficeModel.edmx</DependentUpon>
-      <LastGenOutput>OfficeModel.Context.cs</LastGenOutput>
-    </None>
-    <None Include="OfficeModel.edmx.diagram">
-      <DependentUpon>OfficeModel.edmx</DependentUpon>
-    </None>
-    <None Include="OfficeModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>OfficeModel.edmx</DependentUpon>
-      <LastGenOutput>OfficeModel.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
-    <EntityDeploy Include="WechatModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WechatModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="WechatModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WechatModel.edmx</DependentUpon>
-      <LastGenOutput>WechatModel.Context.cs</LastGenOutput>
-    </None>
-    <None Include="WechatModel.edmx.diagram">
-      <DependentUpon>WechatModel.edmx</DependentUpon>
-    </None>
-    <None Include="WechatModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WechatModel.edmx</DependentUpon>
-      <LastGenOutput>WechatModel.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Exam.Data.Models
+namespace Office.Data.Models
 {
     using System;
     using System.Collections.Generic;

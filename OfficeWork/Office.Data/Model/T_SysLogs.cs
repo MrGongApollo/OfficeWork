@@ -7,15 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Exam.Data.Models
+namespace Office.Data.Models
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("T_XT_OperateLog")]
-    public partial class T_XT_OperateLog
+    [Table("T_SysLogs")]
+    public partial class T_SysLogs
     {
         [Key]
         public string SysLogId { get; set; }
