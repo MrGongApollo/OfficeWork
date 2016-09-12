@@ -488,31 +488,32 @@ namespace Web.Controllers
             base.fin_r = base.error_r;
             try
             {
-                using (WechatEntities db=new WechatEntities())
+                using (WechatEntities db = new WechatEntities())
                 {
-                   var menus=db.T_SysMenus.Where(m => m.IsDeleted == false).OrderBy(o=>o.SortNum);
-                   var topMenus = menus.Where(k => k.MenuLevel == 1).Select(p => new TopSysMenu { 
-                   title=p.MenuName,
-                   key=p.MenuId,
-                   islink=p.Islink,
-                   icon=p.MenuIcon,
-                   href=p.MenuUrl
-                   }).ToList();
+                    var menus = db.T_SysMenus.Where(m => m.IsDeleted == false).OrderBy(o => o.SortNum);
+                    var topMenus = menus.Where(k => k.MenuLevel == 1).Select(p => new TopSysMenu
+                    {
+                        title = p.MenuName,
+                        key = p.MenuId,
+                        islink = p.Islink,
+                        icon = p.MenuIcon,
+                        href = p.MenuUrl
+                    }).ToList();
 
-                   foreach (var mn in topMenus)
-                   {
-                       mn.children = menus.Where(k => k.MenuLevel == 2 && k.ParentId == mn.key).Select(
-                           p => new BaseSysMenu
-                           {
-                               title = p.MenuName,
-                               islink = p.Islink,
-                               icon = p.MenuIcon,
-                               href = p.MenuUrl
-                           }).ToList();
-                   }
+                    foreach (var mn in topMenus)
+                    {
+                        mn.children = menus.Where(k => k.MenuLevel == 2 && k.ParentId == mn.key).Select(
+                            p => new BaseSysMenu
+                            {
+                                title = p.MenuName,
+                                islink = p.Islink,
+                                icon = p.MenuIcon,
+                                href = p.MenuUrl
+                            }).ToList();
+                    }
 
-                   base.fin_r = base.success_r;
-                   return JsonR(topMenus, JsonRequestBehavior.AllowGet);
+                    base.fin_r = base.success_r;
+                    return JsonR(topMenus, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
