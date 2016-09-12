@@ -8,13 +8,14 @@ using Office.Data.Models;
 
 namespace Web.OdataModel
 {
-    public class T_SysMenusController : ODataController
+    public class T_Wx_MenusController : ODataController
     {
         private WechatEntities db = new WechatEntities();
 
-        public IQueryable<T_SysMenus> Get()
+        [EnableQuery]
+        public IQueryable<T_Wx_Menus> Get()
         {
-            return db.T_SysMenus;
+            return db.T_Wx_Menus;
         }
 
         protected override void Dispose(bool disposing)

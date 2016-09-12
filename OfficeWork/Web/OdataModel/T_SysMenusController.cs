@@ -8,10 +8,11 @@ using Office.Data.Models;
 
 namespace Web.OdataModel
 {
-    public class T_Wx_MenusController : ODataController
+    public class T_SysMenusController : ODataController
     {
         private WechatEntities db = new WechatEntities();
 
+        [EnableQuery]
         public IQueryable<T_SysMenus> Get()
         {
             return db.T_SysMenus;
