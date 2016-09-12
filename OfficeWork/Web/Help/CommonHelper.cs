@@ -5,7 +5,7 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Web.Help
+namespace Office.Web.Help
 {
     public class CommonHelper
     {

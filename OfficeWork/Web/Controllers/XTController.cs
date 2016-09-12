@@ -5,14 +5,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Linq.Dynamic;
-using Web.Models;
+using Office.Web.Models;
 using wxCOM;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
+using Office.Web.Filter;
 
-namespace Web.Controllers
+namespace Office.Web.Controllers
 {
+    [LoginChecked]
     public class XTController : BaseController
     {
         #region 视图

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Office.Data;
-using Web.Models;
+using Office.Web.Models;
 
-namespace Web.Controllers
+namespace Office.Web.Controllers
 {
     public class BaseController : Controller
     {
