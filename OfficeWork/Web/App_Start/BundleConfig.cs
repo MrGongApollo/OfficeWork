@@ -106,6 +106,12 @@ namespace Web
                         "~/Content/summernote/summernote.min.css"
                         ));
             #endregion
+
+            #region echarts
+            bundles.Add(new ScriptBundle("~/bundles/echarts").Include(
+            "~/Scripts/echarts.min.js"
+            ));
+            #endregion
         }
     }
 }

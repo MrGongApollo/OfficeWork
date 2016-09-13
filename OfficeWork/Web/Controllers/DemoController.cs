@@ -28,6 +28,10 @@ namespace Web.Controllers
         {
             return View();
         }
-        
+
+        public ActionResult Echart()
+        {
+            return View();
+        }
 	}
 }

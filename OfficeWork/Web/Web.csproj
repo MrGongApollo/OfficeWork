@@ -611,6 +611,7 @@
     <Content Include="Images\login_bg.jpg" />
     <Content Include="Scripts\base.js" />
     <Content Include="Scripts\base.min.js" />
+    <Content Include="Scripts\echarts.min.js" />
     <Content Include="Scripts\Index.js" />
     <Content Include="Scripts\Index.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -649,6 +650,7 @@
     <Content Include="Views\Demo\Bootstrapvalidator.cshtml" />
     <Content Include="Views\Demo\Bootstrapcolorpicker.cshtml" />
     <Content Include="Views\Demo\summernote.cshtml" />
+    <Content Include="Views\Demo\Echart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
