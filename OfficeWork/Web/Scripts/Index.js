@@ -25,6 +25,7 @@
         "data-ajax-update": "#page-main",
         "data-ajax": "true",
         "data-ajax-success": "UpdatePage",
+        "data-ajax-failure":"fnAjaxError",
         "data-href": ""
     };
 
@@ -110,7 +111,7 @@
 });
 
 //切换页面时候更新
-function UpdatePage() {
+function UpdatePage(data, status, xhr) {
     UpdateProgressBar();
     UpdateBreadcrumb();
     UpdateMessage();
@@ -157,4 +158,16 @@ function UpdateMessage() {
     toastr.info("您有一条新的消息，请及时查看！");
     var msgcnt = parseInt($("#user_notice .badge").text());
     $("#user_notice .badge").text(++msgcnt);
+}
+
+function fnAjaxError(xhr, status, error)
+{
+    if (xhr.status == 908)
+    {
+        swal("用户当前身份过期", "1秒后自动跳转", "error");
+        window.location.replace(document.weburl + "Login/Index");
+    }
+    else {
+        swal("操作失败", error, "error");
+    }
 }
