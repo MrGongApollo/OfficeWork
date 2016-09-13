@@ -21,7 +21,7 @@
 
         var $table = $('#table');
         $table.bootstrapTable({
-            url: "@Url.Content("~/XT/GetSysMenus")",
+            url: document.weburl + "odata/T_SysMenus",
             toolbar: '#toolbar',    //工具按钮用哪个容器
             showRefresh: false, //是否显示刷新按钮
             dataType: "json",
@@ -31,6 +31,8 @@
             singleSelect: true, //单选
             sortable: true, //是否启用排序
             showColumns: true, //字段筛选
+            sortName: 'CreateTime',
+            sortOrder: 'desc',
             dataLocale: "zh-CN", //表格汉化
             search: false, //显示搜索框
             pageSize: 10, //每页的记录行数（*）
@@ -46,16 +48,23 @@
 
             },
             queryParams: function (params) {
-                return {
-                    // filter: { MenuName: $("#query_menu_name").val(), MenuLevel: $("#query_menu_level :selected").val(), MenuType: $("#query_menu_type :selected").val() },
-                    offSet: params.offset,
-                    orderBy: params.sort || "CreateTime",
-                    sortType: params.order,
-                    pageSize: params.limit
-                };
-
+                var queryParams = {};
+                queryParams["$top"] = params.limit;
+                queryParams["$skip"] = params.offset;
+                queryParams["$count"] = true;
+                queryParams["$filter"] = GetFilters();
+                if (params.sort)
+                    queryParams["$orderby"] = params.sort + " " + params.order;
+                return queryParams;
             },
             sidePagination: "server", //服务端处理分页
+            responseHandler: function (res) {
+                var ret = {
+                    total: res["@@odata.count"],
+                    rows: res.value
+                };
+                return ret;
+            },
             columns: [
                 { checkbox: true, align: 'center', valign: 'middle' },
                 {
@@ -285,44 +294,55 @@
             }
         });
     }
+
+
+    //查询方法
+    function GetFilters() {
+        var filters = "IsDeleted eq false";
+        filters += $("#query_menu_level>option:selected").val() != "all" ? " and (MenuLevel eq " + $("#query_menu_level>option:selected").val() + ")" : "";
+        filters += $("#query_menu_name").val() ? " and (contains(MenuName,'" + $("#query_menu_name").val() + "'))" : "";
+        return filters;
+    }
 </script>
 
 <div class="container-fluid">
-    <div class="panel-body" style="padding:0px;">
-        <div class="panel panel-default">
-            <div class="panel-heading panel-headicon"><i class="fa fa-search"></i> <h5>查询条件</h5></div>
+    <form method="post">
+        <div class="panel-body" style="padding:0px;">
+            <div class="panel panel-default">
+                <div class="panel-heading panel-headicon"><i class="fa fa-search"></i> <h5>查询条件</h5></div>
 
-            <div class="panel-body">
-                <div class="row margin_tb_5">
-                    <div class="col-md-5">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>菜单名称
-                            </span>
-                            <input type="text" class="form-control" id="query_menu_name" placeholder="请输入菜单名称" />
+                <div class="panel-body">
+                    <div class="row margin_tb_5">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>菜单名称
+                                </span>
+                                <input type="text" class="form-control" id="query_menu_name" placeholder="请输入菜单名称" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar"></i>菜单等级
-                            </span>
-                            <select class="form-control" id="query_menu_level">
-                                <option value="all">全部</option>
-                                <option value="1">一级菜单</option>
-                                <option value="2">二级菜单</option>
-                            </select>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>菜单等级
+                                </span>
+                                <select class="form-control" id="query_menu_level">
+                                    <option value="all">全部</option>
+                                    <option value="1">一级菜单</option>
+                                    <option value="2">二级菜单</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-2 text-right">
-                        <button type="button" id="btn_query" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> 查询</button>
-                        <button type="button" id="btn_reset" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i> 重置</button>
-                    </div>
-                </div><!-- /.row -->
+                        <div class="col-md-2 text-right">
+                            <button type="button" id="btn_query" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> 查询</button>
+                            <button type="reset" id="btn_reset" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i> 重置</button>
+                        </div>
+                    </div><!-- /.row -->
+                </div>
+
             </div>
-
         </div>
-    </div>
+    </form>
 
     <div id="toolbar" class="btn-group">
         <button id="btn_Add" type="button" class="btn btn-success">

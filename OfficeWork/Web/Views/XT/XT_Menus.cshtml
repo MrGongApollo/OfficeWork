@@ -64,7 +64,7 @@
             sidePagination: "server", //服务端处理分页
             responseHandler: function (res) {
                 var ret = {
-                    total: res.value.length,
+                    total: res["@@odata.count"],
                     rows: res.value
                 };
                 return ret;
@@ -253,7 +253,7 @@
             cancelButtonText: "否",
             closeOnConfirm: false
         }, function () {
-            debugger
+            
             $.web.get({ url: "@Url.Content("~/XT/PublishWXMenus")" }, {
                 OnSuccess: function(xhr) {
                     switch (xhr.Key) {
@@ -304,6 +304,7 @@
         });
     }
 
+    //查询方法
     function GetFilters()
     {
         var filters = "IsDeleted eq false";
@@ -315,53 +316,56 @@
 </script>
 
 <div class="container-fluid">
-    <div class="panel-body" style="padding:0px;">
-        <div class="panel panel-default">
-            <div class="panel-heading panel-headicon"><i class="fa fa-search"></i> <h5>查询条件</h5></div>
+    <form method="post">
+        <div class="panel-body" style="padding:0px;">
+            <div class="panel panel-default">
+                <div class="panel-heading panel-headicon"><i class="fa fa-search"></i> <h5>查询条件</h5></div>
 
-            <div class="panel-body">
-                <div class="row margin_tb_5">
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-th"></i> 菜单名称
-                            </span>
-                            <input type="text" class="form-control" id="query_menu_name" placeholder="请输入菜单名称" />
+                <div class="panel-body">
+                    <div class="row margin_tb_5">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-th"></i> 菜单名称
+                                </span>
+                                <input type="text" class="form-control" id="query_menu_name" placeholder="请输入菜单名称" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-signal"></i> 菜单等级
-                            </span>
-                            <select class="form-control" id="query_menu_level">
-                                <option value="all">全部</option>
-                                <option value="button">一级菜单</option>
-                                <option value="sub_button">二级菜单</option>
-                            </select>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-signal"></i> 菜单等级
+                                </span>
+                                <select class="form-control" id="query_menu_level">
+                                    <option value="all">全部</option>
+                                    <option value="button">一级菜单</option>
+                                    <option value="sub_button">二级菜单</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fa fa-tags"></i> 菜单类型
-                            </span>
-                            <select class="form-control" id="query_menu_type">
-                                <option value="all">全部</option>
-                                <option value="click">click</option>
-                                <option value="view">view</option>
-                            </select>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-tags"></i> 菜单类型
+                                </span>
+                                <select class="form-control" id="query_menu_type">
+                                    <option value="all">全部</option>
+                                    <option value="click">click</option>
+                                    <option value="view">view</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 text-right">
-                        <button type="button" id="btn_query" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> 查询</button>
-                        <button type="button" id="btn_reset" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i> 重置</button>
-                    </div>
-                </div><!-- /.row -->
+                        <div class="col-md-3 text-right">
+                            <button type="button" id="btn_query" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> 查询</button>
+                            <button type="reset" id="btn_reset" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i> 重置</button>
+                        </div>
+                    </div><!-- /.row -->
+                </div>
+
             </div>
-
         </div>
-    </div>
+    </form>
+
 
     <div id="toolbar" class="btn-group">
         <button id="btn_Add" type="button" class="btn btn-success">
