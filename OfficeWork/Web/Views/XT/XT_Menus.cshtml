@@ -54,7 +54,7 @@
                 var queryParams = {};
                 queryParams["$top"] = params.limit;
                 queryParams["$skip"] = params.offset;
-                //params["$inlinecount"] = "allpages";
+                queryParams["$count"] = true;
                 queryParams["$filter"] = GetFilters();
                 if (params.sort)
                     queryParams["$orderby"] = params.sort + " " + params.order;
@@ -307,7 +307,9 @@
     function GetFilters()
     {
         var filters = "IsDeleted eq false";
-
+        filters += $("#query_menu_type>option:selected").val()!= "all" ? " and (MenuType eq '" + $("#query_menu_type>option:selected").val() + "')" : "";
+        filters += $("#query_menu_level>option:selected").val()!= "all" ? " and (MenuLevel eq '" + $("#query_menu_level>option:selected").val() + "')" : "";
+        filters += $("#query_menu_name").val() ? " and (contains(MenuName,'" + $("#query_menu_name").val() + "'))" : "";
         return filters;
     }
 </script>
