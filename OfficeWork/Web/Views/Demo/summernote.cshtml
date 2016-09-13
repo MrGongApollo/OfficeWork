@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "summernote";
+}
+@Styles.Render("~/bundles/summernote/css")
+@Scripts.Render("~/bundles/summernote/js")
+<script type="text/javascript">
+    window.curlocation = ['表单', '文本编辑器'];
+    $(function () {
+        $("#summernote").summernote({
+            //      toolbar: [
+            // ['style', ['bold', 'italic', 'underline', 'clear']],
+            // ['font', ['strikethrough']],
+            // ['fontsize', ['fontsize']],
+            // ['color', ['color']],
+            // ['para', ['ul', 'ol', 'paragraph']],
+            // ['height', ['height']],
+            //],
+            lang: 'zh-CN',
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,                 // set focus to editable area after initializing summernote});
+            callbacks: {
+                onInit: function () {
+                    console.log('Summernote is launched');
+                },
+                onEnter: function (e) {
+                    console.log('Enter/Return key pressed');
+                },
+                onFocus: function (e) {
+                    console.log('Editable area is focused');
+                },
+                onKeyup: function (e) {
+                    console.log('Key is released:', e.keyCode);
+                },
+                onKeydown: function (e) {
+                    console.log('Key is pressed:', e.keyCode);
+                },
+                onImageUpload: function (files, editor, $editable) {
+                    console.log('image upload:', files, editor, $editable);
+                },
+                onChange: function (contents, $editable) {
+                    console.log('onChange:', contents, $editable);
+                }
+            }
+        });
+
+        //$('#summernote').destroy();
+    });
+</script>
+
+
+<div id="summernote"></div>
+
