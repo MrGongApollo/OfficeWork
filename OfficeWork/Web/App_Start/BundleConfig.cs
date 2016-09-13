@@ -82,6 +82,11 @@ namespace Web
                         ));
             #endregion
 
+            #region bootstrap-checkbox
+            bundles.Add(new StyleBundle("~/bundles/bootstrap-checkbox").Include(
+                        "~/Content/bootstrap-checkbox/css/bootstrap-checkbox.min.css"
+                        ));
+            #endregion
         }
     }
 }
