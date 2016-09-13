@@ -116,7 +116,7 @@
             type = timeformat ? timeformat : type;
             return date.getFullYear() + type + month + type + currentDate + " " + hour + ":" + minute;
         },
-        dataFormat: function (dataValue, fmtOpts) {
+        dateFormat: function (dataValue, fmtOpts) {
             //格式化选项匹配正则
             var formatOptions = {
                 numeric: /N\d{1}/ig,
