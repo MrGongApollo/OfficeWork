@@ -20,7 +20,14 @@ namespace Web.Filter
             }
             else
             {
-                httpContext.Response.Redirect("~/Login/Index");
+                if (httpContext.Request.IsAjaxRequest())
+                {
+                    throw new HttpException(908,"身份过期");
+                }
+                else
+                {
+                    httpContext.Response.Redirect("~/Login/Index");
+                }
                 return false;
             }
         }
