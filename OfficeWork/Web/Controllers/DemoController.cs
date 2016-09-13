@@ -19,5 +19,10 @@ namespace Web.Controllers
         {
             return View();
         }
+        public ActionResult Bootstrapcolorpicker()
+        {
+            return View();
+        }
+        
 	}
 }

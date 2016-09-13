@@ -184,6 +184,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\XTController.cs" />
@@ -202,6 +203,15 @@
     <Content Include="Content\bootstrap-checkbox\css\bootstrap-checkbox.css" />
     <Content Include="Content\bootstrap-checkbox\css\bootstrap-checkbox.min.css" />
     <Content Include="Content\bootstrap-checkbox\Readme.txt" />
+    <Content Include="Content\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
+    <Content Include="Content\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
+    <Content Include="Content\bootstrap-colorpicker\img\alpha-horizontal.png" />
+    <Content Include="Content\bootstrap-colorpicker\img\alpha.png" />
+    <Content Include="Content\bootstrap-colorpicker\img\hue-horizontal.png" />
+    <Content Include="Content\bootstrap-colorpicker\img\hue.png" />
+    <Content Include="Content\bootstrap-colorpicker\img\saturation.png" />
+    <Content Include="Content\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
+    <Content Include="Content\bootstrap-colorpicker\js\bootstrap-colorpicker.min.js" />
     <Content Include="Content\bootstrap-daterangepicker\css\daterangepicker-bs3.css" />
     <Content Include="Content\bootstrap-daterangepicker\css\daterangepicker.css" />
     <Content Include="Content\bootstrap-daterangepicker\css\daterangepicker.min.css" />
@@ -503,6 +513,8 @@
     <Content Include="Content\font-awesome\css\font-awesome.css.map" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\bootstrap-checkbox\css\bootstrap-checkbox.less" />
+    <Content Include="Content\bootstrap-colorpicker\css\bootstrap-colorpicker.css.map" />
+    <Content Include="Content\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Images\login_bg.jpg" />
     <Content Include="Scripts\base.js" />
@@ -541,6 +553,9 @@
     <Content Include="Views\Common\Share_MsgCenter.cshtml" />
     <Content Include="Views\Common\User_Setting.cshtml" />
     <Content Include="Views\Common\User_Info.cshtml" />
+    <Content Include="Views\Demo\CheckBox.cshtml" />
+    <Content Include="Views\Demo\Bootstrapvalidator.cshtml" />
+    <Content Include="Views\Demo\Bootstrapcolorpicker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

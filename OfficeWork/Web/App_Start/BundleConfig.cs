@@ -87,6 +87,15 @@ namespace Web
                         "~/Content/bootstrap-checkbox/css/bootstrap-checkbox.min.css"
                         ));
             #endregion
+
+            #region bootstrap-colorpicker
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-colorpicker/js").Include(
+            "~/Content/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"
+            ));
+            bundles.Add(new StyleBundle("~/bundles/bootstrap-colorpicker/css").Include(
+                        "~/Content/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css"
+                        ));
+            #endregion
         }
     }
 }
