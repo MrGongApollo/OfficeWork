@@ -97,16 +97,6 @@ namespace Web
                         ));
             #endregion
 
-            #region summernote
-            bundles.Add(new ScriptBundle("~/bundles/summernote/js").Include(
-            "~/Content/summernote/js/summernote.min.js",
-            "~/Content/summernote/lang/summernote-zh-CN.min.js"
-            ));
-            bundles.Add(new StyleBundle("~/bundles/summernote/css").Include(
-                        "~/Content/summernote/summernote.min.css"
-                        ));
-            #endregion
-
             #region echarts
             bundles.Add(new ScriptBundle("~/bundles/echarts").Include(
             "~/Scripts/echarts.min.js"
