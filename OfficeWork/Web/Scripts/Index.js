@@ -86,6 +86,7 @@
         }
     });
 
+    //注销
     $("#Signout").click(function () {
         swal({
             title: "确认注销当前用户",
@@ -125,6 +126,8 @@ function UpdateProgressBar() {
         $(this).width(0);
     });
 }
+
+//更新面包屑
 function UpdateBreadcrumb() {
     //更新当前地址
 
@@ -160,6 +163,7 @@ function UpdateMessage() {
     $("#user_notice .badge").text(++msgcnt);
 }
 
+//页面加载失败
 function fnAjaxError(xhr, status, error)
 {
     if (xhr.status == 908)
@@ -168,6 +172,6 @@ function fnAjaxError(xhr, status, error)
         window.location.replace(document.weburl + "Login/Index");
     }
     else {
-        swal("操作失败", error, "error");
+        swal("操作失败", error||"未知错误", "error");
     }
 }
