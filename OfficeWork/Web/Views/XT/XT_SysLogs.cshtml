@@ -31,15 +31,22 @@
         function LoadTab(_index) {
 
             var $tab = $("#logTab>li").eq(_index),
-                $showTab=$($tab.find(">a").attr("href"));
+            $showTab=$($tab.find(">a").attr("href"));
             $showTab.addClass("in active").siblings(".in.active").removeClass("in active");
             $table = $showTab.find('.table');
             if (!$tab.attr("data-load"))
             {
+                var _filters={};
+
                 $tab.attr("data-load", true);
 
                 $.each($showTab.find('.bootstrap-daterangepicker'), function (i, el) {
-                    $(el).val("2016-9-16 - 2016-9-17").daterangepicker(null, function (start, end, label) {
+                    var b_dt = $.web.today(),
+                        e_dt = $.web.dateAddDays(b_dt, 3);
+                    $(el).val(b_dt + " - " + e_dt).attr({
+                        "data-date-start": b_dt,
+                        "data-date-end": e_dt
+                    }).daterangepicker(null, function (start, end, label) {
                         console.log(start.toISOString(), end.toISOString(), label);
 
                         $(el).attr({
@@ -55,10 +62,18 @@
                     });
                 });
 
-                var uri, tabcolumns;
-                switch (_index) {
-                    case 0:
+                var uri, tabcolumns,$date=$showTab.find(".bootstrap-daterangepicker");
+                switch ($showTab.attr("id")) {
+                    case "TextLogs":
                         uri = "T_TextMessage";
+                        //if ($date.val())
+                        //{
+                        //    var tempfilter = "SysCreateTime ge DateTime'" + $date.attr("data-date-start") + "'";
+                        //    tempfilter += " and SysCreateTime lt DateTime'" + $.web.dateAddDays($date.attr("data-date-end"), 1) + "'";
+                        //    _filters["$filter"] = tempfilter;
+                        //}
+                        
+
                         tabcolumns = [
                         {
                             checkbox: true, align: 'center', valign: 'middle', formatter: function (value, row, index) {
@@ -66,7 +81,12 @@
                             }
                         },
                         { title: '发送者', field: 'FromUserName', align: 'left', valign: 'middle', sortable: true, width: 50 },
-                        { title: '日志内容', field: 'Content', align: 'left', valign: 'middle', sortable: true },
+                        {
+                            title: '日志内容', field: 'Content', align: 'left', valign: 'middle', sortable: true,
+                            formatter: function (value) {
+                                return value ? value.replace(/<([^>]+)>([^<]+)<\/([^>]+)>/g, "&lt;$1&gt;$2&lt;/$3&gt;") : "";
+                            }
+                        },
                         {
                             title: '创建日期', field: 'SysCreateTime', align: 'center', valign: 'middle', sortable: true,
                             formatter: function (value) {
@@ -75,7 +95,7 @@
                         }
                         ];
                         break;
-                    case 1:
+                    case "ImgLogs":
                         uri = "T_ImgMessage";
                         tabcolumns = [
                         {
@@ -92,8 +112,16 @@
                         }
                         ];
                         break;
-                    case 2:
+                    case "ErrorLogs":
                         uri = "T_SysLogs";
+                        var tempfilter = "LogType eq 'error'";
+                        //if ($date.val()) {
+                        //    tempfilter += " and CreateTime ge DateTime'" + $date.attr("data-date-start") + "'";
+                        //    tempfilter += " and CreateTime lt DateTime'" + $.web.dateAddDays($date.attr("data-date-end"), 1) + "'";
+                        //}
+
+                        _filters["$filter"] = tempfilter;
+
                         tabcolumns = [
                         {
                             checkbox: true, align: 'center', valign: 'middle', formatter: function (value, row, index) {
@@ -139,7 +167,9 @@
 
                     },
                     queryParams: function (params) {
-                        var queryParams = {};
+                        
+                        var queryParams = $.extend({}, _filters);
+                        
                         queryParams["$top"] = params.limit;
                         queryParams["$skip"] = params.offset;
                         queryParams["$count"] = true;
@@ -169,11 +199,16 @@
 </script>
 
 <div class="container-fluid">
-    <ul class="nav nav-pills nav-justified" id="logTab">
-        <li class="active"><a href="#TextLogs" data-toggle="tab">文字日志</a></li>
-        <li><a href="#ImgLogs" data-toggle="tab">图片日志</a></li>
-        <li><a href="#ErrorLogs" data-toggle="tab">错误日志</a></li>
-    </ul>
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="nav nav-pills nav-justified" id="logTab">
+                <li class="active"><a href="#TextLogs" data-toggle="tab">文字消息</a></li>
+                @*<li><a href="#ImgLogs" data-toggle="tab">图片日志</a></li>*@
+                <li><a href="#ErrorLogs" data-toggle="tab">错误日志</a></li>
+            </ul>
+        </div>        
+    </div>
+   
     <div class="tab-content">
         <div class="tab-pane fade in active" id="TextLogs">
             <div class="panel-body nopadding">
