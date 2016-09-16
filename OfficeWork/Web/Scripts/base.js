@@ -301,7 +301,7 @@
             
         },
         //同步
-        get: function (_option) {
+        get: function (_option,_data) {
             try {
                 var ajaxconfig =
                                 {
@@ -314,6 +314,7 @@
                 switch (typeof _option) {
                     case "string":
                         ajaxconfig.url = encodeURI(_option);//地址栏里转码
+                        ajaxconfig.data = _data || {};
                         break;
                     case "object":
                         _option.url = encodeURI(_option.url);//地址栏里转码
@@ -325,8 +326,7 @@
 
                 }
 
-                var $ajax = $.ajax(ajaxconfig);
-                return $ajax;
+                return $.ajax(ajaxconfig);
             }
             catch (e) {
                 console.error(e.message);
@@ -334,7 +334,7 @@
 
         },
         //异步
-        getAsync: function (_option) {
+        getAsync: function (_option, _data) {
             try {
                 var ajaxconfig =
                                 {
@@ -346,6 +346,7 @@
                 switch (typeof _option) {
                     case "string":
                         ajaxconfig.url = encodeURI(_option);//地址栏里转码
+                        ajaxconfig.data = _data || {};
                         break;
                     case "object":
                         _option.url = encodeURI(_option.url);//地址栏里转码
@@ -357,8 +358,7 @@
 
                 }
 
-                var $ajax = $.ajax(ajaxconfig);
-                return $ajax;
+                return $.ajax(ajaxconfig);
             }
             catch (e) {
                 console.error(e.message);
@@ -377,12 +377,13 @@
                     contentType: "application/json;application/x-www-form-urlencoded;charset=utf-8",
                     dataType: 'json'
                 };
+
                 switch (typeof _option) {
                     case "object":
                         $.extend(ajaxconfig, _option);
                         break;
                     case "string":
-                        ajaxconfig.data = _data;
+                        ajaxconfig.data = _data || {};
                         ajaxconfig.url = _option;
                         break;
                     default:
@@ -391,9 +392,8 @@
                 }
 
                 ajaxconfig.url = encodeURI(ajaxconfig.url);//地址栏里转码
-                ajaxconfig.data = JSON.stringify(ajaxconfig.data);//序列化                
-                var $ajax = $.ajax(ajaxconfig);
-                return $ajax;
+                ajaxconfig.data = JSON.stringify(ajaxconfig.data);//序列化
+                return $.ajax(ajaxconfig);
             }
             catch (e)
             {
@@ -415,7 +415,7 @@
                         $.extend(ajaxconfig, _option);
                         break;
                     case "string":
-                        ajaxconfig.data = _data;
+                        ajaxconfig.data = _data || {};
                         ajaxconfig.url = _option;
                         break;
                     default:
@@ -424,9 +424,8 @@
                 }
 
                 ajaxconfig.url = encodeURI(ajaxconfig.url);//地址栏里转码
-                ajaxconfig.data = JSON.stringify(ajaxconfig.data);//序列化                
-                var $ajax = $.ajax(ajaxconfig);
-                return $ajax;
+                ajaxconfig.data = JSON.stringify(ajaxconfig.data);//序列化
+                return $.ajax(ajaxconfig);
             }
             catch (e)
             {
