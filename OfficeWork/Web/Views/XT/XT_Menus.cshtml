@@ -254,14 +254,12 @@
             closeOnConfirm: false
         }, function () {
             
-            $.web.get({ url: "@Url.Content("~/XT/PublishWXMenus")" }, {
-                OnSuccess: function(xhr) {
-                    switch (xhr.Key) {
-                        case "success":
-                        case "error":
-                            swal("操作" + (xhr.Key == "success" ? "成功" : "失败"), xhr.Value, xhr.Key);
-                            break;
-                    }
+            $.web.get( "@Url.Content("~/XT/PublishWXMenus")").done(function (xhr) {
+                switch (xhr.Key) {
+                    case "success":
+                    case "error":
+                        swal("操作" + (xhr.Key == "success" ? "成功" : "失败"), xhr.Value, xhr.Key);
+                        break;
                 }
             });
         });
@@ -271,13 +269,11 @@
 
 
     function SaveMenus(data) {
-        $.web.post("@Url.Content("~/XT/WxMenusSave")", data, function (xhr) {
-            switch (xhr.Key)
-            {
+        $.web.post("@Url.Content("~/XT/WxMenusSave")", data).done(function (xhr) {
+            switch (xhr.Key) {
                 case "success":
                     swal("操作成功", "你的操作已经成功执行", "success");
-                    if (data.operatype != "delete")
-                    {
+                    if (data.operatype != "delete") {
                         $("#Menus_form")[0].reset();
                         $("#Menus_Modal").modal("hide");
                     }
@@ -292,14 +288,12 @@
     }
 
     function LoadMenus() {
-        $.web.get({ url: "@Url.Content("~/XT/GetWxbuttons")", async: true }, {
-            OnSuccess: function (xhr) {
-                if (xhr) {
-                    $("#txt_menu_parent>option:gt(1)").remove();
-                    $.each(xhr, function (_i, _t) {
-                        $("#txt_menu_parent").append($("<option>", { "value": _t.key}).text(_t.name));
-                    });
-                }
+        $.web.getAsync("@Url.Content("~/XT/GetWxbuttons")").done(function (xhr) {
+            if (xhr) {
+                $("#txt_menu_parent>option:gt(1)").remove();
+                $.each(xhr, function (_i, _t) {
+                    $("#txt_menu_parent").append($("<option>", { "value": _t.key }).text(_t.name));
+                });
             }
         });
     }

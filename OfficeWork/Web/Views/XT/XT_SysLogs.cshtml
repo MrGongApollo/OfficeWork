@@ -12,15 +12,22 @@
         $(function () {
         window.curlocation = ['系统管理','微信系统日志'];
 
+
+
         $.each($('.bootstrap-daterangepicker'), function (i, el) {
-            $(el).daterangepicker(null, function (start, end, label) {
+            $(el).val("2016-9-16 - 2016-9-17").daterangepicker(null, function (start, end, label) {
                 console.log(start.toISOString(), end.toISOString(), label);
 
                 $(el).attr({
-                    "data-date-start": start,
-                    "data-date-end": end
+                    "data-date-start": $.web.dateFormat(new Date(start), "yyyy-MM-dd"),
+                    "data-date-end": $.web.dateFormat(new Date(end), "yyyy-MM-dd")
                 });
 
+            }).on('apply.daterangepicker', function (ev, picker) {
+                $(el).attr({
+                    "data-date-start": $.web.dateFormat(new Date(picker.startDate), "yyyy-MM-dd"),
+                    "data-date-end": $.web.dateFormat(new Date(picker.endDate), "yyyy-MM-dd")
+                });
             });
         });
 
@@ -29,11 +36,12 @@
 
         var $table = $('#table');
         $table.bootstrapTable({
-            url: "@Url.Content("~/XT/GetSysLogs")",
+            url:document.weburl+"odata/T_SysLogs",
             toolbar: '#toolbar',    //工具按钮用哪个容器
             showRefresh: false, //是否显示刷新按钮
             dataType: "json",
             method: 'get',
+            sortName: 'CreateTime',
             sortOrder: 'desc',
             //ajax: false,
             //ajaxOptions: { headers: { "Accept": "application/json; odata=verbose", "DataServiceVersion": "3.0", "MaxDataServiceVersion": "3.0"} },
@@ -59,16 +67,24 @@
 
             },
             queryParams: function (params) {
-
-                return {
-                    offSet: params.offset,
-                    orderBy: params.sort||"CreateTime",
-                    sortType:params.order,
-                    pageSize: params.limit
-                };
+                var queryParams = {};
+                queryParams["$top"] = params.limit;
+                queryParams["$skip"] = params.offset;
+                queryParams["$count"] = true;
+                queryParams["$filter"] = GetFilters();
+                if (params.sort)
+                    queryParams["$orderby"] = params.sort + " " + params.order;
+                return queryParams;
 
             },
             sidePagination: "server", //服务端处理分页
+            responseHandler: function (res) {
+                var ret = {
+                    total: res["@@odata.count"],
+                    rows: res.value
+                };
+                return ret;
+            },
             columns: [
                 {
                     checkbox: true, align: 'center', valign: 'middle', formatter: function (value, row, index) {
@@ -79,7 +95,7 @@
                 {
                     title: '创建日期', field: 'CreateTime', align: 'center', valign: 'middle', sortable: true,
                     formatter: function (value) {
-                        return $.web.changetoLocaleTimeString(value);
+                        return $.web.dateFormat(value, "yyyy-MM-dd HH:mm");
                     }
                 },
             //{title: '操作',field: 'id',align: 'center',
@@ -103,7 +119,11 @@
             $("#btn_add").click(function () {
                 $("#myModal").modal("show");
             });
-    });
+        });
+
+        function GetFilters() {
+            return "LogType eq 'error'";
+        }
 </script>
 
 <div class="container-fluid">
@@ -119,7 +139,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-calendar"></i>起止日期
                             </span>
-                            <input type="text" class="form-control bootstrap-daterangepicker" readonly="readonly" />
+                            <input type="text" class="form-control bootstrap-daterangepicker" readonly="readonly"/>
                         </div>
                     </div>
 

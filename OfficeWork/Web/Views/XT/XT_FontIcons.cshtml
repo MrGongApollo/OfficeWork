@@ -11,15 +11,11 @@
 <script type="text/javascript">
     window.curlocation = ['系统管理', '字体图标'];
     $(function () {
-        $.web.get({ url: document.weburl + "odata/T_FontIcons?$filter=IsDeleted eq false&$orderby=SortNum", async: true },
-            {
-            OnSuccess: function (xhr)
-            {
-                $.each(xhr.value, function (_i, _t) {
-                    $("#Icon_container>.row").append($("<div>", { "class": "col-md-3" }).text(_t.FontClass).prepend($("<i>", { "class": _t.FontClass })));
-                });
-            }
-        })
+        $.web.getAsync(document.weburl + "odata/T_FontIcons?$filter=IsDeleted eq false&$orderby=SortNum").done(function (xhr) {
+            $.each(xhr.value, function (_i, _t) {
+                $("#Icon_container>.row").append($("<div>", { "class": "col-md-3" }).text(_t.FontClass).prepend($("<i>", { "class": _t.FontClass })));
+            });
+        });
     });
 
 </script>

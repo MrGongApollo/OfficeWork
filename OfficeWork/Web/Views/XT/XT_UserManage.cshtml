@@ -105,29 +105,6 @@
         $("#btn_query").click(function () {
             $table.bootstrapTable('refresh');
         });
-
-        //删除
-        $("#btn_Delete").click(function () {
-            var rowData = $table.bootstrapTable('getSelections');
-            if (rowData.length == 0) { $.web.toast("请选择一行数据！"); return; }
-            rowData = rowData[0];
-            swal({
-                title: "确认解绑所选用户?",
-                text: "一旦解绑无法恢复!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "是",
-                cancelButtonText: "否",
-                closeOnConfirm: false
-            }, function ()
-            {
-                //SaveMenus({
-                //        menu: { MenuId: rowData.MenuId },
-                //        operatype: "delete"
-                //    });
-            }); 
-        });
     });
 </script>
 
