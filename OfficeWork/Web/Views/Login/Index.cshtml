@@ -123,7 +123,7 @@
                 }
             }).on('success.form.bv', function (e) {
                 e.preventDefault();
-                $.web.post("@Url.Content("~/Login/LoginChecked")", { username: $("#username").val(), password: $("#password").val() }, function (xhr) {
+                $.web.post("@Url.Content("~/Login/LoginChecked")", { username: $("#username").val(), password: $("#password").val() }).done(function (xhr) {
                     var IsValid = xhr.Ret.Key == "success";
                     swal("登录" + (IsValid ? "成功" : "失败"), xhr.Ret.Value, xhr.Ret.Key);
                     if (IsValid)
