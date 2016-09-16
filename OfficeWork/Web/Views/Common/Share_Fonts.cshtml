@@ -13,24 +13,21 @@
 <script type="text/javascript">
     $(function () {
         var $row = $("#fonts_container>.row");
-        $.web.get({ url:document.weburl + "odata/T_FontIcons?$filter=IsDeleted eq false&$orderby=SortNum", async: true },
-            {
-            OnSuccess: function (xhr)
-            {
-                $row.empty();
-                $.each(xhr.value, function (_i, _t) {
-                    $row.append($("<div>", { "class": "col-md-3", "data-icons": _t.FontClass }).text(_t.FontClass).prepend($("<i>", { "class": _t.FontClass })).click(function () {
-                        if ($(this).hasClass("active")) { return; }
-                        $(this).addClass("active").siblings(".active").removeClass("active");
-                        return false;
-                    }));
-                });
-            }
-        })
+        $.web.getAsync(document.weburl + "odata/T_FontIcons?$filter=IsDeleted eq false&$orderby=SortNum").done(function (xhr) {
+            $.each(xhr.value, function (_i, _t) {
+                $row.append($("<div>", { "class": "col-md-3", "data-icons": _t.FontClass }).text(_t.FontClass).prepend($("<i>", { "class": _t.FontClass })).click(function () {
+                    if ($(this).hasClass("active")) { return; }
+                    $(this).addClass("active").siblings(".active").removeClass("active");
+                    return false;
+                }));
+            });
+            $row.prev().addClass($row.prev().hasClass("hide")?"":"hide");
+        });
     });
 
 </script>
 
 <div class="container-fluid" id="fonts_container">
-    <div class="row">正在加载中...</div>
+    <p>正在加载中...</p>
+    <div class="row"></div>
 </div>
