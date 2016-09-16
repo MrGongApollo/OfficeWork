@@ -19,7 +19,17 @@ namespace Office.Data.Models
     {
         [Key]
         public string SysLogId { get; set; }
+        /// <summary>
+        /// 日志内容
+        /// </summary>
         public string SysContent { get; set; }
+        /// <summary>
+        /// 日志类型
+        /// </summary>
+        public string LogType { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
         public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }
