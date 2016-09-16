@@ -29,5 +29,7 @@ using Office.Data.Models;
             public DbSet<T_FontIcons> T_FontIcons { get; set; }
             public DbSet<T_SysMenus> T_SysMenus { get; set; }
             public DbSet<T_SysUser> T_SysUser { get; set; }
+            public DbSet<T_TextMessage> T_TextMessage { get; set; }
+            public DbSet<T_ImgMessage> T_ImgMessage { get; set; }
         }
     }

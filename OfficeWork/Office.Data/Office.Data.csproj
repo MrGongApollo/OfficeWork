@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\T_FontIcons.cs" />
+    <Compile Include="Model\T_ImgMessage.cs" />
+    <Compile Include="Model\T_TextMessage.cs" />
     <Compile Include="Model\T_SysLogs.cs" />
     <Compile Include="Model\T_SysMenus.cs" />
     <Compile Include="Model\T_SysUser.cs" />
