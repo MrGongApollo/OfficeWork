@@ -194,6 +194,8 @@
     <Compile Include="Filter\LoginCheckedAttribute.cs" />
     <Compile Include="Help\CommonHelper.cs" />
     <Compile Include="Models\KeyValueModel.cs" />
+    <Compile Include="OdataModel\T_ImgMessage.cs" />
+    <Compile Include="OdataModel\T_TextMessage.cs" />
     <Compile Include="OdataModel\T_SysMenusController.cs" />
     <Compile Include="OdataModel\T_FontIcons.cs" />
     <Compile Include="OdataModel\T_SysLogs.cs" />
