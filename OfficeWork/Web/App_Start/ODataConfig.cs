@@ -22,7 +22,8 @@ namespace Web
             builder.EntitySet<T_Wx_Menus>("T_Wx_Menus");
             builder.EntitySet<T_FontIcons>("T_FontIcons");
             builder.EntitySet<T_SysLogs>("T_SysLogs");
-
+            builder.EntitySet<T_ImgMessage>("T_ImgMessage");
+            builder.EntitySet<T_TextMessage>("T_TextMessage");
             return builder.GetEdmModel();
 
         }

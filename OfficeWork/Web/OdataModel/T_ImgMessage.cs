@@ -8,14 +8,14 @@ using Office.Data.Models;
 
 namespace Web.OdataModel
 {
-    public class T_TextMessageController : ODataController
+    public class T_ImgMessageController : ODataController
     {
         private WechatEntities db = new WechatEntities();
 
         [EnableQuery]
-        public IQueryable<T_TextMessage> Get()
+        public IQueryable<T_ImgMessage> Get()
         {
-            return db.T_TextMessage;
+            return db.T_ImgMessage;
         }
 
         protected override void Dispose(bool disposing)
