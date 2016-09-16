@@ -34,7 +34,7 @@
                             $.extend(_obj_a, { href: t.href, "data-href": t.href || "" });
 
                             $ul.append($("<li>").append(
-                                $("<a>", _obj_a).text(t.title).prepend($("<i>", { "class": "menuIcon " + t.icon })).click(function () {
+                                $("<a>", _obj_a).append($("<i>", { "class": "menuIcon " + t.icon })).append($("<span>").text(t.title)).click(function () {
                                     $("#header_progress").stop(false, true).animate({ width: "80%" }, 2000, "swing");
                                 })
                                 ));
