@@ -12,6 +12,10 @@
 .marI_t(@margin){margin-top:@margin!important;}
 .marI_b(@margin){margin-bottom:@margin!important;}
 
+.pad_l(@padding){padding-left:@padding;}
+.pad_r(@padding){padding-right:@padding;}
+.pad_t(@padding){padding-top:@padding;}
+.pad_b(@padding){padding-bottom:@padding;}
 
 
 .bg(@color){background-color: @color}
@@ -35,7 +39,7 @@ textarea{resize: none;}
 .font-lishu{font-family: "隶书" !important;}
 .font-italic{font-style: italic;}
 .small{font-size: .8em;}
-.xsmall{font-size: 0.7em;}
+.xsmall{font-size:.7em;}
 .text-center{text-align: center;}
 .text-bold{font-weight: bold;}
 
@@ -49,19 +53,21 @@ textarea{resize: none;}
 .nomargin{margin: 0 !important;}
 .margin_l_0{.marI_l(0);}
 .margin_r_0{.marI_r(0);}
-
-.nomr{margin-right: 0!important;}
-.nopadding{padding: 0 !important;}
-
+.margin_t_0{.marI_t(0);}
+.margin_b_0{.marI_b(0);}
 .margin_lr_5{.mar_l(5px);.mar_r(5px);}
 .margin_tb_5{.mar_t(5px);.mar_b(5px);}
 
-.padding_lr_5{padding-right:5px;padding-left: 5px;}
 
+.nopadding{padding: 0 !important;}
 
+.padding_l_0{.pad_l(0);}
+.padding_r_0{.pad_r(0);}
+.padding_t_0{.pad_t(0);}
+.padding_b_0{.pad_b(0);}
 
-
-
+.padding_lr_5{.pad_l(5px);.pad_r(5px);}
+.padding_tb_5{.pad_t(5px);.pad_b(5px);}
 
 
 /***********字体，背景颜色  begin****************/
@@ -135,3 +141,6 @@ textarea{resize: none;}
       }
      
 }
+
+/**************bootstrap nav extend*****************************/
+.extend-nav.nav>li>a{border: 1px solid;border-radius: 0;border-bottom: 0;}
