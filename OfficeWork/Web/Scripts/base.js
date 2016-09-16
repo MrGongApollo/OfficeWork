@@ -300,136 +300,137 @@
                 });
             
         },
-        get: function (_option, _funobj) {
-            var ajaxconfig =
-                {
-                    type: "GET",
-                    contentType: "application/json;application/x-www-form-urlencoded;charset=utf-8",
-                    dataType: 'json',
-                    async: false
-                },
-                funconfig = {
-                    OnSuccess: function () {
+        //同步
+        get: function (_option) {
+            try {
+                var ajaxconfig =
+                                {
+                                    type: "GET",
+                                    contentType: "application/json;application/x-www-form-urlencoded;charset=utf-8",
+                                    dataType: 'json',
+                                    async: false,
+                                };
+                if (!_option) { console.warn("参数不可为空！"); return; }
+                switch (typeof _option) {
+                    case "string":
+                        ajaxconfig.url = encodeURI(_option);//地址栏里转码
+                        break;
+                    case "object":
+                        _option.url = encodeURI(_option.url);//地址栏里转码
+                        $.extend(ajaxconfig, _option);
+                        break;
+                    default:
+                        console.warn("参数类型不正确，必须是string,或者object");
+                        return;
 
-                    },
-                    onFailure: function () {
+                }
 
-                    },
-                    OnComplete: function () {
-
-                    }
-                };
-            if (!_option) { console.warn("参数不可为空！"); return; }
-            switch (typeof _option) {
-                case "string":
-                    ajaxconfig.url = encodeURI(_option);//地址栏里转码
-                    break;
-                case "object":
-                    _option.url = encodeURI(_option.url);//地址栏里转码
-                    $.extend(ajaxconfig, _option);
-                    break;
-                default:
-                    console.warn("参数类型不正确，必须是string,或者object");
-                    return;
-
+                var $ajax = $.ajax(ajaxconfig);
+                return $ajax;
             }
-            
-            if (_funobj) {
-                $.extend(funconfig, _funobj);
+            catch (e) {
+                console.error(e.message);
             }
 
-            $.ajax(ajaxconfig)
-            .done(function (xhr) {
-                funconfig.OnSuccess(xhr);
-            })
-            .fail(function (err) {
-                funconfig.onFailure(err);
-            })
-            .always(function() {
-                funconfig.OnComplete();
-            });
         },
-        post: function (_url, _data, successFnback, failFnback) {
-            $.ajax({
-                url: encodeURI(_url),
-                async: false,
-                type: "POST",
-                data: JSON.stringify(_data),
-                contentType: "application/json;application/x-www-form-urlencoded;charset=utf-8",
-                dataType: 'json'
-            })
-            .done(function (xhr) {
-                if (successFnback) {
-                    successFnback(xhr);
+        //异步
+        getAsync: function (_option) {
+            try {
+                var ajaxconfig =
+                                {
+                                    type: "GET",
+                                    contentType: "application/json;application/x-www-form-urlencoded;charset=utf-8",
+                                    dataType: 'json'
+                                };
+                if (!_option) { console.warn("参数不可为空！"); return; }
+                switch (typeof _option) {
+                    case "string":
+                        ajaxconfig.url = encodeURI(_option);//地址栏里转码
+                        break;
+                    case "object":
+                        _option.url = encodeURI(_option.url);//地址栏里转码
+                        $.extend(ajaxconfig, _option);
+                        break;
+                    default:
+                        console.warn("参数类型不正确，必须是string,或者object");
+                        return;
+
                 }
-            })
-            .fail(function (err) {
-                if (failFnback) {
-                    failFnback(err);
-                }
-            });
+
+                var $ajax = $.ajax(ajaxconfig);
+                return $ajax;
+            }
+            catch (e) {
+                console.error(e.message);
+            }
+
         },
-        postAsync: function (_url, _data, successFnback, failFnback)
-        {
-            $.ajax({
-                url: encodeURI(_url),
-                type: "POST",
-                data: JSON.stringify(_data),
-                contentType: "application/json;application/x-www-form-urlencoded;charset=utf-8",
-                dataType: 'json'
-            })
-            .done(function (xhr) {
-                if (successFnback) {
-                    successFnback(xhr);
-                }
-            })
-            .fail(function (err) {
-                if (failFnback) {
-                    failFnback(err);
-                }
-            });
-        },
-        //默认为异步
-        postWithOption: function (_option, _funobj) {
+        //同步
+        post: function (_option,_data) {
             try
             {
+                if (!_option) { console.warn("参数不可为空！"); return; }
+                var ajaxconfig =
+                {
+                    type: "POST",
+                    async: false,
+                    contentType: "application/json;application/x-www-form-urlencoded;charset=utf-8",
+                    dataType: 'json'
+                };
+                switch (typeof _option) {
+                    case "object":
+                        $.extend(ajaxconfig, _option);
+                        break;
+                    case "string":
+                        ajaxconfig.data = _data;
+                        ajaxconfig.url = _option;
+                        break;
+                    default:
+                        console.warn("参数类型不合法");
+                        return;
+                }
+
+                ajaxconfig.url = encodeURI(ajaxconfig.url);//地址栏里转码
+                ajaxconfig.data = JSON.stringify(ajaxconfig.data);//序列化                
+                var $ajax = $.ajax(ajaxconfig);
+                return $ajax;
+            }
+            catch (e)
+            {
+                console.error(e.message);
+            }
+        },
+        //异步
+        postAsync: function (_option, _data) {
+            try {
+                if (!_option) { console.warn("参数不可为空！"); return; }
                 var ajaxconfig =
                 {
                     type: "POST",
                     contentType: "application/json;application/x-www-form-urlencoded;charset=utf-8",
                     dataType: 'json'
-                },
-                funconfig = {
-                    OnSuccess: function () {
-
-                    },
-                    onFailure: function () {
-
-                    },
-                    OnComplete: function () {
-
-                    }
                 };
-                _option.url = encodeURI(_option.url);//地址栏里转码
-                _option.data = JSON.stringify(_option.data);//序列化
-                $.extend(ajaxconfig, _option);
-                if (_funobj) {
-                    $.extend(funconfig, _funobj);
+                switch (typeof _option) {
+                    case "object":
+                        $.extend(ajaxconfig, _option);
+                        break;
+                    case "string":
+                        ajaxconfig.data = _data;
+                        ajaxconfig.url = _option;
+                        break;
+                    default:
+                        console.warn("参数类型不合法");
+                        return;
                 }
-                $.ajax(ajaxconfig)
-                .done(function (xhr) {
-                    funconfig.OnSuccess(xhr);
-                })
-                .fail(function (err) {
-                    funconfig.onFailure(err);
-                })
-                .always(function () {
-                    funconfig.OnComplete();
-                });
+
+                ajaxconfig.url = encodeURI(ajaxconfig.url);//地址栏里转码
+                ajaxconfig.data = JSON.stringify(ajaxconfig.data);//序列化                
+                var $ajax = $.ajax(ajaxconfig);
+                return $ajax;
             }
             catch (e)
             {
-
+                console.error(e.message);
             }
         }
     }

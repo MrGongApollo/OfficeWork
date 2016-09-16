@@ -168,7 +168,7 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="wxCOM">
-      <HintPath>..\Lib\wxCOM.dll</HintPath>
+      <HintPath>..\Office.Lib\Lib\wxCOM.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +196,7 @@
     <Compile Include="Models\KeyValueModel.cs" />
     <Compile Include="OdataModel\T_SysMenusController.cs" />
     <Compile Include="OdataModel\T_FontIcons.cs" />
+    <Compile Include="OdataModel\T_SysLogs.cs" />
     <Compile Include="OdataModel\T_Wx_MenusController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
