@@ -75,11 +75,6 @@
                         
 
                         tabcolumns = [
-                        {
-                            checkbox: true, align: 'center', valign: 'middle', formatter: function (value, row, index) {
-                                return value;
-                            }
-                        },
                         { title: '发送者', field: 'FromUserName', align: 'left', valign: 'middle', sortable: true, width: 50 },
                         {
                             title: '日志内容', field: 'Content', align: 'left', valign: 'middle', sortable: true,
@@ -123,11 +118,6 @@
                         _filters["$filter"] = tempfilter;
 
                         tabcolumns = [
-                        {
-                            checkbox: true, align: 'center', valign: 'middle', formatter: function (value, row, index) {
-                                return value;
-                            }
-                        },
                         { title: '日志内容', field: 'SysContent', align: 'left', valign: 'middle', sortable: true },
                         {
                             title: '创建日期', field: 'CreateTime', align: 'center', valign: 'middle', sortable: true,
