@@ -79,9 +79,9 @@
 
 <script type="text/javascript">
     window.curlocation = ['表单', '文件上传'];
-
+    $.extend($.fn.fileinputLocales.en, $.fn.fileinputLocales.zh);
     $(function () {
-        $.extend($.fn.fileinputLocales.en, $.fn.fileinputLocales.zh);
+        //$.extend($.fn.fileinputLocales.en, $.fn.fileinputLocales.zh);
 
         $("#file-0b").fileinput({
             language: 'zh',

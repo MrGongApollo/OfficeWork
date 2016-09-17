@@ -116,31 +116,74 @@ textarea{resize: none;}
 
 
 /**************bootstrap panel extend*****************************/
-.panel{
-  &.panel-default{
-    border-color:#CACACA;
-    >.panel-heading.panel-headicon {
+.panel {
+    &.panel-default {
+        border-color: #CACACA;
+
+        >.panel-heading.panel-headicon {
             background-color: #efefef;
         }
-  }
-  > .panel-heading{
-    &.panel-headicon {
+    }
+
+    > .panel-heading {
+        &.panel-headicon {
             height: 3rem;
             line-height: 3rem;
             padding: 0;
+
             >*:first-child {
                 padding: 10px;
                 border-right: 1px solid #CACACA;
             }
+
             > h5 {
                 color: #666;
                 display: inline-block;
                 font-weight: bold;
             }
         }
-      }
-     
-}
 
-/**************bootstrap nav extend*****************************/
-.extend-nav.nav>li>a{border: 1px solid;border-radius: 0;border-bottom: 0;}
+        &.panel-tabs {
+            height: 3rem;
+            line-height: 3rem;
+            padding: 0;
+            overflow: hidden;
+
+            >.nav.nav-pills {
+                >li {
+                    &.active{
+                        >a {
+                        border-color:#337ab7;
+                        color:white;
+                    }
+                    }
+                    >a {
+                        border-radius: 0;
+                        border: 1px solid #ddd;
+                        border-bottom: 0;
+                        padding:2px 10px;
+                        line-height: 3rem;
+                        color:#666;
+                    }
+                }
+            }
+        }
+    }
+    >.panel-body{
+        >ul.list-group.list-only-bottom{
+            margin-bottom: 0;
+            >li{
+                border-width: 1px 0;
+                &:first-child{
+                    border-top:0;
+                }
+            }
+        }
+    }
+}
+    /**************bootstrap nav extend*****************************/
+    .extend-nav.nav > li > a {
+        border: 1px solid;
+        border-radius: 0;
+        border-bottom: 0;
+    }
