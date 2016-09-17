@@ -50,7 +50,7 @@
         msgImageResizeError: '无法获取的图像尺寸调整。',
         msgImageResizeException: '错误而调整图像大小。<pre>{errors}</pre>',
         dropZoneTitle: '拖拽文件到这里 &hellip;',
-        dropZoneClickTitle: '<br>(or click to select {files})',
+        dropZoneClickTitle: '<br>(或点击选择{files})',
         fileActionSettings: {
             removeTitle: '删除文件',
             uploadTitle: '上传文件',
@@ -62,12 +62,12 @@
             indicatorLoadingTitle: '上传 ...'
         },
         previewZoomButtonTitles: {
-            prev: 'View previous file',
-            next: 'View next file',
-            toggleheader: 'Toggle header',
-            fullscreen: 'Toggle full screen',
-            borderless: 'Toggle borderless mode',
-            close: 'Close detailed preview'
+            prev: '上一个',
+            next: '下一个',
+            toggleheader: '收缩/展开头部',
+            fullscreen: '全屏',
+            borderless: '放大/缩小',
+            close: '关闭'
         }
     };
 })(window.jQuery);
