@@ -24,6 +24,11 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult Bootstrapfileinput()
+        {
+            return View();
+        }
+
         public ActionResult summernote()
         {
             return View();

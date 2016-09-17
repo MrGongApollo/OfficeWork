@@ -381,6 +381,8 @@
     <Content Include="Content\bootstrap-table\js\extensions\reorder-rows\bootstrap-table-reorder-rows.min.js" />
     <Content Include="Content\bootstrap-table\js\extensions\resizable\bootstrap-table-resizable.js" />
     <Content Include="Content\bootstrap-table\js\extensions\resizable\bootstrap-table-resizable.min.js" />
+    <Content Include="Content\bootstrap-table\js\extensions\tableExport\tableExport.min.js" />
+    <Content Include="Content\bootstrap-table\js\extensions\tableExport\tableExport.js" />
     <Content Include="Content\bootstrap-table\js\extensions\toolbar\bootstrap-table-toolbar.js" />
     <Content Include="Content\bootstrap-table\js\extensions\toolbar\bootstrap-table-toolbar.min.js" />
     <Content Include="Content\bootstrap-table\js\locale\bootstrap-table-af-ZA.js" />
@@ -607,6 +609,7 @@
     <Content Include="Views\Demo\Bootstrapcolorpicker.cshtml" />
     <Content Include="Views\Demo\summernote.cshtml" />
     <Content Include="Views\Demo\Echart.cshtml" />
+    <Content Include="Views\Demo\Bootstrapfileinput.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

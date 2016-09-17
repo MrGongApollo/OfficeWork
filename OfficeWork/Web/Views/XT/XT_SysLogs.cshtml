@@ -131,17 +131,20 @@
 
                 $table.bootstrapTable({
                     url: document.weburl + "odata/" + uri,
-                    showRefresh: false, //是否显示刷新按钮
-                    dataType: "json",
-                    method: 'get',
                     sortName: 'CreateTime',
                     sortOrder: 'desc',
-                    height: $(window).height() - $("#header").height() - 220, //table 高度
+                    //dataToggle:"table",
+                    height: $(window).height() - $("#header").height() - 250, //table 高度
                     striped: true, //是否显示行间隔色
                     singleSelect: true, //单选
                     sortable: true, //是否启用排序
-                    showColumns: false, //字段筛选
+                    showColumns: true, //字段筛选
+                    showExport: true, //导出
                     dataLocale: "zh-CN", //表格汉化
+                    paginationFirstText: '首页',
+                    paginationPreText: '上一页',
+                    paginationNextText: '下一页',
+                    paginationLastText: '尾页',
                     search: false, //显示搜索框
                     pageSize: 10, //每页的记录行数（*）
                     pageList: [10, 15, 20, 25], //分页选择

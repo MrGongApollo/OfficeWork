@@ -56,7 +56,9 @@ namespace Web
             bundles.Add(new ScriptBundle("~/bundles/bootstrap-table/js").Include(
                         "~/Content/bootstrap-table/js/bootstrap-table.min.js",
                         "~/Content/bootstrap-table/js/locale/bootstrap-table-zh-CN.min.js",
-                        "~/Content/bootstrap-table/js/extensions/filter-control/bootstrap-table-filter-control.js"
+                        "~/Content/bootstrap-table/js/extensions/filter-control/bootstrap-table-filter-control.js",
+                        "~/Content/bootstrap-table/js/extensions/export/bootstrap-table-export.min.js",
+                        "~/Content/bootstrap-table/js/extensions/tableExport/tableExport.js"
                         ));
 
 
@@ -94,6 +96,16 @@ namespace Web
             ));
             bundles.Add(new StyleBundle("~/bundles/bootstrap-colorpicker/css").Include(
                         "~/Content/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css"
+                        ));
+            #endregion
+
+            #region bootstrap-fileinput
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-fileinput/js").Include(
+            "~/Content/bootstrap-fileinput/js/fileinput.min.js",
+            "~/Content/bootstrap-fileinput/js/locales/zh.js"
+            ));
+            bundles.Add(new StyleBundle("~/bundles/bootstrap-fileinput/css").Include(
+                        "~/Content/bootstrap-fileinput/css/fileinput.min.css"
                         ));
             #endregion
 
