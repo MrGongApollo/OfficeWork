@@ -16,7 +16,7 @@
         fileSingle: '文件',
         filePlural: '多个文件',
         browseLabel: '选择 &hellip;',
-        removeLabel: '移除',
+        removeLabel: '全部清空',
         removeTitle: '清除选中文件',
         cancelLabel: '取消',
         cancelTitle: '取消进行中的上传',
