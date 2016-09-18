@@ -8,13 +8,13 @@
     <title>@ViewBag.Title</title>
     @RenderSection("styles", required: false)
     @Styles.Render("~/bundles/commoncss")
+    @Scripts.Render("~/bundles/jquery")
     <style type="text/css">
         body {overflow:hidden;}
     </style>
 </head>
 <body>
     @RenderBody()
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/commonjs")
     @RenderSection("scripts", required: false)

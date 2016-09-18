@@ -34,10 +34,9 @@
             $showTab=$($tab.find(">a").attr("href"));
             $showTab.addClass("in active").siblings(".in.active").removeClass("in active");
             $table = $showTab.find('.table');
+
             if (!$tab.attr("data-load"))
             {
-                var _filters={};
-
                 $tab.attr("data-load", true);
 
                 $.each($showTab.find('.bootstrap-daterangepicker'), function (i, el) {
@@ -62,18 +61,10 @@
                     });
                 });
 
-                var uri, tabcolumns,$date=$showTab.find(".bootstrap-daterangepicker");
+                var uri, tabcolumns;
                 switch ($showTab.attr("id")) {
                     case "TextLogs":
                         uri = "T_TextMessage";
-                        //if ($date.val())
-                        //{
-                        //    var tempfilter = "SysCreateTime ge DateTime'" + $date.attr("data-date-start") + "'";
-                        //    tempfilter += " and SysCreateTime lt DateTime'" + $.web.dateAddDays($date.attr("data-date-end"), 1) + "'";
-                        //    _filters["$filter"] = tempfilter;
-                        //}
-                        
-
                         tabcolumns = [
                         { title: '发送者', field: 'FromUserName', align: 'left', valign: 'middle', sortable: true, width: 50 },
                         {
@@ -109,14 +100,6 @@
                         break;
                     case "ErrorLogs":
                         uri = "T_SysLogs";
-                        var tempfilter = "LogType eq 'error'";
-                        //if ($date.val()) {
-                        //    tempfilter += " and CreateTime ge DateTime'" + $date.attr("data-date-start") + "'";
-                        //    tempfilter += " and CreateTime lt DateTime'" + $.web.dateAddDays($date.attr("data-date-end"), 1) + "'";
-                        //}
-
-                        _filters["$filter"] = tempfilter;
-
                         tabcolumns = [
                         { title: '日志内容', field: 'SysContent', align: 'left', valign: 'middle', sortable: true },
                         {
@@ -160,13 +143,14 @@
 
                     },
                     queryParams: function (params) {
-                        
-                        var queryParams = $.extend({}, _filters);
-                        
+                        var queryParams = {};
                         queryParams["$top"] = params.limit;
                         queryParams["$skip"] = params.offset;
                         queryParams["$count"] = true;
-                        //queryParams["$filter"] = GetFilters();
+                        var Filters = GetFilters($showTab.attr("id"));
+                        if (Filters) {
+                            queryParams["$filter"]=Filters;
+                        }
                         if (params.sort)
                             queryParams["$orderby"] = params.sort + " " + params.order;
                         return queryParams;
@@ -174,6 +158,7 @@
                     },
                     sidePagination: "server", //服务端处理分页
                     responseHandler: function (res) {
+                        debugger
                         var ret = {
                             total: res["@@odata.count"],
                             rows: res.value
@@ -185,9 +170,34 @@
             }
             else
             {
+                _filters["$filter"]=GetFilters($showTab.attr("id"));
                 $table.bootstrapTable('refresh');
             }
             
+        }
+
+        function GetFilters(tp)
+        {
+            debugger
+            var tempfilter = "",
+            $date = $($("#logTab>li.active>a").attr("href")).find(".bootstrap-daterangepicker");
+            switch (tp)
+            {
+                case "TextLogs":
+                    if ($date.val()) {
+                        tempfilter = "date(SysCreateTime) ge " + $date.attr("data-date-start");
+                        tempfilter += " and date(SysCreateTime) lt " + $.web.dateAddDays($date.attr("data-date-end"), 1);
+                    }
+                    break;
+                case "ErrorLogs":
+                    tempfilter = "LogType eq 'error'";
+                    if ($date.val()) {
+                        tempfilter += " and date(CreateTime) ge " + $date.attr("data-date-start");
+                        tempfilter += " and date(CreateTime) lt " + $.web.dateAddDays($date.attr("data-date-end"), 1);
+                    }
+                    break;
+            }
+            return tempfilter;
         }
 </script>
 
