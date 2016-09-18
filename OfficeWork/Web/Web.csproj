@@ -175,6 +175,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Main\" />
+    <Folder Include="Views\Odata\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\XTController.cs" />
+    <Compile Include="Filter\HttpBasicAuthorize.cs" />
     <Compile Include="Filter\IsAjaxChecked.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -195,6 +197,7 @@
     <Compile Include="Filter\LoginCheckedAttribute.cs" />
     <Compile Include="Help\CommonHelper.cs" />
     <Compile Include="Models\KeyValueModel.cs" />
+    <Compile Include="OdataModel\OdataBaseController.cs" />
     <Compile Include="OdataModel\T_ImgMessage.cs" />
     <Compile Include="OdataModel\T_TextMessage.cs" />
     <Compile Include="OdataModel\T_SysMenusController.cs" />

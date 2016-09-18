@@ -9,6 +9,8 @@ using System.Security.Cryptography;
 using System.Text;
 using Web.Help;
 using Office.Data.Models;
+using System.Web.Security;
+using System.Security.Principal;
 
 namespace Web.Controllers
 {
@@ -37,7 +39,25 @@ namespace Web.Controllers
                         #region 密码正确
                         if (user.LoginPsw ==new CommonHelper().MD5(password))
                         {
-                            Session["User"] = user;
+                            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, username, DateTime.Now, DateTime.Now.AddMinutes(90),
+               true, string.Format("{0}:{1}", username, password), FormsAuthentication.FormsCookiePath);
+
+                            string ticString = FormsAuthentication.Encrypt(ticket);
+
+                            //把票据信息写入Cookie和Session  
+                            //SetAuthCookie方法用于标识用户的Identity状态为true  
+                            HttpContext.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, ticString));
+                            FormsAuthentication.SetAuthCookie(username, true);
+                            HttpContext.Session["USER_LOGON_TICKET"] = ticString;
+
+                            //重写HttpContext中的用户身份，可以封装自定义角色数据；  
+                            //判断是否合法用户，可以检查：HttpContext.User.Identity.IsAuthenticated的属性值  
+                            string[] roles = ticket.UserData.Split(',');
+                            IIdentity identity = new FormsIdentity(ticket);
+                            IPrincipal principal = new GenericPrincipal(identity, roles);
+                            HttpContext.User = principal;
+
+                            HttpContext.Session["User"] = user;
                             base.fin_r = new KeyValueModel
                             {
                                 Key = "success",
