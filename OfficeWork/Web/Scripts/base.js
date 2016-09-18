@@ -53,17 +53,36 @@
                 ss = date.getSeconds();
             return _s ? date.getFullYear() + _s + Month + _s + Day + " " + HH + ":" + mm + ":" + ss : date.getFullYear() + "-" + Month + "-" + Day + " " + HH + ":" + mm + ":" + ss;
         },
+        MonthFirstDay: function (date) {
+            var _date = !date?this.today():this.dateFormat(date, "yyyy-MM-dd");
+            return this.dateAddDays(_date,-(new Date(_date).getDate()-1));
+        },
+        MonthLastDay: function (date) {
+            var _date = this.MonthFirstDay(date);
+            return this.dateAddDays(this.dateAddMonths(_date, 1), -1);
+        },
         ///在现有时间上加上指定的天数，返回新的时间字符串
         dateAddDays: function (date, days) {
-            dateArray = String(date).split('-');
-            if (dateArray.length != 3) {
+            if (arguments.length != 2) {
+                console.warn("参数数目不合法");
                 return;
             }
-            var newDate = new Date(new Date(dateArray[0], eval(dateArray[1]) - 1, dateArray[2]).valueOf() + days * 24 * 60 * 60 * 1000), // 日期加上指定的天数
-                newYear = newDate.getFullYear(),
-                newMonth = (newDate.getMonth() < 9 ? "0" : "") + (newDate.getMonth() + 1),
-                newDay = (newDate.getDate() < 10 ? "0":"") + newDate.getDate();
-            return newYear + "-" + newMonth + "-" + newDay;
+            if (typeof date !== "string") {
+                console.warn("日期类型应为string类型");
+                return;
+            }
+            var _date = new Date(date), dd = _date.getDate();
+            _date.setDate(dd + days);
+            return this.dateFormat(_date, "yyyy-MM-dd");
+        },
+        dateAddMonths: function (date, months) {
+            if (arguments.length != 2) {
+                console.warn("参数数目不合法");
+                return;
+            } 
+            var _date = new Date(date),mm = _date.getMonth();
+                _date.setMonth(mm + months);
+                return this.dateFormat(_date, "yyyy-MM-dd");
         },
         changeDateFormat: function (cellval, timeformat) {
             if (!cellval) {
