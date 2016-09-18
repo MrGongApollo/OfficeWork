@@ -30,15 +30,17 @@
             $.ban.banSelectAll();
             $.ban.banF12();
         }
-    },
-    $.web = {
+    };
+    
+    var WebUntils=function(){};
+    WebUntils.prototype={
         //获取今日日期
         today:function (_s) {
             var date = new Date(),
                 MM = date.getMonth()+1,
                 Month = MM < 10 ? "0" + MM : MM,
                 Day = date.getDate() < 10 ?"0" + date.getDate():date.getDate();
-                return _s ? date.getFullYear() + _s + Month + _s + Day : date.getFullYear() + "-" + Month + "-" + Day;
+            return _s ? date.getFullYear() + _s + Month + _s + Day : date.getFullYear() + "-" + Month + "-" + Day;
         },
         //获取当前时间
         Now: function (_s) {
@@ -61,7 +63,7 @@
                 newYear = newDate.getFullYear(),
                 newMonth = (newDate.getMonth() < 9 ? "0" : "") + (newDate.getMonth() + 1),
                 newDay = (newDate.getDate() < 10 ? "0":"") + newDate.getDate();
-                return newYear + "-" + newMonth + "-" + newDay;
+            return newYear + "-" + newMonth + "-" + newDay;
         },
         changeDateFormat: function (cellval, timeformat) {
             if (!cellval) {
@@ -296,8 +298,8 @@
             var $toast=$('#wxtoast');
             $toast.css("left", (ScreenWidth - $toast.width()) / 2);
             $("#wxtoast").show().fadeOut(_config.duration, function () {
-                    $("#wxtoast").remove();
-                });
+                $("#wxtoast").remove();
+            });
             
         },
         //同步
@@ -432,5 +434,6 @@
                 console.error(e.message);
             }
         }
-    }
+    };
+    $.web = new WebUntils();
 })(jQuery)
