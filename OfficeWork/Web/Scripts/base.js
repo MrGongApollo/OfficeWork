@@ -35,23 +35,12 @@
     var WebUntils=function(){};
     WebUntils.prototype={
         //获取今日日期
-        today:function (_s) {
-            var date = new Date(),
-                MM = date.getMonth()+1,
-                Month = MM < 10 ? "0" + MM : MM,
-                Day = date.getDate() < 10 ?"0" + date.getDate():date.getDate();
-            return _s ? date.getFullYear() + _s + Month + _s + Day : date.getFullYear() + "-" + Month + "-" + Day;
+        today: function (date) {
+            return this.dateFormat(new Date(),"yyyy-MM-dd");
         },
         //获取当前时间
-        Now: function (_s) {
-            var date = new Date(),
-                MM = date.getMonth() + 1,
-                Month = MM < 10 ? "0" + MM : MM,
-                Day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
-                HH = date.getHours(),
-                mm = date.getMinutes(),
-                ss = date.getSeconds();
-            return _s ? date.getFullYear() + _s + Month + _s + Day + " " + HH + ":" + mm + ":" + ss : date.getFullYear() + "-" + Month + "-" + Day + " " + HH + ":" + mm + ":" + ss;
+        Now: function (date) {
+            return this.dateFormat(new Date(), "yyyy-MM-dd HH:mm:ss");
         },
         MonthFirstDay: function (date) {
             var _date = !date?this.today():this.dateFormat(date, "yyyy-MM-dd");
