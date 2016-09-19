@@ -31,7 +31,7 @@
                         var $el = $("<li>", { "class": "has-sub" + (index == 0 ? " active" : "") }),
                             $ul = $("<ul>", { "class": "sub-menu" }).hide();
                         $.each(item.children, function (i, t) {
-                            $.extend(_obj_a, { href: t.href, "data-href": t.href || "" });
+                            $.extend(_obj_a, { href:document.weburl+t.href, "data-href": t.href?document.weburl+t.href:"" });
 
                             $ul.append($("<li>").append(
                                 $("<a>", _obj_a).append($("<i>", { "class": "menuIcon " + t.icon })).append($("<span>").text(t.title)).click(function () {
@@ -55,7 +55,7 @@
                             );
                     }
                     else {
-                        $.extend(_obj_a, { href: item.href, "data-href": item.href || "" });
+                        $.extend(_obj_a, { href: document.weburl + item.href, "data-href": item.href ? document.weburl + item.href : "" });
                         var $el = $("<li>", { "class": (index == 0 ? " active" : "") }).append(
                                 $("<a>", _obj_a).append($("<i>", { "class": "menuIcon " + item.icon })).append($("<span>").text(item.title)).click(function () {
                                     var $parent = $(this).parent();
