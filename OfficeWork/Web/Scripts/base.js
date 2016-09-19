@@ -35,11 +35,11 @@
     var WebUntils=function(){};
     WebUntils.prototype={
         //获取今日日期
-        today: function (date) {
+        today: function () {
             return this.dateFormat(new Date(),"yyyy-MM-dd");
         },
         //获取当前时间
-        Now: function (date) {
+        Now: function () {
             return this.dateFormat(new Date(), "yyyy-MM-dd HH:mm:ss");
         },
         MonthFirstDay: function (date) {
